@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -9,34 +10,54 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="584.0" prefWidth="946.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
    <left>
       <AnchorPane prefHeight="584.0" prefWidth="602.0" style="-fx-background-color: #d21e1e;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="loginImageView" fitHeight="240.0" fitWidth="364.0" layoutX="119.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox alignment="CENTER" layoutX="119.0" layoutY="171.0" AnchorPane.bottomAnchor="170.0" AnchorPane.topAnchor="171.0">
+               <children>
+                  <ImageView fx:id="loginImageView" fitHeight="240.0" fitWidth="364.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </VBox>
          </children></AnchorPane>
    </left>
-   <right>
-      <AnchorPane prefHeight="600.0" prefWidth="352.0" BorderPane.alignment="CENTER">
+   <top>
+      <Separator prefWidth="200.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <VBox alignment="CENTER" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="115.0" layoutY="86.0" text="User Login" textFill="#d21e1e">
+            <Label text="User Login" textFill="#d21e1e">
                <font>
                   <Font size="27.0" />
                </font>
             </Label>
-            <PasswordField layoutX="119.0" layoutY="304.0" promptText="Adgangskode" style="-fx-background-color: transparent; -fx-border-color: #d21e1e; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField layoutX="119.0" layoutY="233.0" promptText="Brugernavn" style="-fx-background-color: transparent; -fx-border-color: #d21e1e; -fx-border-width: 0px 0px 2px 0px;" />
-            <Button fx:id="loginButton" layoutX="145.0" layoutY="385.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="25.0" prefWidth="68.0" style="-fx-background-color: #d21e1e;" text="Login" textFill="WHITE" />
-            <Hyperlink layoutX="114.0" layoutY="452.0" text="Glemt adganskode?" />
-            <ImageView fx:id="keyImageView" fitHeight="29.0" fitWidth="27.0" layoutX="84.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="userImageView" fitHeight="29.0" fitWidth="27.0" layoutX="84.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="someImageView" fitHeight="56.0" fitWidth="65.0" layoutX="147.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="231.0">
+               <children>
+                  <ImageView fx:id="userImageView" fitHeight="29.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true" />
+                  <TextField promptText="Brugernavn" style="-fx-background-color: transparent; -fx-border-color: #d21e1e; -fx-border-width: 0px 0px 2px 0px;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="61.0" prefWidth="287.0">
+               <children>
+                  <ImageView fx:id="keyImageView" fitHeight="29.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true" />
+                  <PasswordField prefHeight="27.0" prefWidth="150.0" promptText="Adgangskode" style="-fx-background-color: transparent; -fx-border-color: #d21e1e; -fx-border-width: 0px 0px 2px 0px;" />
+               </children>
+            </HBox>
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="25.0" prefWidth="68.0" style="-fx-background-color: #d21e1e;" text="Login" textFill="WHITE" />
+            <Hyperlink text="Glemt adganskode?" />
+            <ImageView fx:id="someImageView" fitHeight="56.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
          </children>
-      </AnchorPane>
-   </right>
-   <top>
-      <Separator prefWidth="200.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
-   </top>
+         <padding>
+            <Insets bottom="80.0" left="80.0" right="80.0" top="80.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
 </BorderPane>

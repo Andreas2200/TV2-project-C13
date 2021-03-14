@@ -34,6 +34,9 @@ public class PrimaryController implements Initializable {
     private Image userImage;
     private Image loginImage;
     private Image someImage;
+    private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #d21e1e;";
+    private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border," +
+                                                       " -fx-inner-border, transparent; -fx-text-fill: black;";
 
     @FXML
     private void switchToSecondary() throws IOException {
@@ -50,7 +53,6 @@ public class PrimaryController implements Initializable {
         loginImageView.setImage(loginImage);
         someImage = new Image(getClass().getResource("TV_2_RGB.png").toString());
         someImageView.setImage(someImage);
-
         //Changes the black image to the tv2-red colour
         Lighting lighting = new Lighting(new Light.Distant(45, 90, Color.valueOf("#d21e1e")));
         ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
@@ -60,6 +62,8 @@ public class PrimaryController implements Initializable {
         userImageView.setEffect(lighting);
         keyImageView.setEffect(lighting);
 
-
+        //Makes login button cool, changing style when hovered over
+        loginButton.setOnMouseEntered(e-> loginButton.setStyle(HOVERED_BUTTON_STYLE));
+        loginButton.setOnMouseExited(e-> loginButton.setStyle(IDLE_BUTTON_STYLE));
     }
 }
