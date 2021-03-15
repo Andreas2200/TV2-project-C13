@@ -7,7 +7,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
@@ -17,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class PrimaryController implements Initializable {
 
@@ -45,7 +50,6 @@ public class PrimaryController implements Initializable {
         signInCloseImageView.setImage(closeImage);
         signUpCloseImageView.setImage(closeImage);
 
-
         //Changes the black image to the tv2-red colour
         Lighting lighting = new Lighting(new Light.Distant(45, 90, Color.valueOf("#d21e1e")));
         ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
@@ -67,8 +71,6 @@ public class PrimaryController implements Initializable {
         buttonPopper(signInLoginButton);
         buttonPopper(signInCloseButton);
         buttonPopper(signUpCloseButton);
-
-
     }
 
     @FXML
@@ -91,8 +93,15 @@ public class PrimaryController implements Initializable {
     }
 
     @FXML
-    private void switchToSecondary() throws IOException {
+    private void switchToSecondary(ActionEvent event) throws IOException {
         App.setRoot("secondary");
+        /*Parent sceneParent = FXMLLoader.load(getClass().getResource("secondary.fxml"));
+        Scene scene = new Scene(sceneParent);
+
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.setMinWidth(1200);
+        window.setMinHeight(824);*/
     }
 
     @FXML
