@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,31 +13,50 @@ import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class PrimaryController implements Initializable {
 
     @FXML
-    private ImageView keyImageView;
-    @FXML
-    private ImageView userImageView;
-    @FXML
-    private ImageView loginImageView;
-    @FXML
-    private ImageView someImageView;
-    @FXML
-    private BorderPane borderPane;
-    @FXML
     private Button loginButton;
+    @FXML
+    private Button signInScreenButton;
+    @FXML
+    private Button signUpScreenButton;
+    @FXML
+    private ImageView signUpImageView;
+    @FXML
+    private ImageView signInImageView;
+    @FXML
+    private AnchorPane signUpPane, signInPane;
 
-    private Image keyImage;
-    private Image userImage;
-    private Image loginImage;
-    private Image someImage;
-    private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #d21e1e;";
-    private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border," +
-                                                       " -fx-inner-border, transparent; -fx-text-fill: black;";
+
+    private Image signInImage;
+
+    private static final String NOT_CLICKED = "fx-background-color: transparent";
+    private static final String CLICKED = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
+
+    @FXML
+    private void signInSignUpHandler(ActionEvent event) {
+
+        if(event.getSource() == signInScreenButton) {
+            signInPane.toFront();
+            signInScreenButton.toFront();
+            signUpScreenButton.toFront();
+            signInScreenButton.setStyle(CLICKED);
+            signUpScreenButton.setStyle(NOT_CLICKED);
+        }
+        else if(event.getSource() == signUpScreenButton) {
+            signUpPane.toFront();
+            signInScreenButton.toFront();
+            signUpScreenButton.toFront();
+            signUpScreenButton.setStyle(CLICKED);
+            signInScreenButton.setStyle(NOT_CLICKED);
+        }
+    }
 
     @FXML
     private void switchToSecondary() throws IOException {
@@ -45,25 +65,17 @@ public class PrimaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        keyImage = new Image(getClass().getResource("key.png").toString());
-        keyImageView.setImage(keyImage);
-        userImage = new Image(getClass().getResource("user.png").toString());
-        userImageView.setImage(userImage);
-        loginImage = new Image(getClass().getResource("TV_2_Hvid_RGB.png").toString());
-        loginImageView.setImage(loginImage);
-        someImage = new Image(getClass().getResource("TV_2_RGB.png").toString());
-        someImageView.setImage(someImage);
+        signInImage = new Image(getClass().getResource("arrow-circle-right.png").toString());
+        signUpImageView.setImage(signInImage);
+        signInImageView.setImage(signInImage);
+
         //Changes the black image to the tv2-red colour
         Lighting lighting = new Lighting(new Light.Distant(45, 90, Color.valueOf("#d21e1e")));
         ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
         lighting.setContentInput(bright);
         lighting.setSurfaceScale(0.0);
         //applies that effect to the images
-        userImageView.setEffect(lighting);
-        keyImageView.setEffect(lighting);
-
-        //Makes login button cool, changing style when hovered over
-        loginButton.setOnMouseEntered(e-> loginButton.setStyle(HOVERED_BUTTON_STYLE));
-        loginButton.setOnMouseExited(e-> loginButton.setStyle(IDLE_BUTTON_STYLE));
+        signUpImageView.setEffect(lighting);
+        signInImageView.setEffect(lighting);
     }
 }
