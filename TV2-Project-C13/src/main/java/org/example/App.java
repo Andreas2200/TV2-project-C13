@@ -23,12 +23,23 @@ public class App extends Application {
     private static Scene scene;
     private double xOffset = 0;
     private double yOffset = 0;
+    private Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
+        this.stage = stage;
         scene = new Scene(loadFXML("primary"));
-        stage.initStyle(StageStyle.TRANSPARENT);
+        changeSceneLayout(stage);
+        stage.setMinHeight(824);
+        stage.setMinWidth(1200);
+        stage.setScene(scene);
+        stage.setTitle("TV2 CREDIT MANAGEMENT SYSTEM");
+        stage.show();
+    }
 
+    public void changeSceneLayout(Stage stage) {
+        this.stage = stage;
+        stage.initStyle(StageStyle.TRANSPARENT);
         scene.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -43,12 +54,7 @@ public class App extends Application {
                 stage.setY(mouseEvent.getScreenY() - yOffset);
             }
         });
-
         scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-
-        stage.setTitle("TV2 CREDIT MANAGEMENT SYSTEM");
-        stage.show();
     }
 
     static void setRoot(String fxml) throws IOException {

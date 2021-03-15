@@ -73,8 +73,8 @@
                   </Button>
                </children>
             </AnchorPane>
-            <Button fx:id="signUpScreenButton" layoutX="-10.0" layoutY="147.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="187.0" style="-fx-background-color: transparent;" text="SignUp" />
-            <Button fx:id="signInScreenButton" layoutX="-10.0" layoutY="83.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="187.0" style="-fx-background-color: #d21e1e;" text="SignIn" />
+            <Button fx:id="signUpScreenButton" layoutX="-10.0" layoutY="188.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="187.0" style="-fx-background-color: transparent;" text="SignUp" />
+            <Button fx:id="signInScreenButton" layoutX="-10.0" layoutY="124.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="187.0" style="-fx-background-color: #d21e1e;" text="SignIn" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="175.0" prefHeight="568.0" prefWidth="439.0" style="-fx-background-color: #d21e1e;">
