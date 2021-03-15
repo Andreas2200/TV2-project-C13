@@ -35,7 +35,7 @@
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="788.0" layoutY="52.0" text="Sign Up" textFill="#d21e1e">
+                  <Label layoutX="783.0" layoutY="41.0" text="Sign Up" textFill="#d21e1e">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -68,12 +68,12 @@
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="786.0" layoutY="64.0" text="Sign In" textFill="#d21e1e">
+                  <Label layoutX="787.0" layoutY="41.0" text="Sign In" textFill="#d21e1e">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <Button fx:id="signInLoginButton" layoutX="792.0" layoutY="316.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="31.0" prefWidth="42.0" style="-fx-background-color: transparent;">
+                  <Button fx:id="signInLoginButton" layoutX="792.0" layoutY="345.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="31.0" prefWidth="42.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fx:id="signInImageView" fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>

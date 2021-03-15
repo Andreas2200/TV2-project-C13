@@ -9,15 +9,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
+import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 public class PrimaryController implements Initializable {
@@ -33,13 +31,13 @@ public class PrimaryController implements Initializable {
     private Image signInImage;
     private Image closeImage;
 
-    private static final String NOT_CLICKED = "fx-background-color: transparent; -fx-base: #FFFF; -fx-border-color: #FFFF;";
+    private static final String NOT_CLICKED = "fx-background-color: transparent; -fx-base: #FFFF; -fx-border-color: #FFFF; -fx-text-fill: #BFBFBF";
     private static final String CLICKED = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DropShadow shadow = new DropShadow();
-        signInImage = new Image(getClass().getResource("arrow-circle-right.png").toString());
+        signInImage = new Image(getClass().getResource("arrow-right.png").toString());
         signUpImageView.setImage(signInImage);
         signInImageView.setImage(signInImage);
 
@@ -125,24 +123,24 @@ public class PrimaryController implements Initializable {
     }
 
     private void buttonPopper(Button button) {
-        DropShadow shadow = new DropShadow();
-        shadow.setOffsetY(-3);
-        shadow.setOffsetX(-2);
+        Scale bigScale = new Scale();
+        bigScale.setX(1.15);
+        bigScale.setY(1.15);
+
+        DropShadow shadow = new DropShadow(BlurType.values()[3],Color.valueOf("#BFBFBF"), 4, 0.0f, -2.0f, -2.0f);
 
         button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 button.setEffect(shadow);
-                button.setPrefHeight(button.getHeight() + 10);
-                button.setPrefWidth(button.getWidth() + 10);
+                button.getTransforms().add(bigScale);
             }
         });
         button.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 button.setEffect(null);
-                button.setPrefHeight(button.getHeight() - 10);
-                button.setPrefWidth(button.getWidth() - 10);
+                button.getTransforms().remove(bigScale);
             }
         });
     }
