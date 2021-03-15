@@ -23,7 +23,16 @@
                      <children>
                         <VBox alignment="TOP_CENTER" layoutX="-4.0" layoutY="-1.0" prefHeight="824.0" prefWidth="895.0" spacing="20.0">
                             <children>
-                              <Label prefHeight="17.0" prefWidth="900.0" text="Manage Credits:" />
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="24.0" prefWidth="830.0" text="Manage Credits:" />
+                                    <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeButtonHandler" prefHeight="17.0" prefWidth="26.0" style="-fx-background-color: transparent;">
+                                       <graphic>
+                                          <ImageView fx:id="closeButtonImageView" fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </HBox>
                               <HBox prefHeight="36.0" prefWidth="445.0">
                                  <children>
                                     <TextField promptText="Rolle" />

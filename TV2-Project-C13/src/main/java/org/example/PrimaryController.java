@@ -5,39 +5,73 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 public class PrimaryController implements Initializable {
 
     @FXML
-    private Button loginButton;
+    private Button loginButton, signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
     @FXML
-    private Button signInScreenButton;
-    @FXML
-    private Button signUpScreenButton;
-    @FXML
-    private ImageView signUpImageView;
-    @FXML
-    private ImageView signInImageView;
+    private ImageView signUpImageView, signInImageView, signInCloseImageView, signUpCloseImageView;
     @FXML
     private AnchorPane signUpPane, signInPane;
 
-
+    private Button button;
     private Image signInImage;
+    private Image closeImage;
 
-    private static final String NOT_CLICKED = "fx-background-color: transparent";
+    private static final String NOT_CLICKED = "fx-background-color: transparent; -fx-base: #FFFF; -fx-border-color: #FFFF;";
     private static final String CLICKED = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        DropShadow shadow = new DropShadow();
+        signInImage = new Image(getClass().getResource("arrow-circle-right.png").toString());
+        signUpImageView.setImage(signInImage);
+        signInImageView.setImage(signInImage);
+
+        closeImage = new Image(getClass().getResource("times.png").toString());
+        signInCloseImageView.setImage(closeImage);
+        signUpCloseImageView.setImage(closeImage);
+
+
+        //Changes the black image to the tv2-red colour
+        Lighting lighting = new Lighting(new Light.Distant(45, 90, Color.valueOf("#d21e1e")));
+        ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
+        lighting.setContentInput(bright);
+        lighting.setSurfaceScale(0.0);
+        //applies that effect to the images
+        signUpImageView.setEffect(lighting);
+        signInImageView.setEffect(lighting);
+        signInCloseImageView.setEffect(lighting);
+        signUpCloseImageView.setEffect(lighting);
+
+        signInScreenButton.toFront();
+        signUpScreenButton.toFront();
+
+        //creating cool shadow effect on button, when hovered
+        buttonShadower(signInScreenButton);
+        buttonShadower(signUpScreenButton);
+        buttonPopper(signUpLoginButton);
+        buttonPopper(signInLoginButton);
+        buttonPopper(signInCloseButton);
+        buttonPopper(signUpCloseButton);
+
+
+    }
 
     @FXML
     private void signInSignUpHandler(ActionEvent event) {
@@ -63,19 +97,53 @@ public class PrimaryController implements Initializable {
         App.setRoot("secondary");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        signInImage = new Image(getClass().getResource("arrow-circle-right.png").toString());
-        signUpImageView.setImage(signInImage);
-        signInImageView.setImage(signInImage);
+    @FXML
+    private void closeButtonHandler() {
+        Stage stage = (Stage) signInCloseButton.getScene().getWindow();
+        stage.close();
+        Stage stage1 = (Stage) signUpCloseButton.getScene().getWindow();
+        stage1.close();
+    }
 
-        //Changes the black image to the tv2-red colour
-        Lighting lighting = new Lighting(new Light.Distant(45, 90, Color.valueOf("#d21e1e")));
-        ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
-        lighting.setContentInput(bright);
-        lighting.setSurfaceScale(0.0);
-        //applies that effect to the images
-        signUpImageView.setEffect(lighting);
-        signInImageView.setEffect(lighting);
+    private void buttonShadower(Button button) {
+        this.button = button;
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.valueOf("#d21e1e"));
+        shadow.setHeight(20);
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                button.setEffect(shadow);
+            }
+        });
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                button.setEffect(null);
+            }
+        });
+    }
+
+    private void buttonPopper(Button button) {
+        DropShadow shadow = new DropShadow();
+        shadow.setOffsetY(-3);
+        shadow.setOffsetX(-2);
+
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                button.setEffect(shadow);
+                button.setPrefHeight(button.getHeight() + 10);
+                button.setPrefWidth(button.getWidth() + 10);
+            }
+        });
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                button.setEffect(null);
+                button.setPrefHeight(button.getHeight() - 10);
+                button.setPrefWidth(button.getWidth() - 10);
+            }
+        });
     }
 }
