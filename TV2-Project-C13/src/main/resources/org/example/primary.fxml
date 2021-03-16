@@ -25,12 +25,12 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <TextField layoutX="662.0" layoutY="189.0" prefHeight="41.0" prefWidth="316.0" promptText="lastname" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                  <TextField layoutX="662.0" layoutY="210.0" prefHeight="55.0" prefWidth="316.0" promptText="adganskode" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="662.0" layoutY="262.0" prefHeight="41.0" prefWidth="316.0" promptText="email" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                  <TextField layoutX="662.0" layoutY="265.0" prefHeight="55.0" prefWidth="316.0" promptText="fødselsår" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="662.0" layoutY="115.0" prefHeight="41.0" prefWidth="316.0" promptText="firstname" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                  <TextField layoutX="662.0" layoutY="99.0" prefHeight="55.0" prefWidth="316.0" promptText="brugernavn" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -54,6 +54,11 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <TextField layoutX="662.0" layoutY="154.0" prefHeight="55.0" prefWidth="316.0" promptText="email" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="signInPane" prefHeight="460.0" prefWidth="1036.0" style="-fx-background-color: #FFFF; -fx-background-radius: 1em;">
