@@ -95,13 +95,6 @@ public class PrimaryController implements Initializable {
     @FXML
     private void switchToSecondary(ActionEvent event) throws IOException {
         App.setRoot("secondary");
-        /*Parent sceneParent = FXMLLoader.load(getClass().getResource("secondary.fxml"));
-        Scene scene = new Scene(sceneParent);
-
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.setMinWidth(1200);
-        window.setMinHeight(824);*/
     }
 
     @FXML

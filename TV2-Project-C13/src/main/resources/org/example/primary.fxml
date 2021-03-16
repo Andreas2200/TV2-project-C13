@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="568.0" prefWidth="1036.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
+<AnchorPane prefHeight="824.0" prefWidth="1200.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
    <children>
-      <AnchorPane layoutY="69.0" prefHeight="460.0" prefWidth="1036.0" style="-fx-background-color: #FFFF; -fx-background-radius: 1em;">
+      <AnchorPane layoutX="101.0" layoutY="197.0" prefHeight="460.0" prefWidth="1036.0" style="-fx-background-color: #FFFF; -fx-background-radius: 1em;">
          <children>
-            <Button fx:id="signInScreenButton" layoutX="-10.0" layoutY="124.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="187.0" style="-fx-background-color: #d21e1e;" text="SignIn" />
-            <Button fx:id="signUpScreenButton" layoutX="-10.0" layoutY="188.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="187.0" style="-fx-background-color: transparent;" text="SignUp" />
+            <Button fx:id="signInScreenButton" layoutY="124.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="177.0" style="-fx-background-color: #d21e1e;" text="SignIn" />
+            <Button fx:id="signUpScreenButton" layoutY="188.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="177.0" style="-fx-background-color: transparent;" text="SignUp" />
             <AnchorPane fx:id="signUpPane" prefHeight="460.0" prefWidth="1036.0" style="-fx-background-color: #FFFF; -fx-background-radius: 1em;">
                <children>
                   <Button fx:id="signUpCloseButton" layoutX="987.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeButtonHandler" prefHeight="18.0" prefWidth="24.0" style="-fx-background-color: transparent;">
@@ -95,7 +95,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="175.0" prefHeight="568.0" prefWidth="439.0" style="-fx-background-color: #d21e1e;">
+      <AnchorPane layoutX="276.0" layoutY="128.0" prefHeight="568.0" prefWidth="439.0" style="-fx-background-color: #d21e1e;">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="120.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
                <image>
