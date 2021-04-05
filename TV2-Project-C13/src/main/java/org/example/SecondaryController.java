@@ -25,11 +25,12 @@ public class SecondaryController implements Initializable {
     @FXML
     private ImageView userImageView, closeButtonImageView;
     @FXML
-    private Button closeButton, manageCreditsButton, viewCreditsButton;
+    private Button closeButton, manageCreditsButton, viewCreditsButton, manageUsersButton;
     @FXML
-    private TitledPane addCreditTitledPane, createCreditTitledPane, createProgramTitledPane, createPersonTitledPane;
+    private TitledPane addCreditTitledPane, createCreditTitledPane, createProgramTitledPane, createPersonTitledPane,
+            viewUsersTitledPane, requestsTitledPane, editUserTitledPane, deleteUserTitledPane;
     @FXML
-    private Accordion managementAccordion;
+    private Accordion managementAccordion, managementAccordionUsers;
     @FXML
     private VBox guestVBox;
 
@@ -83,6 +84,10 @@ public class SecondaryController implements Initializable {
         if(event.getSource() == viewCreditsButton) {
             guestVBox.toFront();
         }
+        if(event.getSource() == manageUsersButton) {
+            managementAccordionUsers.toFront();
+            managementAccordionUsers.setExpandedPane(viewUsersTitledPane);
+        }
     }
 
     @FXML
@@ -111,6 +116,30 @@ public class SecondaryController implements Initializable {
             createPersonTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
             createProgramTitledPane.setStyle(CLICKED_TITLED_PANE);
             addCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+        }
+        if(event.getSource() == viewUsersTitledPane) {
+            viewUsersTitledPane.setStyle(CLICKED_TITLED_PANE);
+            requestsTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+        }
+        if(event.getSource() == requestsTitledPane) {
+            viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            requestsTitledPane.setStyle(CLICKED_TITLED_PANE);
+            editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+        }
+        if(event.getSource() == editUserTitledPane) {
+            viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            requestsTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            editUserTitledPane.setStyle(CLICKED_TITLED_PANE);
+            deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+        }
+        if(event.getSource() == deleteUserTitledPane) {
+            viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            requestsTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            deleteUserTitledPane.setStyle(CLICKED_TITLED_PANE);
         }
     }
 }
