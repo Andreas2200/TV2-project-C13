@@ -1,4 +1,4 @@
-package dk.TV2.CLI;
+package CLI;
 
 public class Credit
 {

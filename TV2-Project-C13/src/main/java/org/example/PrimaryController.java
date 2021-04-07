@@ -32,7 +32,7 @@ public class PrimaryController implements Initializable {
     private Image signInImage;
     private Image closeImage;
 
-    private static final String NOT_CLICKED = "fx-background-color: transparent; -fx-base: #FFFF; -fx-border-color: #FFFF; -fx-text-fill: #BFBFBF";
+    private static final String NOT_CLICKED = "fx-background-color: transparent; -fx-base: #FFFF; -fx-border-color: #FFFF; -fx-text-fill: #AFAFAF";
     private static final String CLICKED = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
 
     @Override
@@ -59,6 +59,8 @@ public class PrimaryController implements Initializable {
 
         signInScreenButton.toFront();
         signUpScreenButton.toFront();
+        signInScreenButton.setStyle(CLICKED);
+        signUpScreenButton.setStyle(NOT_CLICKED);
 
         //creating cool shadow effect on button, when hovered
         buttonShadower(signInScreenButton);

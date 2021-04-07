@@ -11,10 +11,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -25,28 +29,31 @@ public class SecondaryController implements Initializable {
     @FXML
     private ImageView userImageView, closeButtonImageView;
     @FXML
-    private Button closeButton, manageCreditsButton, viewCreditsButton, manageUsersButton;
+    private Button closeButton, manageCreditsButton, findPersonButton, findProgramButton, manageUsersButton,
+            programButton1, programButton2, programButton3, programButton4, programButton5, programButton6, toSearchButton;
     @FXML
     private TitledPane addCreditTitledPane, createCreditTitledPane, createProgramTitledPane, createPersonTitledPane,
             viewUsersTitledPane, requestsTitledPane, editUserTitledPane, deleteUserTitledPane;
     @FXML
     private Accordion managementAccordion, managementAccordionUsers;
     @FXML
-    private VBox guestVBox;
+    private VBox personVBox, programVBox;
+    @FXML
+    private AnchorPane programInfoAnchorPane, programSearchAnchorPane;
 
 
     private Image userImage;
     private Image closeButtonImage;
+    private Button button;
     private Circle circle = new Circle(75);
 
-    private static final String NON_CLICKED_TITLED_PANE = "-fx-color: #FFFF; -fx-effect: null";
-    private static final String CLICKED_TITLED_PANE = "-fx-base: #d21e1e; -fx-effect: null";
+    private static final String NON_CLICKED_TITLED_PANE = "-fx-background-color: #FFFF; -fx-color: #FFFF; -fx-border-color: #FFFF";
+    private static final String CLICKED_TITLED_PANE = "-fx-background-color: #d21e1e; -fx-color: #d21e1e; -fx-border-color: #d21e1e;";
+    private static final String NOT_CLICKED_BUTTON = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
+    private static final String CLICKED_BUTTON = "-fx-background-color: #FFFF; -fx-background-color: white !important; -fx-text-fill: #AFAFAF;";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        DropShadow shadow = new DropShadow();
-        shadow.setColor(Color.valueOf("#d21e1e"));
 
         userImage = new Image(getClass().getResource("Dancingkid.jpg").toString());
         userImageView.setImage(userImage);
@@ -57,11 +64,31 @@ public class SecondaryController implements Initializable {
         closeButtonImage = new Image(getClass().getResource("times.png").toString());
         closeButtonImageView.setImage(closeButtonImage);
 
+        personVBox.toFront();
+        programSearchAnchorPane.toFront();
+
         addCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-        addCreditTitledPane.setEffect(shadow);
         createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
         createProgramTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
         createPersonTitledPane.setStyle(CLICKED_TITLED_PANE);
+
+        managementAccordion.setExpandedPane(createPersonTitledPane);
+        managementAccordionUsers.setExpandedPane(viewUsersTitledPane);
+
+        findPersonButton.setStyle(CLICKED_BUTTON);
+
+        buttonShadower(findPersonButton);
+        buttonShadower(manageCreditsButton);
+        buttonShadower(manageUsersButton);
+        buttonShadower(findProgramButton);
+
+        //Paints the close button red
+        Lighting lighting = new Lighting(new Light.Distant(45, 90, Color.valueOf("#d21e1e")));
+        ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
+        lighting.setContentInput(bright);
+        lighting.setSurfaceScale(0.0);
+
+        closeButtonImageView.setEffect(lighting);
     }
 
     @FXML
@@ -79,19 +106,43 @@ public class SecondaryController implements Initializable {
     private void toFrontHandler(ActionEvent event) {
         if(event.getSource() == manageCreditsButton) {
             managementAccordion.toFront();
-            managementAccordion.setExpandedPane(createPersonTitledPane);
+
+            manageCreditsButton.setStyle(CLICKED_BUTTON);
+            manageUsersButton.setStyle(NOT_CLICKED_BUTTON);
+            findPersonButton.setStyle(NOT_CLICKED_BUTTON);
+            findProgramButton.setStyle(NOT_CLICKED_BUTTON);
         }
-        if(event.getSource() == viewCreditsButton) {
-            guestVBox.toFront();
+        if(event.getSource() == findPersonButton) {
+            personVBox.toFront();
+            manageCreditsButton.setStyle(NOT_CLICKED_BUTTON);
+            manageUsersButton.setStyle(NOT_CLICKED_BUTTON);
+            findPersonButton.setStyle(CLICKED_BUTTON);
+            findProgramButton.setStyle(NOT_CLICKED_BUTTON);
         }
         if(event.getSource() == manageUsersButton) {
             managementAccordionUsers.toFront();
-            managementAccordionUsers.setExpandedPane(viewUsersTitledPane);
+            manageCreditsButton.setStyle(NOT_CLICKED_BUTTON);
+            manageUsersButton.setStyle(CLICKED_BUTTON);
+            findPersonButton.setStyle(NOT_CLICKED_BUTTON);
+            findProgramButton.setStyle(NOT_CLICKED_BUTTON);
+        }
+        if(event.getSource() == findProgramButton) {
+            programVBox.toFront();
+            manageCreditsButton.setStyle(NOT_CLICKED_BUTTON);
+            manageUsersButton.setStyle(NOT_CLICKED_BUTTON);
+            findPersonButton.setStyle(NOT_CLICKED_BUTTON);
+            findProgramButton.setStyle(CLICKED_BUTTON);
+        }
+        if(event.getSource() == programButton1); {
+            programInfoAnchorPane.toFront();
+        }
+        if(event.getSource() == toSearchButton) {
+            programSearchAnchorPane.toFront();
         }
     }
 
     @FXML
-    private void manageCreditsHandler(MouseEvent event) {
+    private void titledPaneHandler(MouseEvent event) {
 
         if(event.getSource() == addCreditTitledPane) {
             createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
@@ -141,5 +192,26 @@ public class SecondaryController implements Initializable {
             editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
             deleteUserTitledPane.setStyle(CLICKED_TITLED_PANE);
         }
+    }
+
+
+
+    private void buttonShadower(Button button) {
+        this.button = button;
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.valueOf("#AFAFAF"));
+        shadow.setHeight(20);
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                button.setEffect(shadow);
+            }
+        });
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                button.setEffect(null);
+            }
+        });
     }
 }

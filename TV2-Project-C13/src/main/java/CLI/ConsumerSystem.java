@@ -1,4 +1,4 @@
-package dk.TV2.CLI;
+package CLI;
 
 import java.io.File;
 import java.io.FileWriter;
