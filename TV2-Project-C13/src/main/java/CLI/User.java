@@ -7,14 +7,14 @@ public class User {
     private String role;
     private int age;
 
-    User(String name, String username, String password, int age) {
+    public User(String name, String username, String password, int age) {
         this.name = name;
         this.username = username.toLowerCase();
         this.password = password;
         this.age = age;
         this.role = "User";
     }
-    User(String name, String username, String password, int age, String role)
+    public User(String name, String username, String password, int age, String role)
     {
         this(name,username,password,age);
         this.role = role;

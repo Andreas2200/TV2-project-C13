@@ -1,5 +1,7 @@
 package Module;
 
+import CLI.User;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -28,10 +30,30 @@ class Main {
 }
 
 public class DatabaseSystem {
+
+    public User getUser(String username, String password) {
+        try {
+            //har haft nogle problemer med at få pathen til filen til at fungere
+            Scanner reader = new Scanner(new File("../usernames.txt"));
+            while (reader.hasNext()){
+                String[] userInfo = reader.nextLine().split(",");
+                if (userInfo[0].equals(username)){
+                    if (userInfo[1].equals(password)){
+                        return new User(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[4]));
+                    }
+                }
+            }
+        }
+        catch (FileNotFoundException e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
     public String Search(int id) throws Exception {
         try {
             ArrayList<String> readLines = new ArrayList<>();
-            Scanner reader = new Scanner(new File("C:/Users/simon/IdeaProjects/Sorting/src/sample/this.txt"));
+            Scanner reader = new Scanner(new File("this.txt"));
             while (reader.hasNextLine()){
                 readLines.add(reader.nextLine());
             }
