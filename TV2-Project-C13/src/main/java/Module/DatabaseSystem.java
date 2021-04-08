@@ -31,6 +31,15 @@ class Main {
 
 public class DatabaseSystem {
 
+    private static DatabaseSystem instance;
+
+    public static synchronized DatabaseSystem getInstance(){
+        if (instance == null){
+            instance = new DatabaseSystem();
+        }
+        return instance;
+    }
+
     public User getUser(String username, String password) {
         try {
             //har haft nogle problemer med at få pathen til filen til at fungere
