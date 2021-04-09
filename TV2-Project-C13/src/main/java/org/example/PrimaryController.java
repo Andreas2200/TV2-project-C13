@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 public class PrimaryController implements Initializable {
 
     @FXML
-    private Button loginButton, signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
+    private Button loginButtoon, signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
     @FXML
     private ImageView signUpImageView, signInImageView, signInCloseImageView, signUpCloseImageView;
     @FXML
