@@ -78,7 +78,7 @@
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <Button fx:id="signInLoginButton" layoutX="792.0" layoutY="345.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="31.0" prefWidth="42.0" style="-fx-background-color: transparent;">
+                  <Button fx:id="signInLoginButtoon" layoutX="792.0" layoutY="345.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="31.0" prefWidth="42.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fx:id="signInImageView" fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>

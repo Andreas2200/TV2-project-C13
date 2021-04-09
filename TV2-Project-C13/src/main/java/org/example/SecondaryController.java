@@ -44,7 +44,7 @@ public class SecondaryController implements Initializable {
 
     private Image userImage;
     private Image closeButtonImage;
-    private Button button;
+    private Button buttoon;
     private Circle circle = new Circle(75);
 
     private static final String NON_CLICKED_TITLED_PANE = "-fx-background-color: #FFFF; -fx-color: #FFFF; -fx-border-color: #FFFF";
@@ -197,7 +197,7 @@ public class SecondaryController implements Initializable {
 
 
     private void buttonShadower(Button button) {
-        this.button = button;
+        this.buttoon = button;
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.valueOf("#AFAFAF"));
         shadow.setHeight(20);
