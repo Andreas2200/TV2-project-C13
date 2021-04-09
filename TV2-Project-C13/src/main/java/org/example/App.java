@@ -33,7 +33,7 @@ public class App extends Application {
         stage.setMinHeight(824);
         stage.setMinWidth(1200);
         stage.setScene(scene);
-        stage.setTitle("TV2 CREDIT MANAGEMENT SYSTEm");
+        stage.setTitle("TV2 CREDIT MANAGEMENT SYSTEM");
         stage.show();
     }
 

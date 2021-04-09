@@ -5,11 +5,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import CLI.User;
+import Module.DatabaseSystem;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
@@ -22,6 +24,8 @@ import javafx.stage.Stage;
 
 public class PrimaryController implements Initializable {
 
+    public TextField passwordField;
+    public TextField userNameField;
     @FXML
     private Button loginButton, signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
     @FXML
@@ -37,6 +41,7 @@ public class PrimaryController implements Initializable {
     private static final String CLICKED = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
 
     public static User activeUser = null;
+    static DatabaseSystem dbSys = new DatabaseSystem();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -94,7 +99,9 @@ public class PrimaryController implements Initializable {
     }
 
     @FXML
-    private void switchToSecondary(ActionEvent event) throws IOException {
+    private void switchToSecondary(ActionEvent event) throws IOException
+    {
+        activeUser = dbSys.getUser(userNameField.getText(),passwordField.getText());
         App.setRoot("secondary");
     }
 

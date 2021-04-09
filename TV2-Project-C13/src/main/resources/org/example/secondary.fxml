@@ -775,7 +775,7 @@
                      <font>
                         <Font name="Gill Sans MT" size="20.0" />
                      </font></Button>
-                    <Button fx:id="secondaryButtoon" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #FFFF;" styleClass="smallWhiteButton" text="Log ud" textFill="#d21e1e">
+                    <Button fx:id="secondaryButton" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #FFFF;" styleClass="smallWhiteButton" text="Log ud" textFill="#d21e1e">
                      <VBox.margin>
                         <Insets top="150.0" />
                      </VBox.margin></Button>

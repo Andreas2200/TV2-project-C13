@@ -50,7 +50,7 @@
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="signUpLoginButton" layoutX="793.0" layoutY="344.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="31.0" prefWidth="42.0" style="-fx-background-color: transparent;">
+                  <Button fx:id="signUpLoginButton" layoutX="793.0" layoutY="344.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="31.0" prefWidth="42.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fx:id="signUpImageView" fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -68,12 +68,12 @@
             </AnchorPane>
             <AnchorPane fx:id="signInPane" prefHeight="460.0" prefWidth="1036.0" style="-fx-background-color: #FFFF; -fx-background-radius: 1em;">
                <children>
-                  <TextField fx:id="signInUsername" layoutX="662.0" layoutY="129.0" prefHeight="41.0" prefWidth="316.0" promptText="brugernavn" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                  <TextField fx:id="userNameField" layoutX="662.0" layoutY="129.0" prefHeight="41.0" prefWidth="316.0" promptText="brugernavn" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="signInPassword" layoutX="662.0" layoutY="207.0" prefHeight="41.0" prefWidth="316.0" promptText="password" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                  <TextField fx:id="passwordField" layoutX="662.0" layoutY="207.0" prefHeight="41.0" prefWidth="316.0" promptText="password" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -83,7 +83,7 @@
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <Button fx:id="signInLoginButton" layoutX="792.0" layoutY="345.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="31.0" prefWidth="42.0" style="-fx-background-color: transparent;">
+                  <Button fx:id="signInLoginButton" layoutX="792.0" layoutY="345.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="31.0" prefWidth="42.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fx:id="signInImageView" fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
