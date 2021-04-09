@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import CLI.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ import javafx.stage.Stage;
 public class PrimaryController implements Initializable {
 
     @FXML
-    private Button loginButtoon, signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
+    private Button loginButton, signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
     @FXML
     private ImageView signUpImageView, signInImageView, signInCloseImageView, signUpCloseImageView;
     @FXML
@@ -34,6 +35,8 @@ public class PrimaryController implements Initializable {
 
     private static final String NOT_CLICKED = "fx-background-color: transparent; -fx-base: #FFFF; -fx-border-color: #FFFF; -fx-text-fill: #AFAFAF";
     private static final String CLICKED = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
+
+    public static User activeUser = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

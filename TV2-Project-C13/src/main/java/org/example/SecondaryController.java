@@ -46,7 +46,7 @@ public class SecondaryController implements Initializable {
 
     private Image userImage;
     private Image closeButtonImage;
-    private Button button;
+    private Button buttoon;
     private Circle circle = new Circle(75);
 
     public Label userRoleField;
@@ -224,7 +224,7 @@ public class SecondaryController implements Initializable {
 
 
     private void buttonShadower(Button button) {
-        this.button = button;
+        this.buttoon = button;
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.valueOf("#AFAFAF"));
         shadow.setHeight(20);
