@@ -41,14 +41,15 @@ public class DatabaseSystem {
     }
 
     public User getUser(String username, String password) {
-        try {
+        try (Scanner reader = new Scanner(new File("usernames.txt")))
+        {
             //har haft nogle problemer med at få pathen til filen til at fungere
-            Scanner reader = new Scanner(new File("../usernames.txt"));
+
             while (reader.hasNext()){
-                String[] userInfo = reader.nextLine().split(",");
+                String[] userInfo = reader.nextLine().split(";");
                 if (userInfo[0].equals(username)){
                     if (userInfo[1].equals(password)){
-                        return new User(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[4]));
+                        return new User(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[4]),userInfo[3]);
                     }
                 }
             }

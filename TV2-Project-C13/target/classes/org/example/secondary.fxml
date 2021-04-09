@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
@@ -18,51 +24,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="834.0" prefWidth="1200.0" stylesheets="@titledPaneStylesheet.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SecondaryController">
+<BorderPane prefHeight="834.0" prefWidth="1200.0" stylesheets="@titledPaneStylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SecondaryController">
    <center>
       <AnchorPane prefHeight="834.0" prefWidth="923.0" style="-fx-background-color: #ffffff;">
          <children>
-            <VBox fx:id="personVBox" prefHeight="824.0" prefWidth="908.0" style="-fx-background-color: #FFFF;">
-               <children>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="824.0" prefWidth="900.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" layoutX="-4.0" layoutY="-1.0" prefHeight="834.0" prefWidth="912.0">
-                            <children>
-                              <HBox prefHeight="70.0" prefWidth="860.0" style="-fx-background-color: #d21e1e;">
-                                 <children>
-                                    <Label prefHeight="27.0" prefWidth="554.0" text="What are you looking for?" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Search" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;" />
-                                    <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Search" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets bottom="30.0" top="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <TableView prefHeight="676.0" prefWidth="862.0">
-                                <columns>
-                                  <TableColumn minWidth="0.0" prefWidth="176.0" text="Person:" />
-                                  <TableColumn prefWidth="160.0" text="Beskæftigelse" />
-                                    <TableColumn prefWidth="159.0" text="Rolle" />
-                                    <TableColumn prefWidth="167.0" text="Produktion:" />
-                                    <TableColumn prefWidth="199.0" text="Kontakt Information:" />
-                                </columns>
-                              </TableView>
-                            </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="30.0" />
-                           </padding>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </VBox>
             <Accordion fx:id="managementAccordion" layoutX="-6.0" prefHeight="824.0" prefWidth="916.0" style="-fx-background-color: #FFFF;">
               <panes>
                 <TitledPane fx:id="createPersonTitledPane" alignment="TOP_LEFT" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="671.0" prefWidth="938.0" text="Create Person">
@@ -718,6 +683,47 @@
                   </AnchorPane>
                </children>
             </VBox>
+            <VBox fx:id="personVBox" prefHeight="824.0" prefWidth="908.0" style="-fx-background-color: #FFFF;">
+               <children>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="824.0" prefWidth="900.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" layoutX="-4.0" layoutY="-1.0" prefHeight="834.0" prefWidth="912.0">
+                            <children>
+                              <HBox prefHeight="70.0" prefWidth="860.0" style="-fx-background-color: #d21e1e;">
+                                 <children>
+                                    <Label prefHeight="27.0" prefWidth="554.0" text="What are you looking for?" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;" />
+                                    <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="30.0" top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <TableView prefHeight="676.0" prefWidth="862.0">
+                                <columns>
+                                  <TableColumn minWidth="0.0" prefWidth="176.0" text="Person:" />
+                                  <TableColumn prefWidth="160.0" text="Beskæftigelse" />
+                                    <TableColumn prefWidth="159.0" text="Rolle" />
+                                    <TableColumn prefWidth="167.0" text="Produktion:" />
+                                    <TableColumn prefWidth="199.0" text="Kontakt Information:" />
+                                </columns>
+                              </TableView>
+                            </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="30.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </center>
@@ -730,7 +736,7 @@
                      <VBox.margin>
                         <Insets top="50.0" />
                      </VBox.margin></ImageView>
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="228.0" text="User Name" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="userNameField" alignment="CENTER" prefHeight="17.0" prefWidth="228.0" text="User Name" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -738,7 +744,7 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label text="Brugerrolle" textFill="WHITE">
+                  <Label fx:id="userRoleField" text="Brugerrolle" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>

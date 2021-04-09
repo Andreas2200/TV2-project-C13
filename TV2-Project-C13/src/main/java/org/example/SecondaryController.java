@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import CLI.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
@@ -47,13 +49,21 @@ public class SecondaryController implements Initializable {
     private Button button;
     private Circle circle = new Circle(75);
 
+    public Label userRoleField;
+    public Label userNameField;
+
+    private User activeUser = null;
+
     private static final String NON_CLICKED_TITLED_PANE = "-fx-background-color: #FFFF; -fx-color: #FFFF; -fx-border-color: #FFFF";
     private static final String CLICKED_TITLED_PANE = "-fx-background-color: #d21e1e; -fx-color: #d21e1e; -fx-border-color: #d21e1e;";
     private static final String NOT_CLICKED_BUTTON = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
     private static final String CLICKED_BUTTON = "-fx-background-color: #FFFF; -fx-background-color: white !important; -fx-text-fill: #AFAFAF;";
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        activeUser = PrimaryController.activeUser;
 
         userImage = new Image(getClass().getResource("Dancingkid.jpg").toString());
         userImageView.setImage(userImage);
@@ -89,10 +99,27 @@ public class SecondaryController implements Initializable {
         lighting.setSurfaceScale(0.0);
 
         closeButtonImageView.setEffect(lighting);
+
+        //Sets the user permissions and the text for user info
+        userNameField.setText(activeUser.getName());
+        userRoleField.setText(activeUser.getRole());
+
+        setUserPermission();
+    }
+
+    private void setUserPermission()
+    {
+        if(activeUser.getRole().equals("User"))
+        {
+            manageCreditsButton.setVisible(false);
+            manageUsersButton.setVisible(false);
+        }
     }
 
     @FXML
-    private void switchToPrimary(ActionEvent event) throws IOException {
+    private void switchToPrimary(ActionEvent event) throws IOException
+    {
+        activeUser = null;
         App.setRoot("primary");
     }
 
