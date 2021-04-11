@@ -22,7 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
-public class PrimaryController implements Initializable {
+public class LoginController implements Initializable {
 
     public TextField passwordField;
     public TextField userNameField;
