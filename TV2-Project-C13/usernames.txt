@@ -1,3 +1,4 @@
-Morten420;Pa22Wo7d123;Morten Thomsen;Robin;34
-69Karsten69;spiderMonkey;Karsten Kristensen;Pro MinecraftGamer;16
-tommyboi;ThisIsAmerica69;Tom Holland;Spiderman;24
+Morten420;Pa22Wo7d123;Morten Thomsen;Admin;34
+69Karsten69;spiderMonkey;Karsten Kristensen;User;16
+Admin;password;Sigurd Skelmose;Admin;22
+User;password;Sigurd Skelmose;User;22

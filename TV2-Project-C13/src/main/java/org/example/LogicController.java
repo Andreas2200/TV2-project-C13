@@ -26,7 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
-public class SecondaryController implements Initializable {
+public class LogicController implements Initializable {
 
     @FXML
     private ImageView userImageView, closeButtonImageView;
@@ -63,7 +63,7 @@ public class SecondaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        activeUser = PrimaryController.activeUser;
+        activeUser = LoginController.activeUser;
 
         userImage = new Image(getClass().getResource("Dancingkid.jpg").toString());
         userImageView.setImage(userImage);
