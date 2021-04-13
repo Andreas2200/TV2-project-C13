@@ -1,4 +1,4 @@
-package CLI;
+package Domain;
 
 import java.util.ArrayList;
 

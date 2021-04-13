@@ -1,4 +1,4 @@
-package CLI;
+package Domain;
 
 public class Credit
 {

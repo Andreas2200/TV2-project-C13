@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="834.0" prefWidth="1200.0" stylesheets="@titledPaneStylesheet.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.LogicController">
+<BorderPane prefHeight="834.0" prefWidth="1200.0" stylesheets="@titledPaneStylesheet.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.LogicController">
    <center>
       <AnchorPane prefHeight="834.0" prefWidth="923.0" style="-fx-background-color: #ffffff;">
          <children>

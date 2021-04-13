@@ -1,4 +1,4 @@
-package org.example;
+package Domain;
 
 public enum Genre {
     ACTION, BØRNEFILM, DOKUMENTAR, DRAMA,

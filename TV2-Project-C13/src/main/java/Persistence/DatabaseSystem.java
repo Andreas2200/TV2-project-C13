@@ -1,7 +1,7 @@
-package Module;
+package Persistence;
 
-import CLI.User;
-import org.example.Person;
+import Domain.User;
+import Domain.Person;
 
 import java.io.*;
 import java.util.*;
@@ -10,13 +10,13 @@ import java.util.*;
 class Main {
     static DatabaseSystem dbSys = new DatabaseSystem();
     public static void main(String[] args) throws Exception {
-        ArrayList<Person> searched = dbSys.SearchPerson("k");
+        ArrayList<Person> searched = dbSys.searchPerson("k");
         for (Person person : searched){
             System.out.println("Person:\n" + person.getName() + "\nAge:\n" + person.getAge() + "\nEmail:\n" + person.getEmail());
         }
         //String name, String username, String password, int age, String role
-        dbSys.SaveUser(new User("Tom Holland", "TommyBOI", "ThisIsAmerica69", 24, "Spiderman"));
-        dbSys.SavePerson(new Person(48, "Tom@Holland.US", "Tom Holland"));
+        dbSys.saveUser(new User("Tom Holland", "TommyBOI", "ThisIsAmerica69", 24, "Spiderman"));
+        dbSys.savePerson(new Person(48, "Tom@Holland.US", "Tom Holland"));
     }
 }
 
@@ -39,7 +39,7 @@ public class DatabaseSystem {
                 String[] userInfo = reader.nextLine().split(";");
                 if (userInfo[0].equals(username)){
                     if (userInfo[1].equals(password)){
-                        return new User(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[4]),userInfo[3]);
+                        return new User(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[4]),userInfo[5],userInfo[3]);
                     }
                 }
             }
@@ -69,7 +69,7 @@ public class DatabaseSystem {
     //returns if the username already existed
     //true == user didn't exist and adding the new user was a succes
     //false == user already exist
-    public boolean SaveUser(User user) throws IOException {
+    public boolean saveUser(User user) throws IOException {
         if (getUser(user.getUsername()) == null){
             FileWriter writer = new FileWriter("usernames.txt", true);
             writer.write(user.getUsername() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getRole() + ";" + user.getAge() + "\n");
@@ -81,7 +81,7 @@ public class DatabaseSystem {
         }
     }
 
-    public String Search(int id) throws Exception {
+    public String search(int id) throws Exception {
         try {
             ArrayList<String> readLines = new ArrayList<>();
             Scanner reader = new Scanner(new File("persons.txt"));
@@ -95,7 +95,7 @@ public class DatabaseSystem {
         return "";
     }
 
-    public void SavePerson(Person person) throws IOException {
+    public void savePerson(Person person) throws IOException {
         Scanner reader = new Scanner(new File("persons.txt"));
         if (person.getId() == -1){
             int ID = 0;
@@ -115,7 +115,7 @@ public class DatabaseSystem {
     }
 
     //SearchParam uses letters to narrow the search result down, type is the searched var in object, file is the file the data is in
-    public ArrayList<Person> SearchPerson(String searchParam) throws Exception {
+    public ArrayList<Person> searchPerson(String searchParam) throws Exception {
         //readlines and put em in a list
         String splitValue = "";
         searchParam = searchParam.toLowerCase();
@@ -124,7 +124,7 @@ public class DatabaseSystem {
 
         //throw out all of the lines which is not searched for
         for (int i = 0; i < dataValues.size(); i++){
-            splitValue = SplitByChar(dataValues.get(i).getName(), searchParam.length());
+            splitValue = splitByChar(dataValues.get(i).getName(), searchParam.length());
             splitValue = splitValue.toLowerCase();
             if (splitValue.equals(searchParam)){
                 searchItems.add(dataValues.get(i));
@@ -147,7 +147,7 @@ public class DatabaseSystem {
     }
 
 
-    private String SplitByChar(String text, int splitBy){
+    private String splitByChar(String text, int splitBy){
         return text.substring(0, splitBy);
     }
 

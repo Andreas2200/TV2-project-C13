@@ -1,4 +1,4 @@
-morten420;Pa22Wo7d123;Morten Thomsen;Admin;34
-69karsten69;spiderMonkey;Karsten Kristensen;User;16
-admin;password;Sigurd Skelmose;Admin;22
-user;password;Sigurd Skelmose;User;22
+morten420;Pa22Wo7d123;Morten Thomsen;Admin;34;test@test.test;
+69karsten69;spiderMonkey;Karsten Kristensen;User;16;test@test.test;
+admin;password;Sigurd Skelmose;Admin;22;test@test.test;
+user;password;Sigurd Skelmose;User;22;test@test.test;

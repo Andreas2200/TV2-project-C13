@@ -1,4 +1,4 @@
-package CLI;
+package Domain;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import Persistence.DatabaseSystem;
 
 public class ConsumerSystem
 {
@@ -25,6 +26,9 @@ public class ConsumerSystem
     private boolean loggedIn = false;
 
     private User activeUser = null;
+
+    static DatabaseSystem dbSys = new DatabaseSystem();
+
 
     private Scanner scanner = new Scanner(System.in);
 
@@ -89,10 +93,10 @@ public class ConsumerSystem
                 switch (scanner.next())
                 {
                     case "1":
-                        loggedIn = logIn();
+                        //loggedIn = logIn();
                         break;
                     case "2":
-                        createUser();
+                        //createUser();
                         break;
                     case "3":
                         forgottenPassword();
@@ -271,24 +275,16 @@ public class ConsumerSystem
         }
     }
 
-    private void createUser()
-    {
-        System.out.print("Name: ");
-        String tempName = scanner.next();
-        System.out.print("Username: ");
-        String tempUsername = scanner.next();
-        System.out.print("Password: ");
-        String tempPassword = scanner.next();
-        System.out.print("Age: ");
-        int tempAge = scanner.nextInt();
 
-        if(checkUserExits(new User(tempName,tempUsername,tempPassword,tempAge)))
+    public void createUser(String tempName,String tempUsername,String tempPassword, int tempAge,String tempMail)
+    {
+        if(checkUserExits(new User(tempName,tempUsername,tempPassword,tempAge,tempMail)))
         {
             System.out.println("Username taken. Choose another");
         }
         else
         {
-            User tempUser = new User(tempName,tempUsername,tempPassword,tempAge);
+            User tempUser = new User(tempName,tempUsername,tempPassword,tempAge,tempMail);
             users.add(tempUser);
             saveUser(tempUser);
         }
@@ -331,23 +327,22 @@ public class ConsumerSystem
 
     private boolean checkUserExits(User newUser)
     {
-        for (User user: users)
+        return newUser.getUsername().equals(dbSys.getUser(newUser.getUsername()));
+        /*for (User user: users)
         {
             if(user.getUsername().equals(newUser.getUsername()))
             {
                 return true;
             }
         }
-        return false;
+        return false;*/
     }
 
-    private boolean logIn()
+    public User logIn(String tempUsername,String tempPass)
     {
-        System.out.print("Username: ");
-        String tempUsername = scanner.next();
-        System.out.print("Password: ");
-        String tempPass = scanner.next();
+        return dbSys.getUser(tempUsername,tempPass);
 
+        /*
         for (User user:users)
         {
             if(user.getUsername().equals(tempUsername.toLowerCase()))
@@ -364,7 +359,7 @@ public class ConsumerSystem
         {
             System.out.println("Invalid username or password");
         }
-        return false;
+        return false;*/
     }
 
     private String showPrograms() {

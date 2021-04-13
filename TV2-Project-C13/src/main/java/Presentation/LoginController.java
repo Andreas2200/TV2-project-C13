@@ -1,19 +1,16 @@
-package org.example;
+package Presentation;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import CLI.User;
-import Module.DatabaseSystem;
+import Domain.ConsumerSystem;
+import Domain.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +24,12 @@ public class LoginController implements Initializable {
 
     public TextField passwordField;
     public TextField userNameField;
+    public TextField createUserUsernameField;
+    public TextField createUserEmailField;
+    public DatePicker birthdayDatePicker;
+
+    private final ConsumerSystem CS = new ConsumerSystem();
+
     @FXML
     private Button loginButton, signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
     @FXML
@@ -44,7 +47,7 @@ public class LoginController implements Initializable {
     private static final String CLICKED = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
 
     public static User activeUser = null;
-    static DatabaseSystem dbSys = new DatabaseSystem();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -105,15 +108,14 @@ public class LoginController implements Initializable {
     @FXML
     private void switchToSecondary(ActionEvent event) throws IOException
     {
-        activeUser = dbSys.getUser(userNameField.getText().toLowerCase(),passwordField.getText());
+        activeUser = CS.logIn(userNameField.getText(),passwordField.getText());
 
         if(activeUser == null)
         {
             invalidPasswordLabel.setVisible(true);
             return;
         }
-        else if(activeUser != null)
-        {
+        else {
             App.setRoot("secondary");
         }
     }
@@ -166,5 +168,10 @@ public class LoginController implements Initializable {
                 button.getTransforms().remove(bigScale);
             }
         });
+    }
+
+    public void signUpCreate(ActionEvent actionEvent)
+    {
+
     }
 }

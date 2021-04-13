@@ -1,4 +1,4 @@
-package org.example;
+package Domain;
 
 public class Person {
     private int age;

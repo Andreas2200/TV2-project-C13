@@ -1,4 +1,4 @@
-package org.example;
+package Domain;
 
 public class Credits {
     private Occupation occupation;

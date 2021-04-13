@@ -1,4 +1,4 @@
-package org.example;
+package Domain;
 
 public enum Occupation {
     BILLEDKUNSTNER, BILLED_OG_LYDREDIGERING, CASTING, COLOURGRADING, DIRIGENTER,

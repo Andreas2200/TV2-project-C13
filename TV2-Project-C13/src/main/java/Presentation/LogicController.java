@@ -1,10 +1,10 @@
-package org.example;
+package Presentation;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import CLI.User;
+import Domain.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

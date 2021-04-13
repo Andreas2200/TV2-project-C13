@@ -1,22 +1,24 @@
-package CLI;
+package Domain;
 
 public class User {
     private String name;
     private String username;
     private String password;
+    private String email;
     private String role;
     private int age;
 
-    public User(String name, String username, String password, int age) {
+    public User(String name, String username, String password, int age, String email) {
         this.name = name;
         this.username = username.toLowerCase();
         this.password = password;
         this.age = age;
+        this.email = email;
         this.role = "User";
     }
-    public User(String name, String username, String password, int age, String role)
+    public User(String name, String username, String password, int age, String email, String role)
     {
-        this(name,username,password,age);
+        this(name,username,password,age,email);
         this.role = role;
     }
 
@@ -35,6 +37,8 @@ public class User {
     public int getAge() {
         return age;
     }
+
+    public String getEmail(){return email;}
 
     public String getRole() {
         return role;
@@ -55,6 +59,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "" + getName() + ";" + getUsername() + ";" + getPassword() + ";" + getAge() + ";" + getRole() + ";";
+        return "" + getName() + ";" + getUsername() + ";" + getPassword() + ";" + getAge() + ";" + getRole() + ";" + getEmail() + ";";
     }
 }
