@@ -1,0 +1,8 @@
+0;Adam;27;Adam@gmail.com
+1;John;19;JohnHitler@gmail.com
+2;Karsten;58;Karsten@gmail.com
+3;Kristen;77;Kristen@yahoo.com
+4;Børge;44;Børge@gmail.com
+5;Kirsten;49;Kirsten@gmail.com
+6;Kasper;22;xXxKasperxXx@gmail.com
+7;Tom Holland;48;Tom@Holland.US
