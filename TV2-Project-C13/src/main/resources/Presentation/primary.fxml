@@ -13,21 +13,69 @@
    <children>
       <AnchorPane layoutX="101.0" layoutY="197.0" prefHeight="460.0" prefWidth="1036.0" style="-fx-background-color: #FFFF; -fx-background-radius: 1em;">
          <children>
-            <Button fx:id="signInScreenButton" layoutY="124.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="177.0" style="-fx-background-color: #d21e1e;" text="SignIn" />
-            <Button fx:id="signUpScreenButton" layoutY="188.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="177.0" style="-fx-background-color: transparent;" text="SignUp" />
+            <Button fx:id="signInScreenButton" layoutY="124.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="177.0" style="-fx-background-color: #d21e1e;" text="Log Ind" />
+            <Button fx:id="signUpScreenButton" layoutY="188.0" mnemonicParsing="false" onAction="#signInSignUpHandler" prefHeight="64.0" prefWidth="177.0" style="-fx-background-color: transparent;" text="Ny Bruger" />
+            <AnchorPane fx:id="signUpPane" prefHeight="460.0" prefWidth="1036.0" style="-fx-background-color: #FFFF; -fx-background-radius: 1em;">
+               <children>
+                  <Button fx:id="signUpCloseButton" layoutX="987.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeButtonHandler" prefHeight="18.0" prefWidth="24.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="signUpCloseImageView" fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@key.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <TextField fx:id="createUserPasswordField" layoutX="662.0" layoutY="248.0" prefHeight="55.0" prefWidth="316.0" promptText="Adganskode" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="783.0" layoutY="41.0" text="Ny Bruger" textFill="#d21e1e">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="createUserUsernameField" layoutX="662.0" layoutY="138.0" prefHeight="55.0" prefWidth="316.0" promptText="Brugernavn" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="signUpLoginButton" layoutX="793.0" layoutY="368.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="31.0" prefWidth="42.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="signUpImageView" fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@key.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <TextField fx:id="createUserEmailField" layoutX="662.0" layoutY="193.0" prefHeight="55.0" prefWidth="316.0" promptText="Email" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <DatePicker fx:id="birthdayDatePicker" layoutX="662.0" layoutY="316.0" prefHeight="39.0" prefWidth="316.0" promptText="Fødselsdato" style="-fx-border-color: #d21e1e;" />
+                  <TextField fx:id="createUserUsernameField1" layoutX="662.0" layoutY="83.0" prefHeight="55.0" prefWidth="316.0" promptText="Navn" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </AnchorPane>
             <AnchorPane fx:id="signInPane" prefHeight="460.0" prefWidth="1036.0" style="-fx-background-color: #FFFF; -fx-background-radius: 1em;">
                <children>
-                  <TextField fx:id="userNameField" layoutX="662.0" layoutY="129.0" prefHeight="41.0" prefWidth="316.0" promptText="brugernavn" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                  <TextField fx:id="userNameField" layoutX="662.0" layoutY="129.0" prefHeight="41.0" prefWidth="316.0" promptText="Brugernavn" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="passwordField" layoutX="662.0" layoutY="207.0" prefHeight="41.0" prefWidth="316.0" promptText="password" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                  <TextField fx:id="passwordField" layoutX="662.0" layoutY="207.0" prefHeight="41.0" prefWidth="316.0" promptText="Password" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="787.0" layoutY="41.0" text="Sign In" textFill="#d21e1e">
+                  <Label layoutX="787.0" layoutY="41.0" text="Log Ind" textFill="#d21e1e">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -55,54 +103,6 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="signUpPane" prefHeight="460.0" prefWidth="1036.0" style="-fx-background-color: #FFFF; -fx-background-radius: 1em;">
-               <children>
-                  <Button fx:id="signUpCloseButton" layoutX="987.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeButtonHandler" prefHeight="18.0" prefWidth="24.0" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fx:id="signUpCloseImageView" fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@key.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <TextField fx:id="createUserPasswordField" layoutX="662.0" layoutY="248.0" prefHeight="55.0" prefWidth="316.0" promptText="adganskode" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="783.0" layoutY="41.0" text="Sign Up" textFill="#d21e1e">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="createUserUsernameField" layoutX="662.0" layoutY="138.0" prefHeight="55.0" prefWidth="316.0" promptText="brugernavn" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextField>
-                  <Button fx:id="signUpLoginButton" layoutX="793.0" layoutY="368.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="31.0" prefWidth="42.0" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fx:id="signUpImageView" fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@key.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <TextField fx:id="createUserEmailField" layoutX="662.0" layoutY="193.0" prefHeight="55.0" prefWidth="316.0" promptText="email" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextField>
-                  <DatePicker fx:id="birthdayDatePicker" layoutX="662.0" layoutY="316.0" prefHeight="39.0" prefWidth="316.0" promptText="fødselsdato" style="-fx-border-color: #d21e1e;" />
-                  <TextField fx:id="createUserUsernameField1" layoutX="662.0" layoutY="83.0" prefHeight="55.0" prefWidth="316.0" promptText="navn" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextField>
                </children>
             </AnchorPane>
          </children>

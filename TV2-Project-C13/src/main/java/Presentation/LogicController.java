@@ -43,7 +43,6 @@ public class LogicController implements Initializable {
     @FXML
     private AnchorPane programInfoAnchorPane, programSearchAnchorPane;
 
-
     private Image userImage;
     private Image closeButtonImage;
     private Button button;
@@ -58,7 +57,6 @@ public class LogicController implements Initializable {
     private static final String CLICKED_TITLED_PANE = "-fx-background-color: #d21e1e; -fx-color: #d21e1e; -fx-border-color: #d21e1e;";
     private static final String NOT_CLICKED_BUTTON = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
     private static final String CLICKED_BUTTON = "-fx-background-color: #FFFF; -fx-background-color: white !important; -fx-text-fill: #AFAFAF;";
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
