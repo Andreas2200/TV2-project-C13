@@ -108,8 +108,6 @@ public class DatabaseSystem {
             ID += 1;
             reader.close();
 
-            if (ID == -1) return false;
-
             FileWriter writer = new FileWriter(new File("programs.txt"), true);
             String genres = "";
             for (Genre genre : program.getGenre()){
