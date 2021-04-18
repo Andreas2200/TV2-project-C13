@@ -1,22 +1,23 @@
 package Module;
 
+import CLI.Credit;
+import CLI.Program;
 import CLI.User;
+import org.example.Genre;
 import org.example.Person;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 //bruges kun til at teste database componenter og skal i ingen omstændigheder bruges i det endelige produkt
 class Main {
     static DatabaseSystem dbSys = new DatabaseSystem();
     public static void main(String[] args) throws Exception {
-        ArrayList<Person> searched = dbSys.SearchPerson("k");
-        for (Person person : searched){
-            System.out.println("Person:\n" + person.getName() + "\nAge:\n" + person.getAge() + "\nEmail:\n" + person.getEmail());
-        }
-        //String name, String username, String password, int age, String role
-        dbSys.SaveUser(new User("Tom Holland", "TommyBOI", "ThisIsAmerica69", 24, "Spiderman"));
-        dbSys.SavePerson(new Person(48, "Tom@Holland.US", "Tom Holland"));
+        dbSys = dbSys.getInstance();
+        //ArrayList<Program> programs = dbSys.getProgram();
+        System.out.println(dbSys.SaveProgram(new Program("SUPERMAN 2 Return of the Jedi", new Date(), null, LocalTime.now(), new ArrayList<Genre>(Collections.singleton(Genre.ACTION)), "Bedre end den første", 0 )));
     }
 }
 
@@ -29,6 +30,138 @@ public class DatabaseSystem {
             instance = new DatabaseSystem();
         }
         return instance;
+    }
+
+    public ArrayList<Program> getProgram() throws Exception {
+        //readlines and put em in a list
+        ArrayList<Program> searchItems = new ArrayList<>();
+        ArrayList<String> dataValues = readDataValues("programs.txt");
+        ArrayList<Program> programs = new ArrayList<Program>();
+
+        for (int i = 0; i < dataValues.size(); i += 7){
+            //Year of release
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, Integer.parseInt(dataValues.get(4 + i)));
+            Date date = new Date();
+            date = Calendar.getInstance().getTime();
+            //Watch length
+            String[] splittetTime = (dataValues.get(5 + i).split(","));
+            ArrayList<Integer> splittetTimeInt = new ArrayList<Integer>();
+            for (int j = 0; j < splittetTime.length; j ++){
+                splittetTimeInt.add(Integer.parseInt(splittetTime[j]));
+            }
+            LocalTime time = LocalTime.of(splittetTimeInt.get(0), splittetTimeInt.get(1), splittetTimeInt.get(2), splittetTimeInt.get(3));
+
+            //Genre
+            ArrayList<Genre> genres = new ArrayList<>();
+            String[] splittetGenres = dataValues.get(2).split(",");
+            for (int j = 0; j < splittetGenres.length; j++){
+                genres.add(Genre.valueOf(splittetGenres[j]));
+            }
+            Program program = new Program(dataValues.get(1 + i), date, null, time, genres, dataValues.get(6 + i), Integer.parseInt(dataValues.get(0 + i)));
+            programs.add(program);
+        }
+        return programs;
+    }
+
+    public Program getProgram(Person person){
+        return null;
+    }
+
+    public Program getProgram(Genre genre) throws Exception {
+        ArrayList<Program> programs = getProgram();
+        for (Program program : programs) {
+            for (Genre genre_ : program.getGenre()) {
+                if (genre_.equals(genre)) return program;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Program> getProgram(String title) throws Exception {
+        ArrayList<Program> programs = getProgram();
+
+        //Sort em
+        Collections.sort(programs, Comparator.comparing(Program::getName));
+
+        ArrayList<Program> sortedPrograms = new ArrayList<>();
+
+        for (Program program : programs) {
+            String splitValues = SplitByChar(program.getName(), title.length());
+            if (splitValues.equals(title)) sortedPrograms.add(program);
+        }
+        return sortedPrograms;
+    }
+
+    public boolean SaveProgram(Program program) {
+        try {
+            int ID = -1;
+
+
+            //getID
+            Scanner reader = new Scanner(new File("programs.txt"));
+            while (reader.hasNextLine()){
+                String read = reader.nextLine();
+                String[] readValues = read.split(";");
+                ID = Integer.parseInt(readValues[0]);
+            }
+            ID += 1;
+            reader.close();
+
+            if (ID == -1) return false;
+
+            FileWriter writer = new FileWriter(new File("programs.txt"), true);
+            String genres = "";
+            for (Genre genre : program.getGenre()){
+                genres += genre + ",";
+            }
+
+
+            writer.write(ID + ";" + program.getName() + ";" + genres + ";" + program.getReleaseDate() + ";" + program.getDuration() + ";" + program.getDescription() + ";" + program.getCreatorID() + "\n");
+            writer.close();
+            return true;
+        }
+        catch (IOException e){
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    public boolean SaveProgram(Program program, int ID) {
+        try {
+            FileWriter writer = new FileWriter(new File("programs.txt"), true);
+            String genres = "";
+            for (Genre genre : program.getGenre()){
+                if (program.getGenre().get(program.getGenre().size()).equals(genre)){
+                    genres += genre;
+                    break;
+                }
+                genres += genre + ",";
+            }
+            writer.write(ID + ";" + program.getName() + ";" + genres + ";" + program.getReleaseDate() + ";" + program.getDuration() + ";" + program.getDescription() + ";" + program.getCreatorID() + "\n");
+            writer.close();
+            return true;
+        }
+        catch (IOException e){
+            return false;
+        }
+    }
+
+
+    public Credit getCredits(){
+        return null;
+    }
+
+    public Credit getCredits(Program program){
+        return null;
+    }
+
+    public Credit getCredits(Person person){
+        return null;
+    }
+
+    public void saveCredits(Credit credit){
+        return;
     }
 
     public User getUser(String username, String password) {
@@ -171,5 +304,4 @@ public class DatabaseSystem {
         }
         return returnLines;
     }
-
 }

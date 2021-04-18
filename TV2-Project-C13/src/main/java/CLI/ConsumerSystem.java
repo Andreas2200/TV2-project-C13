@@ -158,7 +158,7 @@ public class ConsumerSystem
             while(reader.hasNextLine())
             {
                 String[] tempStringArray = reader.nextLine().split(";");
-                programs.add(new Program(tempStringArray[0],tempStringArray[1],tempStringArray[2]));
+                //programs.add(new Program(tempStringArray[0],tempStringArray[1],tempStringArray[2]));
             }
         }
         catch (IOException ex)
@@ -502,9 +502,9 @@ public class ConsumerSystem
         System.out.print("Aired on: ");
         String tempShowedOn = scanner.next();
 
-        Program tempProgram = new Program(tempName,tempDate,tempShowedOn);
-        programs.add(tempProgram);
-        saveProgram(tempProgram);
+        //Program tempProgram = new Program(tempName,tempDate,tempShowedOn);
+        //programs.add(tempProgram);
+        //saveProgram(tempProgram);
     }
 
     private void addCredit()
