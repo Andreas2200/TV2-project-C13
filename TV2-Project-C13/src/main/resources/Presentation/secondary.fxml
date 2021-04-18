@@ -78,14 +78,26 @@
                                           <Font size="18.0" />
                                        </font>
                                     </TextField>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem person" textAlignment="CENTER">
-                                       <VBox.margin>
-                                          <Insets bottom="40.0" left="375.0" right="375.0" top="40.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Button>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem person" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Slet person" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>
@@ -178,14 +190,29 @@
                                           <Font size="14.0" />
                                        </font>
                                     </TextArea>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem program" textAlignment="CENTER">
+                                    <HBox alignment="CENTER" prefHeight="112.0" prefWidth="922.0">
                                        <VBox.margin>
-                                          <Insets bottom="40.0" left="375.0" right="375.0" top="40.0" />
+                                          <Insets />
                                        </VBox.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Button>
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem program" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Slet program" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>
@@ -243,14 +270,29 @@
                                           <Font size="18.0" />
                                        </font>
                                     </TextField>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem kreditering" textAlignment="CENTER">
+                                    <HBox alignment="CENTER" prefHeight="96.0" prefWidth="918.0">
                                        <VBox.margin>
-                                          <Insets bottom="40.0" left="375.0" right="375.0" top="40.0" />
+                                          <Insets />
                                        </VBox.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Button>
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem kreditering" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem kreditering" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>
@@ -292,14 +334,29 @@
                                           <Insets left="50.0" right="50.0" />
                                        </VBox.margin>
                                     </ComboBox>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="203.0" text="Tilføj kreditering til program" textAlignment="CENTER">
+                                    <HBox alignment="CENTER" prefHeight="98.0" prefWidth="919.0">
                                        <VBox.margin>
-                                          <Insets bottom="40.0" left="350.0" right="350.0" top="40.0" />
+                                          <Insets />
                                        </VBox.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Button>
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="203.0" text="Tilføj kreditering til program" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="203.0" text="Slet kreditering fra program" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>
@@ -523,6 +580,50 @@
                   </TitledPane>
                </panes>
             </Accordion>
+            <VBox fx:id="personVBox" prefHeight="824.0" prefWidth="908.0" style="-fx-background-color: #FFFF;">
+               <children>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="824.0" prefWidth="900.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" layoutX="-4.0" layoutY="-1.0" prefHeight="834.0" prefWidth="912.0">
+                            <children>
+                              <HBox prefHeight="70.0" prefWidth="860.0" style="-fx-background-color: #d21e1e;">
+                                 <children>
+                                    <Label prefHeight="27.0" prefWidth="554.0" text="Hvem leder du efter?" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font></TextField>
+                                    <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="30.0" top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <TableView prefHeight="676.0" prefWidth="862.0">
+                                <columns>
+                                  <TableColumn minWidth="0.0" prefWidth="176.0" text="Person:" />
+                                  <TableColumn prefWidth="160.0" text="Beskæftigelse" />
+                                    <TableColumn prefWidth="159.0" text="Rolle" />
+                                    <TableColumn prefWidth="167.0" text="Produktion:" />
+                                    <TableColumn prefWidth="199.0" text="Kontakt Information:" />
+                                </columns>
+                              </TableView>
+                            </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="30.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
             <VBox fx:id="programVBox" prefHeight="834.0" prefWidth="910.0" style="-fx-background-color: #FFFF;">
                <children>
                   <AnchorPane prefHeight="824.0" prefWidth="899.0">
@@ -761,50 +862,6 @@
                   </AnchorPane>
                </children>
             </VBox>
-            <VBox fx:id="personVBox" prefHeight="824.0" prefWidth="908.0" style="-fx-background-color: #FFFF;">
-               <children>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="824.0" prefWidth="900.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" layoutX="-4.0" layoutY="-1.0" prefHeight="834.0" prefWidth="912.0">
-                            <children>
-                              <HBox prefHeight="70.0" prefWidth="860.0" style="-fx-background-color: #d21e1e;">
-                                 <children>
-                                    <Label prefHeight="27.0" prefWidth="554.0" text="Hvem leder du efter?" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font></TextField>
-                                    <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets bottom="30.0" top="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <TableView prefHeight="676.0" prefWidth="862.0">
-                                <columns>
-                                  <TableColumn minWidth="0.0" prefWidth="176.0" text="Person:" />
-                                  <TableColumn prefWidth="160.0" text="Beskæftigelse" />
-                                    <TableColumn prefWidth="159.0" text="Rolle" />
-                                    <TableColumn prefWidth="167.0" text="Produktion:" />
-                                    <TableColumn prefWidth="199.0" text="Kontakt Information:" />
-                                </columns>
-                              </TableView>
-                            </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="30.0" />
-                           </padding>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </VBox>
          </children>
       </AnchorPane>
    </center>
@@ -848,11 +905,11 @@
                      <VBox.margin>
                         <Insets />
                      </VBox.margin></Button>
-                  <Button id="manageCreditsButton" fx:id="manageCreditsButton" mnemonicParsing="false" onAction="#toFrontHandler" prefHeight="65.0" prefWidth="305.0" style="-fx-background-color: #d21e1e;" text="Manage Credits" textFill="WHITE">
+                  <Button id="manageCreditsButton" fx:id="manageCreditsButton" mnemonicParsing="false" onAction="#toFrontHandler" prefHeight="65.0" prefWidth="305.0" style="-fx-background-color: #d21e1e;" text="Manage Krediteringer" textFill="WHITE">
                      <font>
                         <Font name="Gill Sans MT" size="20.0" />
                      </font></Button>
-                  <Button id="manageUsersButton" fx:id="manageUsersButton" mnemonicParsing="false" onAction="#toFrontHandler" prefHeight="65.0" prefWidth="305.0" style="-fx-background-color: #d21e1e;" text="Manage Users" textFill="WHITE">
+                  <Button id="manageUsersButton" fx:id="manageUsersButton" mnemonicParsing="false" onAction="#toFrontHandler" prefHeight="65.0" prefWidth="305.0" style="-fx-background-color: #d21e1e;" text="Manage Brugere" textFill="WHITE">
                      <font>
                         <Font name="Gill Sans MT" size="20.0" />
                      </font></Button>

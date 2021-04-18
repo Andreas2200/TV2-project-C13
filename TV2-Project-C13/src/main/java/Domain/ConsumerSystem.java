@@ -29,7 +29,6 @@ public class ConsumerSystem
 
     static DatabaseSystem dbSys = new DatabaseSystem();
 
-
     private Scanner scanner = new Scanner(System.in);
 
     public void runApp()
