@@ -3,7 +3,9 @@ package Module;
 import CLI.Credit;
 import CLI.Program;
 import CLI.User;
+import org.example.Credits;
 import org.example.Genre;
+import org.example.Occupation;
 import org.example.Person;
 
 import java.io.*;
@@ -146,8 +148,28 @@ public class DatabaseSystem {
     }
 
 
-    public Credit getCredits(){
-        return null;
+    public ArrayList<Credits> getCredits(String programTitle){
+        ArrayList<Credits> credits = new ArrayList<>();
+        try {
+            Scanner reader = new Scanner(new File(programTitle + "-credits.txt"));
+            while (reader.hasNextLine()){
+                String read = reader.nextLine();
+                String[] readSplit = read.split(";");
+                Credits credit;
+                //The getPerson method is yet to be implemented
+                if (readSplit.length == 2) {
+                    credit = new Credits(Occupation.valueOf(readSplit[1]), getPerson(readSplit[0]));
+                }
+                else {
+                    credit = new Credits(Occupation.valueOf(readSplit[1]), getPerson(readSplit[0]), readSplit[2]);
+                }
+                credits.add(credit);
+            }
+            return credits;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Credit getCredits(Program program){
@@ -158,8 +180,23 @@ public class DatabaseSystem {
         return null;
     }
 
-    public void saveCredits(Credit credit){
-        return;
+    public void saveCredits(Credits credit, String programTitle){
+        try {
+            FileWriter writer = new FileWriter(new File(programTitle + "-credits.txt"), true);
+            if (credit.getCharacterName() != null) {
+                writer.write(credit.getPerson().getName() + ";" + credit.getOccupation().toString() + ";" + credit.getOccupation());
+            }
+            else {
+                writer.write(credit.getPerson().getName() + ";" + credit.getOccupation().toString());
+            }
+        }
+        catch (IOException e){
+            System.out.println(e);
+        }
+    }
+
+    public Person getPerson(String name) {
+        return null;
     }
 
     public User getUser(String username, String password) {

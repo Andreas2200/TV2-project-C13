@@ -14,4 +14,16 @@ public class Credits {
         this(occupation, person);
         this.characterName = characterName;
     }
+
+    public Occupation getOccupation() {
+        return occupation;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public String getCharacterName() {
+        return characterName;
+    }
 }
