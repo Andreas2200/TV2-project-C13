@@ -156,12 +156,11 @@ public class DatabaseSystem {
                 String read = reader.nextLine();
                 String[] readSplit = read.split(";");
                 Credits credit;
-                //The getPerson method is yet to be implemented
                 if (readSplit.length == 2) {
-                    credit = new Credits(Occupation.valueOf(readSplit[1]), getPerson(readSplit[0]));
+                    credit = new Credits(Occupation.valueOf(readSplit[1]), getPerson(Integer.parseInt(readSplit[0])));
                 }
                 else {
-                    credit = new Credits(Occupation.valueOf(readSplit[1]), getPerson(readSplit[0]), readSplit[2]);
+                    credit = new Credits(Occupation.valueOf(readSplit[1]), getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
                 }
                 credits.add(credit);
             }
@@ -184,19 +183,15 @@ public class DatabaseSystem {
         try {
             FileWriter writer = new FileWriter(new File(programTitle + "-credits.txt"), true);
             if (credit.getCharacterName() != null) {
-                writer.write(credit.getPerson().getName() + ";" + credit.getOccupation().toString() + ";" + credit.getOccupation());
+                writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + credit.getOccupation());
             }
             else {
-                writer.write(credit.getPerson().getName() + ";" + credit.getOccupation().toString());
+                writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString());
             }
         }
         catch (IOException e){
             System.out.println(e);
         }
-    }
-
-    public Person getPerson(String name) {
-        return null;
     }
 
     public User getUser(String username, String password) {
@@ -279,6 +274,24 @@ public class DatabaseSystem {
             FileWriter writer = new FileWriter("persons.txt", true);
             writer.write("\n" + person.getId() + ";" + person.getName() + ";" + person.getAge() + ";" + person.getEmail());
             writer.close();
+        }
+    }
+
+    public Person getPerson(int id) {
+        Person person = null;
+        try {
+            Scanner reader = new Scanner(new File("persons.txt"));
+            while (reader.hasNextLine()) {
+                String read = reader.nextLine();
+                String[] readSplit = read.split(";");
+                if (Integer.parseInt(readSplit[0]) == id) {
+                    person = new Person(Integer.parseInt(readSplit[2]), id, readSplit[3], readSplit[1]);
+                }
+            }
+            return person;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
