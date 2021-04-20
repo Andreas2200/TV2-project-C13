@@ -101,7 +101,8 @@ public class LoginController implements Initializable {
     @FXML
     private void switchToSecondary(ActionEvent event) throws IOException
     {
-        activeUser = dbSys.getUser(userNameField.getText(),passwordField.getText());
+        //BIB BIB, HVIS DER ER EN FEJL ER DET MÅSKE HER, JEG ER IKKE HELT SIKKER.
+        activeUser = (User) dbSys.getUser(userNameField.getText(),passwordField.getText());
         App.setRoot("secondary");
     }
 

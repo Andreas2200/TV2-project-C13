@@ -1,22 +1,22 @@
-package CLI;
+package Module;
 
 import Interfaces.UserInterface;
 
-public class User implements UserInterface {
+public class UserData implements UserInterface {
     private String name;
     private String username;
     private String password;
     private String role;
     private int age;
 
-    public User(String name, String username, String password, int age) {
+    public UserData(String name, String username, String password, int age) {
         this.name = name;
         this.username = username.toLowerCase();
         this.password = password;
         this.age = age;
         this.role = "User";
     }
-    public User(String name, String username, String password, int age, String role)
+    public UserData(String name, String username, String password, int age, String role)
     {
         this(name,username,password,age);
         this.role = role;

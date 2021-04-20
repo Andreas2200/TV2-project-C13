@@ -1,16 +1,15 @@
-package CLI;
+package Module;
 
+import CLI.Credit;
 import Interfaces.CreditInterface;
 import Interfaces.ProgramInterface;
-import org.example.Credits;
 import org.example.Genre;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Program implements ProgramInterface
-{
+public class ProgramData implements ProgramInterface {
     private String name;
     private Date releaseDate;
     private String showedOn;
@@ -23,7 +22,7 @@ public class Program implements ProgramInterface
 
     private ArrayList<CreditInterface> credits;
 
-    public Program(String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
+    public ProgramData(String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
     {
         this.name = name;
         this.releaseDate = releaseDate;
@@ -36,7 +35,7 @@ public class Program implements ProgramInterface
         this.creatorID = creatorID;
     }
 
-    public Program(int id, String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
+    public ProgramData(int id, String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
     {
         this.name = name;
         this.releaseDate = releaseDate;
