@@ -2,6 +2,8 @@ package Presentation;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ResourceBundle;
 
 import Domain.ConsumerSystem;
@@ -23,8 +25,12 @@ import javafx.stage.Stage;
 
 public class LoginController implements Initializable {
 
+    @FXML
+    public DatePicker birthdayDatePicker;
+    @FXML
     public PasswordField passwordField;
-    public TextField userNameField;
+    @FXML
+    public TextField userNameField, createUserNameField, createUserUsernameField, createUserEmailField, createUserPasswordField;
     @FXML
     private Button loginButton, signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
     @FXML
@@ -32,7 +38,7 @@ public class LoginController implements Initializable {
     @FXML
     private AnchorPane signUpPane, signInPane;
     @FXML
-    private Label invalidPasswordLabel;
+    private Label invalidPasswordLabel, missingInfoLabel;
 
     private Button button;
     private Image signInImage;
@@ -48,6 +54,8 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         invalidPasswordLabel.setVisible(false);
+        missingInfoLabel.setVisible(false);
+
         DropShadow shadow = new DropShadow();
         signInImage = new Image(getClass().getResource("arrow-right.png").toString());
         signUpImageView.setImage(signInImage);
@@ -91,6 +99,7 @@ public class LoginController implements Initializable {
             signUpScreenButton.toFront();
             signInScreenButton.setStyle(CLICKED);
             signUpScreenButton.setStyle(NOT_CLICKED);
+            invalidPasswordLabel.setVisible(false);
         }
         else if(event.getSource() == signUpScreenButton) {
             signUpPane.toFront();
@@ -115,6 +124,41 @@ public class LoginController implements Initializable {
             App.setRoot("secondary");
         }
     }
+
+    @FXML
+    private void createUser(ActionEvent event){
+        if(event.getSource() == signUpLoginButton) {
+            if(createUserNameField.getText() != null && createUserUsernameField.getText() != null && birthdayDatePicker.getValue() != null
+                    && createUserPasswordField.getText() != null && createUserEmailField.getText() != null) {
+                //Convert datepicker value to an age
+                LocalDate today = LocalDate.now();
+                LocalDate birthdate = birthdayDatePicker.getValue();
+                Period p = Period.between(birthdate,today);
+                int age = p.getYears();
+                // Create the user
+                cs.createUser(createUserNameField.getText(), createUserUsernameField.getText(), createUserPasswordField.getText(), age, createUserEmailField.getText());
+                //GUI controls
+                signInPane.toFront();
+                signInScreenButton.toFront();
+                signUpScreenButton.toFront();
+                invalidPasswordLabel.setVisible(true);
+                invalidPasswordLabel.setStyle("-fx-text-fill: GREEN");
+                invalidPasswordLabel.setText("Succesfuld oprettelse af bruger");
+                missingInfoLabel.setVisible(false);
+                signInScreenButton.setStyle(CLICKED);
+                signUpScreenButton.setStyle(NOT_CLICKED);
+                createUserNameField.setText(null);
+                createUserUsernameField.setText(null);
+                createUserPasswordField.setText(null);
+                createUserEmailField.setText(null);
+                birthdayDatePicker.setValue(null);
+            }
+            else {
+               missingInfoLabel.setVisible(true);
+            }
+        }
+    }
+
 
     @FXML
     private void closeButtonHandler() {

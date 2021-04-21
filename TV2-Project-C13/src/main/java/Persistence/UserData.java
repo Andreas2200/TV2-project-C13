@@ -15,6 +15,7 @@ public class UserData implements UserInterface {
         this.username = username.toLowerCase();
         this.password = password;
         this.age = age;
+        this.email = email;
         this.role = "User";
     }
     public UserData(String name, String username, String password, int age, String email, String role)

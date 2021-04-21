@@ -4,6 +4,9 @@ import Interfaces.UserInterface;
 import Persistence.DatabaseSystem;
 import Persistence.UserData;
 
+import java.io.IOException;
+import java.time.LocalDate;
+
 public class ConsumerSystem
 {
     private User activeUser = null;
@@ -30,9 +33,14 @@ public class ConsumerSystem
 
     }
 
-    public void createUser()
+    public void createUser(String tempName, String tempUsername, String tempPass, int tempBirthday, String tempEmail)
     {
-
+        UserData tempUser = new UserData(tempName, tempUsername, tempPass, tempBirthday, tempEmail);
+        try {
+            dbSys.SaveUser(tempUser);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public User logIn(String tempUsername,String tempPass)
