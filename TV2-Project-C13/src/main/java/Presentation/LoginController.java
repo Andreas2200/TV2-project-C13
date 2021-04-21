@@ -17,6 +17,8 @@ import javafx.scene.control.*;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -124,6 +126,7 @@ public class LoginController implements Initializable {
             App.setRoot("secondary");
         }
     }
+
 
     @FXML
     private void createUser(ActionEvent event){
