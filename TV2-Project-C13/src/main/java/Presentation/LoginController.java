@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.effect.*;
@@ -33,6 +34,8 @@ public class LoginController implements Initializable {
     private ImageView signUpImageView, signInImageView, signInCloseImageView, signUpCloseImageView;
     @FXML
     private AnchorPane signUpPane, signInPane;
+    @FXML
+    private Label invalidPasswordLabel;
 
     private Button button;
     private Image signInImage;
@@ -47,6 +50,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        invalidPasswordLabel.setVisible(false);
         DropShadow shadow = new DropShadow();
         signInImage = new Image(getClass().getResource("arrow-right.png").toString());
         signUpImageView.setImage(signInImage);
@@ -103,9 +107,16 @@ public class LoginController implements Initializable {
     @FXML
     private void switchToSecondary(ActionEvent event) throws IOException
     {
-        //BIB BIB, HVIS DER ER EN FEJL ER DET MÅSKE HER, JEG ER IKKE HELT SIKKER.
         activeUser = cs.logIn(userNameField.getText(),passwordField.getText());
-        App.setRoot("secondary");
+
+        if(activeUser == null)
+        {
+            invalidPasswordLabel.setVisible(true);
+            return;
+        }
+        else {
+            App.setRoot("secondary");
+        }
     }
 
     @FXML
