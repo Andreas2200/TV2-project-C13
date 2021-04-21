@@ -22,6 +22,7 @@ public class User implements UserInterface {
         this.role = role;
     }
 
+
     public String getName() {
         return name;
     }

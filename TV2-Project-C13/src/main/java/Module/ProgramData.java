@@ -73,7 +73,7 @@ public class ProgramData implements ProgramInterface {
     }
 
     public String getReleaseDate() {
-        return releaseDate.toString();
+        return releaseDate.getYear() + "," + releaseDate.getMonth() + "," + releaseDate.getDay();
     }
 
     public String getShowedOn()

@@ -530,7 +530,7 @@ public class ConsumerSystem
         }
         System.out.print("What program has he/she worked on?");
         Program tempProgram = programs.get(scanner.nextInt());
-        tempProgram.addCredit(credit);
+        //tempProgram.addCredit(credit);
         linkedCredits.put(credit,tempProgram.getId());
         saveLinkedCredit(credit, tempProgram.getId());
     }

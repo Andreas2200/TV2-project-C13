@@ -1,19 +1,14 @@
 package Module;
 
-import CLI.Credit;
-import CLI.Program;
-import CLI.User;
 import Interfaces.CreditInterface;
 import Interfaces.PersonInterface;
 import Interfaces.ProgramInterface;
 import Interfaces.UserInterface;
-import org.example.Credits;
 import org.example.Genre;
 import org.example.Occupation;
 import org.example.Person;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -22,6 +17,20 @@ class Main {
     static DatabaseSystem dbSys = new DatabaseSystem();
     public static void main(String[] args) throws Exception {
         dbSys = dbSys.getInstance();
+
+        /*
+        boolean wasItSucces = dbSys.SaveProgram(new ProgramData("Bob the builder", new Date(), "this", LocalTime.now(), new ArrayList<Genre>(Arrays.asList(Genre.ACTION)), "BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!", 0));
+        System.out.println(wasItSucces);
+
+        boolean thiss = dbSys.saveCredits(new Credits(Occupation.ANIMATION, new Person(17, "SteveFromAccounting@gmail.com", "Steve from Accounting")), 0);
+        System.out.println(thiss);
+
+        System.out.println(dbSys.getCredits("Bob the builder").get(0).getOccupation());
+
+        UserInterface aUser = dbSys.getUser("Morten420", "Pa22Wo7d123");
+        System.out.println(aUser.getAge());
+        */
+
         /*
         Person person = new Person(20, 1, "BoB@bobbymail.bob", "Bob Bobbyson");
         Credits credit = new Credits(Occupation.CASTING, person);
@@ -54,16 +63,13 @@ public class DatabaseSystem {
         for (int i = 0; i < dataValues.size(); i += 7){
             //Year of release
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.YEAR, Integer.parseInt(dataValues.get(4 + i)));
+            String[] calendarValues = dataValues.get(3 + i).split(",");
+            calendar.set(Integer.parseInt(calendarValues[0]), Integer.parseInt(calendarValues[1]), Integer.parseInt(calendarValues[2]));
             Date date = new Date();
             date = Calendar.getInstance().getTime();
             //Watch length
-            String[] splittetTime = (dataValues.get(5 + i).split(","));
-            ArrayList<Integer> splittetTimeInt = new ArrayList<Integer>();
-            for (int j = 0; j < splittetTime.length; j ++){
-                splittetTimeInt.add(Integer.parseInt(splittetTime[j]));
-            }
-            LocalTime time = LocalTime.of(splittetTimeInt.get(0), splittetTimeInt.get(1), splittetTimeInt.get(2), splittetTimeInt.get(3));
+            String[] splittetTime = (dataValues.get(4 + i).split(","));
+            LocalTime time = LocalTime.of(Integer.parseInt(splittetTime[0]), Integer.parseInt(splittetTime[1]), Integer.parseInt(splittetTime[2]));
 
             //Genre
             ArrayList<Genre> genres = new ArrayList<>();
@@ -71,14 +77,40 @@ public class DatabaseSystem {
             for (int j = 0; j < splittetGenres.length; j++){
                 genres.add(Genre.valueOf(splittetGenres[j]));
             }
-            ProgramData program = new ProgramData(dataValues.get(1 + i), date, null, time, genres, dataValues.get(6 + i), Integer.parseInt(dataValues.get(0 + i)));
+
+            ProgramData program = new ProgramData(Integer.parseInt(dataValues.get(0 + i)), dataValues.get(1 + i), date, null, time, genres, dataValues.get(5 + i), Integer.parseInt(dataValues.get(6 + i)));
+
+            //credits
+            Scanner reader = new Scanner(new File("credits.txt"));
+            while (reader.hasNextLine()){
+                int programID = Integer.parseInt(reader.nextLine().split(";")[0]);
+                if (Integer.parseInt(dataValues.get(0 + i)) == programID) {
+                    for (CreditInterface credit : (getCredits(programID))){
+                        program.addCredit(credit);
+                    }
+                }
+            }
+
             programs.add(program);
         }
         return programs;
     }
 
-    public Program getProgram(Person person){
-        return null;
+    //denne metode vil ikke kunne virke hvis den ikke kan få fat på creditteringerne for et program
+    public ArrayList<ProgramInterface> getProgram(Person person) throws Exception {
+        throw new Exception("Mangler en getCreditsmetode i Program før denne metode kan blive implementeret -2 Ris");
+        /*
+        ArrayList<ProgramInterface> programs = getProgram();
+        ArrayList<CreditInterface> credits = getCredits();
+        ArrayList<ProgramInterface> returnPrograms = new ArrayList<>();
+        for (ProgramInterface program : programs){
+            for (CreditInterface credit : credits){
+                if (credit.getPerson().equals(person)) if (program.);
+            }
+        }
+
+        return returnPrograms;
+*/
     }
 
     public ProgramInterface getProgram(Genre genre) throws Exception {
@@ -109,7 +141,6 @@ public class DatabaseSystem {
         try {
             int ID = -1;
 
-
             //getID
             Scanner reader = new Scanner(new File("programs.txt"));
             while (reader.hasNextLine()){
@@ -125,7 +156,6 @@ public class DatabaseSystem {
             for (Genre genre : program.getGenre()){
                 genres += genre + ",";
             }
-
 
             writer.write(ID + ";" + program.getName() + ";" + genres + ";" + program.getReleaseDate() + ";" + program.getDuration() + ";" + program.getDescription() + ";" + program.getCreatorID() + "\n");
             writer.close();
@@ -157,16 +187,47 @@ public class DatabaseSystem {
         }
     }
 
+    //denne her metode er for at få fat på alle credits uden at skulle have nogen kritiriere
+    public ArrayList<CreditInterface> getCredits() throws Exception {
+        ArrayList<CreditInterface>  credits = new ArrayList<>();
 
-    public ArrayList<CreditInterface> getCredits(String programTitle){
+        Scanner reader = new Scanner(new File("credits.txt"));
+        //stjal lige noget kode, det ville sku være hurtigere
+        while (reader.hasNextLine()){
+            String read = reader.nextLine();
+            String[] readSplit = read.split(";");
+            CreditData credit;
+            if (readSplit.length == 3) {
+                credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
+            }
+            else {
+                credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
+            }
+            credits.add(credit);
+        }
+        return credits;
+    }
+
+    public ArrayList<CreditInterface> getCredits(int programID) throws Exception {
         ArrayList<CreditInterface> credits = new ArrayList<>();
+
         try {
-            Scanner reader = new Scanner(new File(programTitle + "-credits.txt"));
+            Scanner reader = new Scanner(new File("credits.txt"));
+
             while (reader.hasNextLine()){
                 String read = reader.nextLine();
                 String[] readSplit = read.split(";");
+                //hop til næste itteration hvis credittet ikke har rigtig ID
+
+                if (readSplit.length == 3){
+                    if (Integer.parseInt(readSplit[2]) != programID) continue;
+                }
+                else {
+                    if (Integer.parseInt(readSplit[3]) != programID) continue;
+                }
+
                 CreditData credit;
-                if (readSplit.length == 2) {
+                if (readSplit.length == 3) {
                     credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
                 }
                 else {
@@ -181,21 +242,64 @@ public class DatabaseSystem {
         }
     }
 
-    public void saveCredits(CreditInterface credit, String programTitle){
+    public ArrayList<CreditInterface> getCredits(String programTitle) throws Exception {
+        //rettet i det efter jeg rettede i saveCredits
+        ArrayList<CreditInterface> credits = new ArrayList<>();
+        //get programID
+        int programID = getProgram(programTitle).get(0).getId();
+        System.out.println(programID);
+
         try {
-            FileWriter writer = new FileWriter(new File(programTitle + "-credits.txt"), true);
+            Scanner reader = new Scanner(new File("credits.txt"));
+
+            while (reader.hasNextLine()){
+                String read = reader.nextLine();
+                String[] readSplit = read.split(";");
+                //hop til næste itteration hvis credittet ikke har rigtig ID
+
+                if (readSplit.length == 3){
+                    if (Integer.parseInt(readSplit[2]) != programID) continue;
+                }
+                else {
+                    if (Integer.parseInt(readSplit[3]) != programID) continue;
+                }
+
+                CreditData credit;
+                if (readSplit.length == 3) {
+                    credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
+                }
+                else {
+                    credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
+                }
+                credits.add(credit);
+            }
+            return credits;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean saveCredits(CreditInterface credit, int programID){
+        try {
+            //ved ikke hvorfor den skulle lave en ny fil hvergang
+            //har tilføjet programID sådan at vi altid kan finde tilbage til det program det var lavet til
+            //gjort sådan at den fortæller om det lykkedes for den at gemme credits
+            FileWriter writer = new FileWriter(new File("credits.txt"), true);
             if (credit.getCharacterName() != null) {
-                writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + credit.getOccupation() + "\n");
+                writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + programID + ";" + credit.getOccupation() + "\n");
                 writer.close();
             }
             else {
-                writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + "\n");
+                writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + programID + "\n");
                 writer.close();
             }
         }
         catch (IOException e){
             System.out.println(e);
+            return false;
         }
+        return true;
     }
 
     public UserInterface getUser(String username, String password) {

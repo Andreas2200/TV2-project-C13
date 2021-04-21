@@ -1,5 +1,7 @@
 package Interfaces;
 
+import CLI.User;
+
 public interface UserInterface {
     public String getName();
 
