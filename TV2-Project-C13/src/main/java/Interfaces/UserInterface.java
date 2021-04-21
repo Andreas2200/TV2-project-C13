@@ -11,6 +11,8 @@ public interface UserInterface {
 
     public String getRole();
 
+    public String getEmail();
+
     public void setPassword(String newPas);
 
     public void changeName(String newName);

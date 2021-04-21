@@ -286,7 +286,7 @@ public class DatabaseSystem {
                 String[] userInfo = reader.nextLine().split(";");
                 if (userInfo[0].equals(username)){
                     if (userInfo[1].equals(password)){
-                        return new UserData(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[4]), userInfo[3]) {
+                        return new UserData(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[5]), userInfo[4], userInfo[3]) {
                         };
                     }
                 }
@@ -304,7 +304,7 @@ public class DatabaseSystem {
             while (reader.hasNext()){
                 String[] userInfo = reader.nextLine().split(";");
                 if (userInfo[0].equals(username)){
-                    return new UserData(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[4]),userInfo[3]);
+                    return new UserData(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[5]), userInfo[4], userInfo[3]);
                 }
             }
         }
@@ -320,7 +320,7 @@ public class DatabaseSystem {
     public boolean SaveUser(UserInterface user) throws IOException {
         if (getUser(user.getUsername()) == null){
             FileWriter writer = new FileWriter("usernames.txt", true);
-            writer.write(user.getUsername() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getRole() + ";" + user.getAge() + "\n");
+            writer.write(user.getUsername() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getRole() + ";" + user.getEmail() + ";" + user.getAge() + "\n");
             writer.close();
             return true;
         }

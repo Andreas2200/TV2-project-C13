@@ -6,19 +6,20 @@ public class UserData implements UserInterface {
     private String name;
     private String username;
     private String password;
+    private String email;
     private String role;
     private int age;
 
-    public UserData(String name, String username, String password, int age) {
+    public UserData(String name, String username, String password, int age, String email) {
         this.name = name;
         this.username = username.toLowerCase();
         this.password = password;
         this.age = age;
         this.role = "User";
     }
-    public UserData(String name, String username, String password, int age, String role)
+    public UserData(String name, String username, String password, int age, String email, String role)
     {
-        this(name,username,password,age);
+        this(name, username, password, age, email);
         this.role = role;
     }
 
@@ -33,6 +34,8 @@ public class UserData implements UserInterface {
     public String getPassword() {
         return password;
     }
+
+    public String getEmail() {return email;}
 
     public int getAge() {
         return age;
@@ -57,6 +60,6 @@ public class UserData implements UserInterface {
 
     @Override
     public String toString() {
-        return "" + getName() + ";" + getUsername() + ";" + getPassword() + ";" + getAge() + ";" + getRole() + ";";
+        return "" + getName() + ";" + getUsername() + ";" + getPassword() + ";" + getAge() + ";" + getEmail() + ";" + getRole() + ";";
     }
 }
