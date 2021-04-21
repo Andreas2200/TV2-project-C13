@@ -1,11 +1,11 @@
-package org.example;
+package Presentation;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import CLI.User;
-import Module.DatabaseSystem;
+import Domain.User;
+import Persistence.DatabaseSystem;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

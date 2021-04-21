@@ -1,9 +1,8 @@
-package Module;
+package Persistence;
 
-import CLI.Credit;
 import Interfaces.CreditInterface;
+import Interfaces.GenreInterface;
 import Interfaces.ProgramInterface;
-import org.example.Genre;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -16,13 +15,13 @@ public class ProgramData implements ProgramInterface {
     private int id;
     private static int programID;
     private LocalTime duration;
-    private ArrayList<Genre> genre;
+    private ArrayList<GenreData> genre;
     private String description;
     private int creatorID;
 
     private ArrayList<CreditInterface> credits;
 
-    public ProgramData(String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
+    public ProgramData(String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<GenreData> genre, String description, int creatorID)
     {
         this.name = name;
         this.releaseDate = releaseDate;
@@ -35,7 +34,7 @@ public class ProgramData implements ProgramInterface {
         this.creatorID = creatorID;
     }
 
-    public ProgramData(int id, String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
+    public ProgramData(int id, String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<GenreData> genre, String description, int creatorID)
     {
         this.name = name;
         this.releaseDate = releaseDate;
@@ -91,8 +90,15 @@ public class ProgramData implements ProgramInterface {
         return credits.size();
     }
 
-    public ArrayList<Genre> getGenre() {
-        return genre;
+    //FIX ME! not implemented
+    public ArrayList<GenreInterface> getGenre() {
+        try {
+            return null;
+        }
+        catch (Exception e){
+            System.out.println("Not implemented");
+        }
+        return null;
     }
 
     public String getDuration() {

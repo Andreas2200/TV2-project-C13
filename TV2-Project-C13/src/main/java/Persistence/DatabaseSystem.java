@@ -1,12 +1,8 @@
-package Module;
+package Persistence;
 
-import Interfaces.CreditInterface;
-import Interfaces.PersonInterface;
-import Interfaces.ProgramInterface;
-import Interfaces.UserInterface;
-import org.example.Genre;
-import org.example.Occupation;
-import org.example.Person;
+import Domain.Genre;
+import Interfaces.*;
+import Domain.Occupation;
 
 import java.io.*;
 import java.time.LocalTime;
@@ -18,7 +14,7 @@ class Main {
     public static void main(String[] args) throws Exception {
         dbSys = dbSys.getInstance();
 
-        boolean wasItSucces = dbSys.SaveProgram(new ProgramData("Bob the builder", new Date(), "this", LocalTime.now(), new ArrayList<Genre>(Arrays.asList(Genre.ACTION)), "BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!", 0));
+        boolean wasItSucces = dbSys.SaveProgram(new ProgramData("Bob the builder", new Date(), "this", LocalTime.now(), new ArrayList<GenreData>(Arrays.asList(GenreData.ACTION)), "BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!", 0));
         System.out.println(wasItSucces);
 
         boolean thiss = dbSys.saveCredits(new CreditData(Occupation.ANIMATION, new PersonData(17, "SteveFromAccounting@gmail.com", "Steve from Accounting")), 0);
@@ -61,10 +57,10 @@ public class DatabaseSystem {
             LocalTime time = LocalTime.of(Integer.parseInt(splittetTime[0]), Integer.parseInt(splittetTime[1]), Integer.parseInt(splittetTime[2]));
 
             //Genre
-            ArrayList<Genre> genres = new ArrayList<>();
+            ArrayList<GenreData> genres = new ArrayList<>();
             String[] splittetGenres = dataValues.get(2).split(",");
             for (int j = 0; j < splittetGenres.length; j++){
-                genres.add(Genre.valueOf(splittetGenres[j]));
+                genres.add(GenreData.valueOf(splittetGenres[j]));
             }
 
             ProgramData program = new ProgramData(Integer.parseInt(dataValues.get(0 + i)), dataValues.get(1 + i), date, null, time, genres, dataValues.get(5 + i), Integer.parseInt(dataValues.get(6 + i)));
@@ -85,7 +81,7 @@ public class DatabaseSystem {
     }
 
     //denne metode vil ikke kunne virke hvis den ikke kan få fat på creditteringerne for et program
-    public ArrayList<ProgramInterface> getProgram(Person person) throws Exception {
+    public ArrayList<ProgramInterface> getProgram(PersonInterface person) throws Exception {
         throw new Exception("Mangler en getCreditsmetode i Program før denne metode kan blive implementeret -2 Ris");
         /*
         ArrayList<ProgramInterface> programs = getProgram();
@@ -101,10 +97,10 @@ public class DatabaseSystem {
 */
     }
 
-    public ProgramInterface getProgram(Genre genre) throws Exception {
+    public ProgramInterface getProgram(GenreInterface genre) throws Exception {
         ArrayList<ProgramInterface> programs = getProgram();
         for (ProgramInterface program : programs) {
-            for (Genre genre_ : program.getGenre()) {
+            for (GenreInterface genre_ : program.getGenre()) {
                 if (genre_.equals(genre)) return program;
             }
         }
@@ -141,7 +137,7 @@ public class DatabaseSystem {
 
             FileWriter writer = new FileWriter(new File("programs.txt"), true);
             String genres = "";
-            for (Genre genre : program.getGenre()){
+            for (GenreInterface genre : program.getGenre()){
                 genres += genre + ",";
             }
 
@@ -159,7 +155,7 @@ public class DatabaseSystem {
         try {
             FileWriter writer = new FileWriter(new File("programs.txt"), true);
             String genres = "";
-            for (Genre genre : program.getGenre()){
+            for (GenreInterface genre : program.getGenre()){
                 if (program.getGenre().get(program.getGenre().size()).equals(genre)){
                     genres += genre;
                     break;

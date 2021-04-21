@@ -1,9 +1,8 @@
 package Domain;
 
 import Interfaces.CreditInterface;
+import Interfaces.GenreInterface;
 import Interfaces.ProgramInterface;
-import org.example.Credits;
-import org.example.Genre;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -92,8 +91,9 @@ public class Program implements ProgramInterface
         return credits.size();
     }
 
-    public ArrayList<Genre> getGenre() {
-        return genre;
+    //FIX ME not implemented
+    public ArrayList<GenreInterface> getGenre() {
+        return null;
     }
 
     public String getDuration() {

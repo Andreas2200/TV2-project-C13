@@ -1,8 +1,7 @@
-package Module;
+package Persistence;
 
 import Interfaces.CreditInterface;
-import org.example.Occupation;
-import org.example.Person;
+import Domain.Occupation;
 
 public class CreditData implements CreditInterface {
     private Occupation occupation;

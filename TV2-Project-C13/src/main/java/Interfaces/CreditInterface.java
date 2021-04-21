@@ -1,7 +1,6 @@
 package Interfaces;
 
-import org.example.Occupation;
-import org.example.Person;
+import Domain.Occupation;
 
 public interface CreditInterface {
     public Occupation getOccupation();

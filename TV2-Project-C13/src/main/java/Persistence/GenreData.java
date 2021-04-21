@@ -1,8 +1,8 @@
-package Domain;
+package Persistence;
 
 import Interfaces.GenreInterface;
 
-public enum Genre implements GenreInterface {
+public enum GenreData implements GenreInterface {
     ACTION, BØRNEFILM, DOKUMENTAR, DRAMA,
     FAMILIEFILM, GYSER, KOMEDIE, ROMANTIK,
     THRILLER

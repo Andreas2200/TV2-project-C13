@@ -1,4 +1,4 @@
-package Module;
+package Persistence;
 
 import Interfaces.UserInterface;
 

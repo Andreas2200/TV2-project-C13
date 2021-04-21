@@ -1,8 +1,5 @@
 package Interfaces;
 
-import CLI.Credit;
-import org.example.Genre;
-
 import java.util.ArrayList;
 
 public interface ProgramInterface {
@@ -20,7 +17,7 @@ public interface ProgramInterface {
 
     public int getCreditSize();
 
-    public ArrayList<Genre> getGenre();
+    public ArrayList<GenreInterface> getGenre();
 
     public String getDuration();
 
