@@ -317,10 +317,10 @@ public class DatabaseSystem {
     //returns if the username already existed
     //true == user didn't exist and adding the new user was a succes
     //false == user already exist
-    public boolean SaveUser(UserData user) throws IOException {
+    public boolean SaveUser(UserInterface user) throws IOException {
         if (getUser(user.getUsername()) == null){
             FileWriter writer = new FileWriter("usernames.txt", true);
-            writer.write("\n" + user.getUsername() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getRole() + ";" + user.getEmail() + ";" + user.getAge());
+            writer.write( user.getUsername() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getRole() + ";" + user.getEmail() + ";" + user.getAge() + "\n" );
             writer.close();
             return true;
         }

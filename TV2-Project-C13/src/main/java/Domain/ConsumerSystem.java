@@ -2,10 +2,15 @@ package Domain;
 
 import Interfaces.UserInterface;
 import Persistence.DatabaseSystem;
+import Persistence.GenreData;
+import Persistence.ProgramData;
 import Persistence.UserData;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class ConsumerSystem
 {
@@ -13,9 +18,10 @@ public class ConsumerSystem
 
     static DatabaseSystem dbSys = new DatabaseSystem();
 
-    private void saveProgram()
+    private void createEditProgram(String tempName, Date tempDate, String showedOn, LocalTime tempDuration, ArrayList<GenreData> tempGenre, String tempDesc, int createrID)
     {
-
+        ProgramData tempProgram = new ProgramData(tempName, tempDate, showedOn, tempDuration, tempGenre, tempDesc, createrID);
+        dbSys.SaveProgram(tempProgram);
     }
 
     private void saveCredit()
@@ -30,7 +36,7 @@ public class ConsumerSystem
 
     public void createUser(String tempName, String tempUsername, String tempPass, int tempBirthday, String tempEmail)
     {
-        UserData tempUser = new UserData(tempName, tempUsername, tempPass, tempBirthday, tempEmail);
+        User tempUser = new User(tempName, tempUsername, tempPass, tempBirthday, tempEmail);
         try {
             dbSys.SaveUser(tempUser);
         } catch (IOException e) {
