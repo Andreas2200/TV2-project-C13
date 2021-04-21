@@ -1,16 +1,18 @@
-package Presentation;
+package org.example;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import Domain.ConsumerSystem;
-import Domain.User;
+import CLI.User;
+import Module.DatabaseSystem;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,20 +26,12 @@ public class LoginController implements Initializable {
 
     public TextField passwordField;
     public TextField userNameField;
-    public TextField createUserUsernameField;
-    public TextField createUserEmailField;
-    public DatePicker birthdayDatePicker;
-
-    private final ConsumerSystem CS = new ConsumerSystem();
-
     @FXML
     private Button loginButton, signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
     @FXML
     private ImageView signUpImageView, signInImageView, signInCloseImageView, signUpCloseImageView;
     @FXML
     private AnchorPane signUpPane, signInPane;
-    @FXML
-    private Label invalidPasswordLabel;
 
     private Button button;
     private Image signInImage;
@@ -47,11 +41,10 @@ public class LoginController implements Initializable {
     private static final String CLICKED = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
 
     public static User activeUser = null;
-
+    static DatabaseSystem dbSys = new DatabaseSystem();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        invalidPasswordLabel.setVisible(false);
         DropShadow shadow = new DropShadow();
         signInImage = new Image(getClass().getResource("arrow-right.png").toString());
         signUpImageView.setImage(signInImage);
@@ -108,16 +101,9 @@ public class LoginController implements Initializable {
     @FXML
     private void switchToSecondary(ActionEvent event) throws IOException
     {
-        activeUser = CS.logIn(userNameField.getText(),passwordField.getText());
-
-        if(activeUser == null)
-        {
-            invalidPasswordLabel.setVisible(true);
-            return;
-        }
-        else {
-            App.setRoot("secondary");
-        }
+        //BIB BIB, HVIS DER ER EN FEJL ER DET MÅSKE HER, JEG ER IKKE HELT SIKKER.
+        activeUser = (User) dbSys.getUser(userNameField.getText(),passwordField.getText());
+        App.setRoot("secondary");
     }
 
     @FXML
@@ -168,10 +154,5 @@ public class LoginController implements Initializable {
                 button.getTransforms().remove(bigScale);
             }
         });
-    }
-
-    public void signUpCreate(ActionEvent actionEvent)
-    {
-
     }
 }

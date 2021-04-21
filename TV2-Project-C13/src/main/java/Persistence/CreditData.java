@@ -1,31 +1,33 @@
-package Domain;
+package Module;
 
 import Interfaces.CreditInterface;
+import org.example.Occupation;
+import org.example.Person;
 
-public class Credits implements CreditInterface {
+public class CreditData implements CreditInterface {
     private Occupation occupation;
-    private Person person;
+    private PersonData person;
     private String characterName;
 
-    public Credits(Occupation occupation, Person person) {
+    public CreditData(Occupation occupation, PersonData person) {
         this.occupation = occupation;
         this.person = person;
     }
 
-    public Credits(Occupation occupation, Person person, String characterName) {
+    public CreditData(Occupation occupation, PersonData person, String characterName) {
         this(occupation, person);
         this.characterName = characterName;
     }
-
     public Occupation getOccupation() {
         return occupation;
     }
 
-    public Person getPerson() {
+    public PersonData getPerson() {
         return person;
     }
 
     public String getCharacterName() {
         return characterName;
     }
+
 }
