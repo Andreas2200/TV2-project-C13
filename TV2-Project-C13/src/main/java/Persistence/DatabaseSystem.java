@@ -1,6 +1,7 @@
 package Persistence;
 
-import Domain.Genre;
+
+import Domain.User;
 import Interfaces.*;
 import Domain.Occupation;
 
@@ -13,17 +14,8 @@ class Main {
     static DatabaseSystem dbSys = new DatabaseSystem();
     public static void main(String[] args) throws Exception {
         dbSys = dbSys.getInstance();
-
-        boolean wasItSucces = dbSys.SaveProgram(new ProgramData("Bob the builder", new Date(), "this", LocalTime.now(), new ArrayList<GenreData>(Arrays.asList(GenreData.ACTION)), "BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!", 0));
-        System.out.println(wasItSucces);
-
-        boolean thiss = dbSys.saveCredits(new CreditData(Occupation.ANIMATION, new PersonData(17, "SteveFromAccounting@gmail.com", "Steve from Accounting")), 0);
-        System.out.println(thiss);
-
-        System.out.println(dbSys.getCredits("Bob the builder").get(0).getOccupation());
-
-        UserInterface aUser = dbSys.getUser("Morten420", "Pa22Wo7d123");
-        System.out.println(aUser.getAge());
+        User user = null;
+        System.out.println(user = (User) dbSys.getUser("Admin", "password"));
 
     }
 }
@@ -337,6 +329,7 @@ public class DatabaseSystem {
         }
     }
 
+    //FIX ME, få den til at returnere en Person og ændre navnet
     public String Search(int id) throws Exception {
         try {
             ArrayList<String> readLines = new ArrayList<>();

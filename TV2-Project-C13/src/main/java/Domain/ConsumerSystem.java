@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import Persistence.DatabaseSystem;
+import Persistence.UserData;
 
 public class ConsumerSystem
 {
@@ -339,7 +340,9 @@ public class ConsumerSystem
 
     public User logIn(String tempUsername,String tempPass)
     {
-        return (User) dbSys.getUser(tempUsername,tempPass);
+         UserData userData = (UserData) dbSys.getUser(tempUsername,tempPass);
+         return new User(userData.getName(), userData.getUsername(), userData.getPassword(), userData.getAge(), "Sutenkuk", userData.getRole());
+
 
         /*
         for (User user:users)
