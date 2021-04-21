@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -70,11 +71,6 @@
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="passwordField" layoutX="662.0" layoutY="207.0" prefHeight="41.0" prefWidth="316.0" promptText="Password" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextField>
                   <Label layoutX="787.0" layoutY="41.0" text="Log Ind" textFill="#d21e1e">
                      <font>
                         <Font size="21.0" />
@@ -103,6 +99,11 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <PasswordField fx:id="passwordField" layoutX="661.0" layoutY="198.0" prefHeight="46.0" prefWidth="316.0" promptText="Password" style="-fx-border-width: 0px 0px 2px 0px; -fx-border-color: #d21e1e; -fx-background-color: transparent;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </PasswordField>
                </children>
             </AnchorPane>
          </children>
