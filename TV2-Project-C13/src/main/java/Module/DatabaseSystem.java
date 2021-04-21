@@ -18,28 +18,17 @@ class Main {
     public static void main(String[] args) throws Exception {
         dbSys = dbSys.getInstance();
 
-        /*
         boolean wasItSucces = dbSys.SaveProgram(new ProgramData("Bob the builder", new Date(), "this", LocalTime.now(), new ArrayList<Genre>(Arrays.asList(Genre.ACTION)), "BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!", 0));
         System.out.println(wasItSucces);
 
-        boolean thiss = dbSys.saveCredits(new Credits(Occupation.ANIMATION, new Person(17, "SteveFromAccounting@gmail.com", "Steve from Accounting")), 0);
+        boolean thiss = dbSys.saveCredits(new CreditData(Occupation.ANIMATION, new PersonData(17, "SteveFromAccounting@gmail.com", "Steve from Accounting")), 0);
         System.out.println(thiss);
 
         System.out.println(dbSys.getCredits("Bob the builder").get(0).getOccupation());
 
         UserInterface aUser = dbSys.getUser("Morten420", "Pa22Wo7d123");
         System.out.println(aUser.getAge());
-        */
 
-        /*
-        Person person = new Person(20, 1, "BoB@bobbymail.bob", "Bob Bobbyson");
-        Credits credit = new Credits(Occupation.CASTING, person);
-        dbSys.saveCredits(credit, "Superman 2");
-        ArrayList<CreditInterface> arrayList = dbSys.getCredits("Superman 2");
-        System.out.println(arrayList.get(5).getOccupation());
-         */
-        //ArrayList<Program> programs = dbSys.getProgram();
-        //System.out.println(dbSys.SaveProgram(new Program("SUPERMAN 2 Return of the Jedi", new Date(), null, LocalTime.now(), new ArrayList<Genre>(Collections.singleton(Genre.ACTION)), "Bedre end den første", 0 )));
     }
 }
 
@@ -90,7 +79,6 @@ public class DatabaseSystem {
                     }
                 }
             }
-
             programs.add(program);
         }
         return programs;
