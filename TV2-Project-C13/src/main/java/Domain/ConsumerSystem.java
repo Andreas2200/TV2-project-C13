@@ -13,11 +13,6 @@ public class ConsumerSystem
 
     static DatabaseSystem dbSys = new DatabaseSystem();
 
-    private void saveUser(UserInterface user)
-    {
-
-    }
-
     private void saveProgram()
     {
 

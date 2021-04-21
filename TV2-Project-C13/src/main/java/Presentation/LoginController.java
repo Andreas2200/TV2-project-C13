@@ -48,6 +48,8 @@ public class LoginController implements Initializable {
 
     private static final String NOT_CLICKED = "fx-background-color: transparent; -fx-base: #FFFF; -fx-border-color: #FFFF; -fx-text-fill: #AFAFAF";
     private static final String CLICKED = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
+    private static final String INVALID = "-fx-text-fill: #d21e1e";
+    private static final String VALID = "-fx-text-fill: GREEN";
 
     public static User activeUser = null;
     static ConsumerSystem cs = new ConsumerSystem();
@@ -102,6 +104,8 @@ public class LoginController implements Initializable {
             signInScreenButton.setStyle(CLICKED);
             signUpScreenButton.setStyle(NOT_CLICKED);
             invalidPasswordLabel.setVisible(false);
+            invalidPasswordLabel.setStyle(INVALID);
+            invalidPasswordLabel.setText("Ugyldigt brugernavn/password!");
         }
         else if(event.getSource() == signUpScreenButton) {
             signUpPane.toFront();
@@ -120,10 +124,66 @@ public class LoginController implements Initializable {
         if(activeUser == null)
         {
             invalidPasswordLabel.setVisible(true);
+            invalidPasswordLabel.setStyle(INVALID);
+            invalidPasswordLabel.setText("Ugyldigt brugernavn/password!");
             return;
         }
         else {
             App.setRoot("secondary");
+        }
+    }
+
+    public void handlelogInEnter(javafx.scene.input.KeyEvent keyEvent) throws IOException {
+        var key = keyEvent.getCode();
+        switch (key) {
+            case ENTER:
+                activeUser = cs.logIn(userNameField.getText(),passwordField.getText());
+
+                if(activeUser == null)
+                {
+                    invalidPasswordLabel.setVisible(true);
+                    invalidPasswordLabel.setStyle(INVALID);
+                    invalidPasswordLabel.setText("Ugyldigt brugernavn/password!");
+                    return;
+                }
+                else {
+                    App.setRoot("secondary");
+                }
+        }
+    }
+
+    public void handleCreateUserEnter(javafx.scene.input.KeyEvent keyEvent) throws IOException {
+        var key = keyEvent.getCode();
+        switch (key) {
+            case ENTER:
+                if(createUserNameField.getText() != null && createUserUsernameField.getText() != null && birthdayDatePicker.getValue() != null
+                        && createUserPasswordField.getText() != null && createUserEmailField.getText() != null) {
+                    //Convert datepicker value to an age
+                    LocalDate today = LocalDate.now();
+                    LocalDate birthdate = birthdayDatePicker.getValue();
+                    Period p = Period.between(birthdate,today);
+                    int age = p.getYears();
+                    // Create the user
+                    cs.createUser(createUserNameField.getText(), createUserUsernameField.getText(), createUserPasswordField.getText(), age, createUserEmailField.getText());
+                    //GUI controls
+                    signInPane.toFront();
+                    signInScreenButton.toFront();
+                    signUpScreenButton.toFront();
+                    invalidPasswordLabel.setVisible(true);
+                    invalidPasswordLabel.setStyle(VALID);
+                    invalidPasswordLabel.setText("Succesfuld oprettelse af bruger");
+                    missingInfoLabel.setVisible(false);
+                    signInScreenButton.setStyle(CLICKED);
+                    signUpScreenButton.setStyle(NOT_CLICKED);
+                    createUserNameField.setText(null);
+                    createUserUsernameField.setText(null);
+                    createUserPasswordField.setText(null);
+                    createUserEmailField.setText(null);
+                    birthdayDatePicker.setValue(null);
+                }
+                else {
+                    missingInfoLabel.setVisible(true);
+                }
         }
     }
 
@@ -145,7 +205,7 @@ public class LoginController implements Initializable {
                 signInScreenButton.toFront();
                 signUpScreenButton.toFront();
                 invalidPasswordLabel.setVisible(true);
-                invalidPasswordLabel.setStyle("-fx-text-fill: GREEN");
+                invalidPasswordLabel.setStyle(VALID);
                 invalidPasswordLabel.setText("Succesfuld oprettelse af bruger");
                 missingInfoLabel.setVisible(false);
                 signInScreenButton.setStyle(CLICKED);
