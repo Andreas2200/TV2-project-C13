@@ -294,7 +294,8 @@ public class DatabaseSystem {
                 String[] userInfo = reader.nextLine().split(";");
                 if (userInfo[0].equals(username)){
                     if (userInfo[1].equals(password)){
-                        return new UserData(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[4]),userInfo[3]);
+                        return new UserData(userInfo[2], userInfo[0], userInfo[1], Integer.parseInt(userInfo[4]), userInfo[3]) {
+                        };
                     }
                 }
             }

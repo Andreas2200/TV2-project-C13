@@ -339,7 +339,7 @@ public class ConsumerSystem
 
     public User logIn(String tempUsername,String tempPass)
     {
-        return dbSys.getUser(tempUsername,tempPass);
+        return (User) dbSys.getUser(tempUsername,tempPass);
 
         /*
         for (User user:users)

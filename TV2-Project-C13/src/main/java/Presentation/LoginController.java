@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import Domain.ConsumerSystem;
 import Domain.User;
 import Persistence.DatabaseSystem;
 import javafx.event.ActionEvent;
@@ -41,7 +42,8 @@ public class LoginController implements Initializable {
     private static final String CLICKED = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
 
     public static User activeUser = null;
-    static DatabaseSystem dbSys = new DatabaseSystem();
+    static ConsumerSystem cs = new ConsumerSystem();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -102,7 +104,7 @@ public class LoginController implements Initializable {
     private void switchToSecondary(ActionEvent event) throws IOException
     {
         //BIB BIB, HVIS DER ER EN FEJL ER DET MÅSKE HER, JEG ER IKKE HELT SIKKER.
-        activeUser = (User) dbSys.getUser(userNameField.getText(),passwordField.getText());
+        activeUser = cs.logIn(userNameField.getText(),passwordField.getText());
         App.setRoot("secondary");
     }
 
