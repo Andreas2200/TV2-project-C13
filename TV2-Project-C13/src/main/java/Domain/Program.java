@@ -58,7 +58,7 @@ public class Program implements ProgramInterface
         return "" + getName() + ";" + getReleaseDate() + ";" + getShowedOn() + ";";
     }
 
-    @Override
+    /*@Override
     public String toString()
     {
         return "\nName: " + getName() + "\n" +
@@ -66,6 +66,16 @@ public class Program implements ProgramInterface
                 "Release date: " + getReleaseDate() + "\n" +
                 "People in credits: " + getCreditSize() + "\n" +
                 "ID: " + id + "\n";
+    }*/
+
+    @Override
+    public String toString()
+    {
+        return "Name: " + getName()  +
+                "Showed on: " + getShowedOn() +
+                "Release date: " + getReleaseDate() +
+                "People in credits: " + getCreditSize() +
+                "ID: " + id ;
     }
 
     public String getName() {

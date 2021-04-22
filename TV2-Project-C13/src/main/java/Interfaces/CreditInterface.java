@@ -1,9 +1,9 @@
 package Interfaces;
 
-import Domain.Occupation;
+import Persistence.OccupationData;
 
 public interface CreditInterface {
-    public Occupation getOccupation();
+    public OccupationInterface getOccupation();
 
     public PersonInterface getPerson();
 

@@ -11,10 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import Domain.ConsumerSystem;
-import Domain.Genre;
-import Domain.Person;
-import Domain.User;
+import Domain.*;
+import Interfaces.PersonInterface;
 import Persistence.GenreData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
@@ -40,6 +38,15 @@ import javafx.stage.Stage;
 public class LogicController implements Initializable {
 
     @FXML
+    private ComboBox<Program> addCreditProgramProgramCB;
+    @FXML
+    private ComboBox<Credits> addCreditProgramCreditCB;
+    @FXML
+    private ComboBox<Person> creditPersonCB;
+    @FXML
+    private ComboBox<Occupation> creditOccupationCB;
+
+    @FXML
     private ImageView userImageView, closeButtonImageView;
     @FXML
     private Button closeButton, manageCreditsButton, findPersonButton, findProgramButton, manageUsersButton,
@@ -61,7 +68,7 @@ public class LogicController implements Initializable {
     @FXML
     private TableColumn personCol, occupationCol, roleCol, programCol, contactInfoCol;
     @FXML
-    private TextField programTitleField, durationField, releaseDateField, showedOnField, personNameField, personBirthdayField, personEmailField;
+    private TextField programTitleField, durationField, releaseDateField, showedOnField, personNameField, personBirthdayField, personEmailField, creditActorTextField;
     @FXML
     private TextArea programDescriptionArea;
 
@@ -72,9 +79,11 @@ public class LogicController implements Initializable {
 
     public Label userRoleField, succesProgramField;
     public Label userNameField;
+    @FXML
+    private Label creditActorLabel;
 
     private User activeUser = null;
-    static ConsumerSystem cs = new ConsumerSystem();
+    static ConsumerSystem cs = null;
 
     private static final String NON_CLICKED_TITLED_PANE = "-fx-background-color: #FFFF; -fx-color: #FFFF; -fx-border-color: #FFFF";
     private static final String CLICKED_TITLED_PANE = "-fx-background-color: #d21e1e; -fx-color: #d21e1e; -fx-border-color: #d21e1e;";
@@ -85,10 +94,15 @@ public class LogicController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         succesProgramField.setVisible(false);
 
+        activeUser = LoginController.activeUser;
+        cs = LoginController.cs;
+
         //Plots values into comboBox
         genreComboBox.setItems(FXCollections.observableArrayList(Genre.values()));
-
-        activeUser = LoginController.activeUser;
+        creditOccupationCB.setItems(FXCollections.observableArrayList(Occupation.values()));
+        creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
+        addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
+        addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
 
         userImage = new Image(getClass().getResource("Dancingkid.jpg").toString());
         userImageView.setImage(userImage);
@@ -129,6 +143,9 @@ public class LogicController implements Initializable {
         userNameField.setText(activeUser.getName());
         userRoleField.setText(activeUser.getRole());
 
+        creditActorLabel.setVisible(false);
+        creditActorTextField.setVisible(false);
+
         setUserPermission();
     }
 
@@ -160,6 +177,12 @@ public class LogicController implements Initializable {
         int age = p.getYears();
         cs.createEditPerson(age, personEmailField.getText(), personNameField.getText());
     }
+
+    private void setUpCreateCredit()
+    {
+        creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
+    }
+
 
     private void setUserPermission()
     {
@@ -236,6 +259,8 @@ public class LogicController implements Initializable {
             createPersonTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
             createProgramTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
             addCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            setUpCreateCredit();
+            System.out.println("Debug");
         }
         if(event.getSource() == createPersonTitledPane) {
             createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
@@ -293,4 +318,29 @@ public class LogicController implements Initializable {
             }
         });
     }
+
+    public void checkOccupationCB(ActionEvent actionEvent)
+    {
+        if(creditOccupationCB.getValue() != Occupation.SKUESPILLER)
+        {
+            creditActorLabel.setVisible(false);
+            creditActorTextField.setVisible(false);
+        }
+        else
+        {
+            creditActorLabel.setVisible(true);
+            creditActorTextField.setVisible(true);
+        }
+    }
+
+    public void saveCredit(ActionEvent actionEvent)
+    {
+        cs.saveCredit(new Credits(creditOccupationCB.getValue(),creditPersonCB.getValue()));
+    }
+
+    public void saveCreditToProgram(ActionEvent actionEvent)
+    {
+        cs.saveCreditToProgram(addCreditProgramCreditCB.getValue(),addCreditProgramProgramCB.getValue().getId());
+    }
+
 }

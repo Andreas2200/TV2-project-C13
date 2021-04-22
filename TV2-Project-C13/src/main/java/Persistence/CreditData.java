@@ -1,23 +1,23 @@
 package Persistence;
 
 import Interfaces.CreditInterface;
-import Domain.Occupation;
+
 
 public class CreditData implements CreditInterface {
-    private Occupation occupation;
+    private OccupationData occupation;
     private PersonData person;
     private String characterName;
 
-    public CreditData(Occupation occupation, PersonData person) {
+    public CreditData(OccupationData occupation, PersonData person) {
         this.occupation = occupation;
         this.person = person;
     }
 
-    public CreditData(Occupation occupation, PersonData person, String characterName) {
+    public CreditData(OccupationData occupation, PersonData person, String characterName) {
         this(occupation, person);
         this.characterName = characterName;
     }
-    public Occupation getOccupation() {
+    public OccupationData getOccupation() {
         return occupation;
     }
 

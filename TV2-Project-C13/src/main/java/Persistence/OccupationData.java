@@ -1,8 +1,8 @@
-package Domain;
+package Persistence;
 
 import Interfaces.OccupationInterface;
 
-public enum Occupation implements OccupationInterface {
+public enum OccupationData implements OccupationInterface {
     BILLEDKUNSTNER, BILLED_OG_LYDREDIGERING, CASTING, COLOURGRADING, DIRIGENTER,
     DRONE, DUKKESKABER, FORTÆLLER, FOTOGRAFER, FORLÆG,
     GRAFISKE_DESIGNERE, INDTALERE, KAPELMESTER, KLIPPER, PROGRAMKONCEPT,

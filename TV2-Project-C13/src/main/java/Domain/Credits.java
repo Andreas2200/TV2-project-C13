@@ -10,6 +10,7 @@ public class Credits implements CreditInterface {
     public Credits(Occupation occupation, Person person) {
         this.occupation = occupation;
         this.person = person;
+        this.characterName = "N/A";
     }
 
     public Credits(Occupation occupation, Person person, String characterName) {
@@ -27,5 +28,10 @@ public class Credits implements CreditInterface {
 
     public String getCharacterName() {
         return characterName;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + person.getName() + " Occupation: " + occupation + " Character name: " + characterName;
     }
 }

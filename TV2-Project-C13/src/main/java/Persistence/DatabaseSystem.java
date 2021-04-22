@@ -177,10 +177,10 @@ public class DatabaseSystem {
             String[] readSplit = read.split(";");
             CreditData credit;
             if (readSplit.length == 3) {
-                credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
+                credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
             }
             else {
-                credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
+                credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
             }
             credits.add(credit);
         }
@@ -207,10 +207,10 @@ public class DatabaseSystem {
 
                 CreditData credit;
                 if (readSplit.length == 3) {
-                    credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
+                    credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
                 }
                 else {
-                    credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
+                    credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
                 }
                 credits.add(credit);
             }
@@ -245,10 +245,10 @@ public class DatabaseSystem {
 
                 CreditData credit;
                 if (readSplit.length == 3) {
-                    credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
+                    credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
                 }
                 else {
-                    credit = new CreditData(Occupation.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
+                    credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
                 }
                 credits.add(credit);
             }
@@ -264,7 +264,7 @@ public class DatabaseSystem {
             //ved ikke hvorfor den skulle lave en ny fil hvergang
             //har tilføjet programID sådan at vi altid kan finde tilbage til det program det var lavet til
             //gjort sådan at den fortæller om det lykkedes for den at gemme credits
-            FileWriter writer = new FileWriter(new File("credits.txt"), true);
+            FileWriter writer = new FileWriter(new File("credit.txt"), true);
             if (credit.getCharacterName() != null) {
                 writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + programID + ";" + credit.getOccupation() + "\n");
                 writer.close();
@@ -278,6 +278,46 @@ public class DatabaseSystem {
             System.out.println(e);
             return false;
         }
+        return true;
+    }
+
+    public ArrayList<CreditInterface> getAllCredits() throws Exception {
+        ArrayList<CreditInterface> credits = new ArrayList<>();
+        ArrayList<String> readValues = new ArrayList<>();
+        try(Scanner reader = new Scanner(new File("credits.txt")))
+        {
+            while (reader.hasNextLine())
+            {
+                readValues.add(reader.nextLine());
+            }
+            for (String element: readValues)
+            {
+                String[] valuesToUse = element.split(";");
+                credits.add(new CreditData(OccupationData.valueOf(valuesToUse[4]), new PersonData(Integer.parseInt(valuesToUse[0]),Integer.parseInt(valuesToUse[1]),valuesToUse[2],valuesToUse[3])));
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        return credits;
+    }
+
+    public boolean saveCredit(CreditInterface credit)
+    {
+        try(FileWriter writer = new FileWriter(new File("Credits.txt"),true))
+        {
+            if(credit.getPerson().getName() != null)
+            {
+                writer.write(credit.getPerson().getAge() + ";" + credit.getPerson().getId() + ";" + credit.getPerson().getEmail() + ";" + credit.getPerson().getName() + ";" + credit.getOccupation());
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+
         return true;
     }
 

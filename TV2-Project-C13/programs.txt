@@ -5,4 +5,3 @@
 4;Bob the builder;ACTION,;121,3,3;1,30,2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
 5;Bob the builder;ACTION,;121,3,3;1,30,2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
 6;Bob the builder;ACTION,;121,3,3;1,30,2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
-7;Sigurd Nege;null;Fri Jan 01 00:00:00 CET 1098;1,30,2;Sigurd neger er sluppet fri, hvad vil du gøre ved det?;1

@@ -7,3 +7,4 @@
 6;Kasper;22;xXxKasperxXx@gmail.com
 7;Tom Holland;48;Tom@Holland.UK
 8;Sigurd;22;Sivin20@student.sdu.dk
+9;Freja Kongslev;20;Testmail@test.dk

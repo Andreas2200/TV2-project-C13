@@ -52,7 +52,7 @@ public class LoginController implements Initializable {
     private static final String VALID = "-fx-text-fill: GREEN";
 
     public static User activeUser = null;
-    static ConsumerSystem cs = new ConsumerSystem();
+    public static ConsumerSystem cs = new ConsumerSystem();
 
 
     @Override

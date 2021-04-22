@@ -40,6 +40,6 @@ public class Person implements PersonInterface {
 
     @Override
     public String toString() {
-        return "\n" + "Name: " + getName() + " age: " + getAge() + " email: " + getEmail();
+        return "Name: " + getName() + " age: " + getAge() + " email: " + getEmail();
     }
 }

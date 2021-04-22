@@ -91,14 +91,11 @@ public class ProgramData implements ProgramInterface {
     }
 
     //FIX ME! not implemented
-    public ArrayList<GenreInterface> getGenre() {
-        try {
-            return null;
-        }
-        catch (Exception e){
-            System.out.println("Not implemented");
-        }
-        return null;
+    public ArrayList<GenreInterface> getGenre()
+    {
+        ArrayList<GenreInterface> genreReturnList = new ArrayList<>(genre);
+
+        return genreReturnList;
     }
 
     public String getDuration() {
