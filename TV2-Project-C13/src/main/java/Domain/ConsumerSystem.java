@@ -18,12 +18,6 @@ public class ConsumerSystem
 
     static DatabaseSystem dbSys = new DatabaseSystem();
 
-    private void createEditProgram(String tempName, Date tempDate, String showedOn, LocalTime tempDuration, ArrayList<GenreData> tempGenre, String tempDesc, int createrID)
-    {
-        ProgramData tempProgram = new ProgramData(tempName, tempDate, showedOn, tempDuration, tempGenre, tempDesc, createrID);
-        dbSys.SaveProgram(tempProgram);
-    }
-
     private void saveCredit()
     {
 
@@ -32,6 +26,14 @@ public class ConsumerSystem
     private void saveLinkedCredit()
     {
 
+    }
+    public void createEditPerson(int tempAge, String tempEmail, String tempName) {
+        Person tempPerson = new Person(tempAge, tempEmail, tempName);
+        try {
+            dbSys.SavePerson(tempPerson);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createUser(String tempName, String tempUsername, String tempPass, int tempBirthday, String tempEmail)
@@ -59,11 +61,6 @@ public class ConsumerSystem
 
     }
 
-    private void addProgram()
-    {
-
-    }
-
     private void addCredit()
     {
 
@@ -72,5 +69,10 @@ public class ConsumerSystem
     private void linkCreditProgram()
     {
 
+    }
+
+    public void createEditProgram(String tempName, Date tempDate, String showedOn, LocalTime tempDuration, ArrayList<Genre> tempGenre, String tempDesc, int createrID) {
+        Program tempProgram = new Program(tempName, tempDate, showedOn, tempDuration, tempGenre, tempDesc, createrID);
+        dbSys.SaveProgram(tempProgram);
     }
 }

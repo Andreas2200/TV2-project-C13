@@ -37,4 +37,9 @@ public class Person implements PersonInterface {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "\n" + "Name: " + getName() + " age: " + getAge() + " email: " + getEmail();
+    }
 }

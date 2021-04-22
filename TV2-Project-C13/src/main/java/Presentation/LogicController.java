@@ -2,17 +2,28 @@ package Presentation;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
+import Domain.ConsumerSystem;
+import Domain.Genre;
+import Domain.Person;
 import Domain.User;
+import Persistence.GenreData;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Light;
@@ -32,7 +43,8 @@ public class LogicController implements Initializable {
     private ImageView userImageView, closeButtonImageView;
     @FXML
     private Button closeButton, manageCreditsButton, findPersonButton, findProgramButton, manageUsersButton,
-            programButton1, programButton2, programButton3, programButton4, programButton5, programButton6, toSearchButton;
+            programButton1, programButton2, programButton3, programButton4, programButton5, programButton6, toSearchButton,
+            saveProgramButton, deleteProgramButton;
     @FXML
     private TitledPane addCreditTitledPane, createCreditTitledPane, createProgramTitledPane, createPersonTitledPane,
             viewUsersTitledPane, requestsTitledPane, editUserTitledPane, deleteUserTitledPane;
@@ -42,16 +54,27 @@ public class LogicController implements Initializable {
     private VBox personVBox, programVBox;
     @FXML
     private AnchorPane programInfoAnchorPane, programSearchAnchorPane;
+    @FXML
+    private ComboBox<Genre> genreComboBox;
+    @FXML
+    private TableView<Person> findPersonTableView;
+    @FXML
+    private TableColumn personCol, occupationCol, roleCol, programCol, contactInfoCol;
+    @FXML
+    private TextField programTitleField, durationField, releaseDateField, showedOnField, personNameField, personBirthdayField, personEmailField;
+    @FXML
+    private TextArea programDescriptionArea;
 
     private Image userImage;
     private Image closeButtonImage;
     private Button button;
     private Circle circle = new Circle(75);
 
-    public Label userRoleField;
+    public Label userRoleField, succesProgramField;
     public Label userNameField;
 
     private User activeUser = null;
+    static ConsumerSystem cs = new ConsumerSystem();
 
     private static final String NON_CLICKED_TITLED_PANE = "-fx-background-color: #FFFF; -fx-color: #FFFF; -fx-border-color: #FFFF";
     private static final String CLICKED_TITLED_PANE = "-fx-background-color: #d21e1e; -fx-color: #d21e1e; -fx-border-color: #d21e1e;";
@@ -60,6 +83,10 @@ public class LogicController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        succesProgramField.setVisible(false);
+
+        //Plots values into comboBox
+        genreComboBox.setItems(FXCollections.observableArrayList(Genre.values()));
 
         activeUser = LoginController.activeUser;
 
@@ -103,6 +130,35 @@ public class LogicController implements Initializable {
         userRoleField.setText(activeUser.getRole());
 
         setUserPermission();
+    }
+
+    @FXML
+    private void createEditProgram(ActionEvent event) throws Exception {
+        if(event.getSource() == saveProgramButton) {
+            //converting releasedate from String to Date
+            String tempDate = releaseDateField.getText();
+            Date releaseDate = new SimpleDateFormat("dd/MM/yyyy").parse(tempDate);
+            // converting duration from String to LocalTime
+            LocalTime durationTime = LocalTime.parse(durationField.getText());
+            // converting GenreData from object to arraylist
+            ArrayList<Genre> tempGenres = new ArrayList<>();
+            tempGenres.add(genreComboBox.getSelectionModel().getSelectedItem());
+
+            cs.createEditProgram(programTitleField.getText(), releaseDate, showedOnField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), 1);
+            succesProgramField.setVisible(true);
+        }
+
+    }
+
+    @FXML
+    private void createEditPerson(ActionEvent event) {
+        LocalDate today = LocalDate.now();
+        String birthdateString = personBirthdayField.getText();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate birthdate = LocalDate.parse(birthdateString, dtf);
+        Period p = Period.between(birthdate,today);
+        int age = p.getYears();
+        cs.createEditPerson(age, personEmailField.getText(), personNameField.getText());
     }
 
     private void setUserPermission()
@@ -218,8 +274,6 @@ public class LogicController implements Initializable {
             deleteUserTitledPane.setStyle(CLICKED_TITLED_PANE);
         }
     }
-
-
 
     private void buttonShadower(Button button) {
         this.button = button;

@@ -234,352 +234,6 @@
                   </TitledPane>
                </panes>
             </Accordion>
-            <Accordion fx:id="managementAccordion" layoutX="-6.0" prefHeight="824.0" prefWidth="916.0" style="-fx-background-color: #FFFF;">
-              <panes>
-                <TitledPane fx:id="createPersonTitledPane" alignment="TOP_LEFT" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="671.0" prefWidth="938.0" text="Create/Edit Person">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <VBox layoutX="-11.0" layoutY="-4.0" prefHeight="636.0" prefWidth="925.0" style="-fx-background-color: #FFFF;">
-                                 <children>
-                                    <Label prefHeight="50.0" prefWidth="423.0" text="Navn:" textFill="#d21e1e">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="50.0" top="50.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <TextField prefHeight="50.0" prefWidth="420.0">
-                                       <VBox.margin>
-                                          <Insets left="50.0" right="50.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </TextField>
-                                    <Label prefHeight="50.0" prefWidth="423.0" text="Fødselsdato:" textFill="#d21e1e">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="50.0" top="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <TextField prefHeight="50.0" prefWidth="423.0">
-                                       <VBox.margin>
-                                          <Insets left="50.0" right="50.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </TextField>
-                                    <Label prefHeight="50.0" prefWidth="423.0" text="Email:" textFill="#d21e1e">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="50.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <TextField prefHeight="50.0" prefWidth="423.0">
-                                       <VBox.margin>
-                                          <Insets left="50.0" right="50.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </TextField>
-                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem person" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets right="10.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Slet person" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                </TitledPane>
-                <TitledPane id="createProgramTitledPane" fx:id="createProgramTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="682.0" prefWidth="916.0" text="Create/Edit Program">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <VBox layoutX="-7.0" prefHeight="630.0" prefWidth="922.0" style="-fx-background-color: #FFFF;">
-                                 <children>
-                                    <Label prefHeight="33.0" prefWidth="423.0" text="Programtitel:" textFill="#d21e1e">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="50.0" top="50.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <TextField prefHeight="50.0" prefWidth="121.0" style="-fx-border-color: #d21e1e;">
-                                       <VBox.margin>
-                                          <Insets left="50.0" right="50.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </TextField>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <Label text="Længde:" textFill="#d21e1e">
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                             <padding>
-                                                <Insets right="10.0" />
-                                             </padding>
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField layoutX="651.0" layoutY="40.0" prefHeight="35.0" prefWidth="190.0" promptText="Eks. 2020" style="-fx-border-color: #d21e1e;">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </TextField>
-                                          <Label layoutX="60.0" layoutY="10.0" text="Genre:" textFill="#d21e1e">
-                                             <padding>
-                                                <Insets left="30.0" right="10.0" />
-                                             </padding>
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <ComboBox layoutX="109.0" layoutY="10.0" prefHeight="35.0" prefWidth="190.0" />
-                                          <Label layoutX="259.0" layoutY="10.0" text="Årstal:" textFill="#d21e1e">
-                                             <padding>
-                                                <Insets left="30.0" right="10.0" />
-                                             </padding>
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField prefHeight="35.0" prefWidth="190.0" promptText="Eks. 2020" style="-fx-border-color: #d21e1e;">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </TextField>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets left="50.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <Label prefHeight="33.0" prefWidth="423.0" text="Programbeskrivelse:" textFill="#d21e1e">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="50.0" top="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <TextArea prefHeight="207.0" prefWidth="791.0" promptText="Skriv programbeskrivelsen her:" style="-fx-border-color: #d21e1e;">
-                                       <VBox.margin>
-                                          <Insets left="50.0" right="50.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </TextArea>
-                                    <HBox alignment="CENTER" prefHeight="112.0" prefWidth="922.0">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                       <children>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem program" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets right="10.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Slet program" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                </TitledPane>
-                <TitledPane id="createCreditTitledPane" fx:id="createCreditTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="689.0" prefWidth="916.0" text="Create/Edit Credit">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <VBox layoutX="-4.0" layoutY="-5.0" prefHeight="638.0" prefWidth="918.0" style="-fx-background-color: #FFFF;">
-                                 <children>
-                                    <Label prefHeight="33.0" prefWidth="423.0" text="Person:" textFill="#d21e1e">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="50.0" top="50.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <ComboBox prefHeight="33.0" prefWidth="826.0" style="-fx-background-color: #FFFF;">
-                                       <VBox.margin>
-                                          <Insets left="50.0" right="50.0" />
-                                       </VBox.margin>
-                                    </ComboBox>
-                                    <Label prefHeight="33.0" prefWidth="423.0" text="Beskæftigelse:" textFill="#d21e1e">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="50.0" top="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <ComboBox prefHeight="33.0" prefWidth="826.0" style="-fx-background-color: #FFFF;">
-                                       <VBox.margin>
-                                          <Insets left="50.0" right="50.0" />
-                                       </VBox.margin>
-                                    </ComboBox>
-                                    <Label prefHeight="33.0" prefWidth="423.0" text="Skuespillerens rollenavn:" textFill="#d21e1e">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="50.0" top="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <TextField prefHeight="50.0" prefWidth="121.0" style="-fx-border-color: #d21e1e;">
-                                       <VBox.margin>
-                                          <Insets left="50.0" right="50.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </TextField>
-                                    <HBox alignment="CENTER" prefHeight="96.0" prefWidth="918.0">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                       <children>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem kreditering" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets right="10.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem kreditering" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                </TitledPane>
-                  <TitledPane id="addCreditTitledPane" fx:id="addCreditTitledPane" animated="false" onMouseClicked="#titledPaneHandler" text="Add/Edit Credit to Program">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="673.0" prefWidth="914.0">
-                           <children>
-                              <VBox layoutX="-3.0" prefHeight="630.0" prefWidth="919.0" style="-fx-background-color: FFFF;">
-                                 <children>
-                                    <Label prefHeight="33.0" prefWidth="423.0" text="Programtitel:" textFill="#d21e1e">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="50.0" top="50.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <ComboBox prefHeight="33.0" prefWidth="826.0" style="-fx-background-color: #FFFF;">
-                                       <VBox.margin>
-                                          <Insets left="50.0" right="50.0" />
-                                       </VBox.margin>
-                                    </ComboBox>
-                                    <Label prefHeight="33.0" prefWidth="423.0" text="Krediteret person:" textFill="#d21e1e">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets left="50.0" top="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <ComboBox prefHeight="33.0" prefWidth="826.0" style="-fx-background-color: #FFFF;">
-                                       <VBox.margin>
-                                          <Insets left="50.0" right="50.0" />
-                                       </VBox.margin>
-                                    </ComboBox>
-                                    <HBox alignment="CENTER" prefHeight="98.0" prefWidth="919.0">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                       <children>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="203.0" text="Tilføj kreditering til program" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets right="10.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="203.0" text="Slet kreditering fra program" textAlignment="CENTER">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </TitledPane>
-              </panes>
-            </Accordion>
             <VBox fx:id="programVBox" prefHeight="834.0" prefWidth="910.0" style="-fx-background-color: #FFFF;">
                <children>
                   <AnchorPane prefHeight="824.0" prefWidth="899.0">
@@ -818,6 +472,380 @@
                   </AnchorPane>
                </children>
             </VBox>
+            <Accordion fx:id="managementAccordion" layoutX="-6.0" prefHeight="824.0" prefWidth="916.0" style="-fx-background-color: #FFFF;">
+              <panes>
+                <TitledPane fx:id="createPersonTitledPane" alignment="TOP_LEFT" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="671.0" prefWidth="938.0" text="Create/Edit Person">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox layoutX="-11.0" layoutY="-4.0" prefHeight="636.0" prefWidth="925.0" style="-fx-background-color: #FFFF;">
+                                 <children>
+                                    <Label prefHeight="50.0" prefWidth="423.0" text="Navn:" textFill="#d21e1e">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="personNameField" prefHeight="50.0" prefWidth="420.0">
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label prefHeight="50.0" prefWidth="423.0" text="Fødselsdato:" textFill="#d21e1e">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="personBirthdayField" prefHeight="50.0" prefWidth="423.0" promptText="dd/MM/yyyy">
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label prefHeight="50.0" prefWidth="423.0" text="Email:" textFill="#d21e1e">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="personEmailField" prefHeight="50.0" prefWidth="423.0">
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Button fx:id="savePersonButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createEditPerson" prefHeight="50.0" prefWidth="167.0" text="Gem person" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Slet person" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                </TitledPane>
+                <TitledPane id="createProgramTitledPane" fx:id="createProgramTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="682.0" prefWidth="916.0" text="Create/Edit Program">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox layoutX="-7.0" prefHeight="630.0" prefWidth="922.0" style="-fx-background-color: #FFFF;">
+                                 <children>
+                                    <Label prefHeight="33.0" prefWidth="423.0" text="Programtitel:" textFill="#d21e1e">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="programTitleField" prefHeight="50.0" prefWidth="121.0" style="-fx-border-color: #d21e1e;">
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Længde:" textFill="#d21e1e">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <padding>
+                                                <Insets right="10.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="durationField" layoutX="651.0" layoutY="40.0" prefHeight="35.0" prefWidth="190.0" promptText="10:10:10" style="-fx-border-color: #d21e1e;">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label layoutX="60.0" layoutY="10.0" text="Genre:" textFill="#d21e1e">
+                                             <padding>
+                                                <Insets left="10.0" right="10.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="genreComboBox" layoutX="109.0" layoutY="10.0" prefHeight="35.0" prefWidth="190.0" />
+                                          <Label layoutX="259.0" layoutY="10.0" text="Udgivelsesdato:" textFill="#d21e1e">
+                                             <padding>
+                                                <Insets left="10.0" right="10.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="releaseDateField" prefHeight="41.0" prefWidth="145.0" promptText="dd/MM/YYYY" style="-fx-border-color: #d21e1e;">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="50.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="849.0">
+                                       <VBox.margin>
+                                          <Insets left="50.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <Label text="Vist på:" textFill="#d21e1e">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets right="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <TextField fx:id="showedOnField" prefHeight="35.0" prefWidth="190.0" promptText="TV2" style="-fx-border-color: #d21e1e;">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </TextField>
+                                          <Label fx:id="succesProgramField" text="Programmet blev oprettet!" textFill="GREEN">
+                                             <HBox.margin>
+                                                <Insets left="50.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <Label prefHeight="33.0" prefWidth="423.0" text="Programbeskrivelse:" textFill="#d21e1e">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextArea fx:id="programDescriptionArea" prefHeight="207.0" prefWidth="791.0" promptText="Skriv programbeskrivelsen her:" style="-fx-border-color: #d21e1e;">
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextArea>
+                                    <HBox alignment="CENTER" prefHeight="112.0" prefWidth="922.0">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <children>
+                                          <Button fx:id="saveProgramButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createEditProgram" prefHeight="50.0" prefWidth="167.0" text="Gem program" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button fx:id="deleteProgramButton" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Slet program" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                </TitledPane>
+                <TitledPane id="createCreditTitledPane" fx:id="createCreditTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="689.0" prefWidth="916.0" text="Create/Edit Credit">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox layoutX="-4.0" layoutY="-5.0" prefHeight="638.0" prefWidth="918.0" style="-fx-background-color: #FFFF;">
+                                 <children>
+                                    <Label prefHeight="33.0" prefWidth="423.0" text="Person:" textFill="#d21e1e">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox prefHeight="33.0" prefWidth="826.0" style="-fx-background-color: #FFFF;">
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                    <Label prefHeight="33.0" prefWidth="423.0" text="Beskæftigelse:" textFill="#d21e1e">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox prefHeight="33.0" prefWidth="826.0" style="-fx-background-color: #FFFF;">
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                    <Label prefHeight="33.0" prefWidth="423.0" text="Skuespillerens rollenavn:" textFill="#d21e1e">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField prefHeight="50.0" prefWidth="121.0" style="-fx-border-color: #d21e1e;">
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextField>
+                                    <HBox alignment="CENTER" prefHeight="96.0" prefWidth="918.0">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem kreditering" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem kreditering" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                </TitledPane>
+                  <TitledPane id="addCreditTitledPane" fx:id="addCreditTitledPane" animated="false" onMouseClicked="#titledPaneHandler" text="Add/Edit Credit to Program">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="673.0" prefWidth="914.0">
+                           <children>
+                              <VBox layoutX="-3.0" prefHeight="630.0" prefWidth="919.0" style="-fx-background-color: FFFF;">
+                                 <children>
+                                    <Label prefHeight="33.0" prefWidth="423.0" text="Programtitel:" textFill="#d21e1e">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox prefHeight="33.0" prefWidth="826.0" style="-fx-background-color: #FFFF;">
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                    <Label prefHeight="33.0" prefWidth="423.0" text="Krediteret person:" textFill="#d21e1e">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox prefHeight="33.0" prefWidth="826.0" style="-fx-background-color: #FFFF;">
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                    <HBox alignment="CENTER" prefHeight="98.0" prefWidth="919.0">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="203.0" text="Tilføj kreditering til program" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="203.0" text="Slet kreditering fra program" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TitledPane>
+              </panes>
+            </Accordion>
             <VBox fx:id="personVBox" prefHeight="824.0" prefWidth="908.0" style="-fx-background-color: #FFFF;">
                <children>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="824.0" prefWidth="900.0">
@@ -844,7 +872,7 @@
                                     <Insets bottom="30.0" top="20.0" />
                                  </VBox.margin>
                               </HBox>
-                              <TableView prefHeight="676.0" prefWidth="862.0">
+                              <TableView fx:id="findPersonTableView" prefHeight="676.0" prefWidth="862.0">
                                 <columns>
                                   <TableColumn minWidth="0.0" prefWidth="176.0" text="Person:" />
                                   <TableColumn prefWidth="160.0" text="Beskæftigelse" />

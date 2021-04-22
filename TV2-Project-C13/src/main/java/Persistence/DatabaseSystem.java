@@ -14,8 +14,10 @@ class Main {
     static DatabaseSystem dbSys = new DatabaseSystem();
     public static void main(String[] args) throws Exception {
         dbSys = dbSys.getInstance();
-        User user = null;
-        System.out.println(user = (User) dbSys.getUser("Admin", "password"));
+        //User user = null;
+        //System.out.println(user = (User) dbSys.getUser("Admin", "password"));
+        System.out.println(String.valueOf(dbSys.SearchPerson("tom")));
+        System.out.println(String.valueOf(dbSys.getAllPersons()));
 
     }
 }
@@ -128,12 +130,13 @@ public class DatabaseSystem {
             reader.close();
 
             FileWriter writer = new FileWriter(new File("programs.txt"), true);
-            String genres = "";
+            //Simon hjælp!
+            /*String genres = "";
             for (GenreInterface genre : program.getGenre()){
                 genres += genre + ",";
-            }
+            }*/
 
-            writer.write(ID + ";" + program.getName() + ";" + genres + ";" + program.getReleaseDate() + ";" + program.getDuration() + ";" + program.getDescription() + ";" + program.getCreatorID() + "\n");
+            writer.write(ID + ";" + program.getName() + ";" + program.getGenre() + ";" + program.getReleaseDate() + ";" + program.getDuration() + ";" + program.getDescription() + ";" + program.getCreatorID() + "\n");
             writer.close();
             return true;
         }

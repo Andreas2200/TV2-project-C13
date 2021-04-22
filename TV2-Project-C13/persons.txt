@@ -6,3 +6,4 @@
 5;Kirsten;49;Kirsten@gmail.com
 6;Kasper;22;xXxKasperxXx@gmail.com
 7;Tom Holland;48;Tom@Holland.UK
+8;Sigurd;22;Sivin20@student.sdu.dk

@@ -8,4 +8,7 @@ public interface PersonInterface {
     public String getEmail();
 
     public String getName();
+
+    @Override
+    String toString();
 }
