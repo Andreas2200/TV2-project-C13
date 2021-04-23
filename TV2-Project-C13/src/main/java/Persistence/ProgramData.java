@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class ProgramData implements ProgramInterface {
     private String name;
-    private Date releaseDate;
+    private String releaseDate;
     private String showedOn;
     private int id;
     private static int programID;
@@ -21,7 +21,7 @@ public class ProgramData implements ProgramInterface {
 
     private ArrayList<CreditInterface> credits;
 
-    public ProgramData(String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<GenreData> genre, String description, int creatorID)
+    public ProgramData(String name, String releaseDate, String showedOn, LocalTime duration, ArrayList<GenreData> genre, String description, int creatorID)
     {
         this.name = name;
         this.releaseDate = releaseDate;
@@ -34,7 +34,7 @@ public class ProgramData implements ProgramInterface {
         this.creatorID = creatorID;
     }
 
-    public ProgramData(int id, String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<GenreData> genre, String description, int creatorID)
+    public ProgramData(int id, String name, String releaseDate, String showedOn, LocalTime duration, ArrayList<GenreData> genre, String description, int creatorID)
     {
         this.name = name;
         this.releaseDate = releaseDate;
@@ -72,7 +72,7 @@ public class ProgramData implements ProgramInterface {
     }
 
     public String getReleaseDate() {
-        return releaseDate.getYear() + "," + releaseDate.getMonth() + "," + releaseDate.getDay();
+        return releaseDate;
     }
 
     public String getShowedOn()

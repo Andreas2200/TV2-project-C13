@@ -41,9 +41,9 @@ public class DatabaseSystem {
 
         for (int i = 0; i < dataValues.size(); i += 7){
             //Year of release
-            Calendar calendar = Calendar.getInstance();
+            /*Calendar calendar = Calendar.getInstance();
             String[] calendarValues = dataValues.get(3 + i).split(",");
-            calendar.set(Integer.parseInt(calendarValues[0]), Integer.parseInt(calendarValues[1]), Integer.parseInt(calendarValues[2]));
+            calendar.set(Integer.parseInt(calendarValues[0]), Integer.parseInt(calendarValues[1]), Integer.parseInt(calendarValues[2]));*/
             Date date = new Date();
             date = Calendar.getInstance().getTime();
             //Watch length
@@ -57,7 +57,7 @@ public class DatabaseSystem {
                 genres.add(GenreData.valueOf(splittetGenres[j]));
             }
 
-            ProgramData program = new ProgramData(Integer.parseInt(dataValues.get(0 + i)), dataValues.get(1 + i), date, null, time, genres, dataValues.get(5 + i), Integer.parseInt(dataValues.get(6 + i)));
+            ProgramData program = new ProgramData(Integer.parseInt(dataValues.get(0 + i)), dataValues.get(1 + i), dataValues.get(3+i), null, time, genres, dataValues.get(5 + i), Integer.parseInt(dataValues.get(6 + i)));
 
             //credits
             Scanner reader = new Scanner(new File("credits.txt"));
