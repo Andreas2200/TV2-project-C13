@@ -51,7 +51,7 @@ public class ConsumerSystem
     {
          UserData userData = (UserData) dbSys.getUser(tempUsername,tempPass);
          try {
-             return new User(userData.getName(), userData.getUsername(), userData.getPassword(), userData.getAge(), "Sutenkuk", userData.getRole());
+             return new User(userData.getName(), userData.getUsername(), userData.getPassword(), userData.getAge(), userData.getEmail(), userData.getRole());
          } catch(NullPointerException e) {
              return null;
          }
@@ -88,21 +88,20 @@ public class ConsumerSystem
         {
             for (ProgramInterface element: dbSys.getProgram())
             {
-                Calendar calendar = Calendar.getInstance();
-                String[] calendarValues = element.getReleaseDate().split(",");
-                calendar.set(Integer.parseInt(calendarValues[0]), Integer.parseInt(calendarValues[1]), Integer.parseInt(calendarValues[2]));
-                Date date = new Date();
-                date = Calendar.getInstance().getTime();
+                //Calendar calendar = Calendar.getInstance();
+                //String[] calendarValues = element.getReleaseDate().split(",");
+                //calendar.set(Integer.parseInt(calendarValues[0]), Integer.parseInt(calendarValues[1]), Integer.parseInt(calendarValues[2]));
+                //Date date = new Date();
+                //date = Calendar.getInstance().getTime();
 
-
-                String[] durationTime = element.getDuration().split(",");
-                LocalTime time = LocalTime.of(Integer.parseInt(durationTime[0]), Integer.parseInt(durationTime[1]));
+                //String[] durationTime = element.getDuration().split(",");
+                //LocalTime time = LocalTime.of(Integer.parseInt(durationTime[0]), Integer.parseInt(durationTime[1]));
                 ArrayList<Genre> genres = new ArrayList<>();
                 for (GenreInterface genreInterfaces: element.getGenre())
                 {
                     genres.add(Genre.valueOf(genreInterfaces.toString()));
                 }
-                returnList.add(new Program(element.getId(), element.getName(), date, element.getShowedOn(), time, genres, element.getDescription(), element.getCreatorID()));
+                returnList.add(new Program(element.getId(), element.getName(), element.getReleaseDate(), element.getShowedOn(), element.getDuration(), genres, element.getDescription(), element.getCreatorID()));
             }
         }
         catch (Exception e)
@@ -160,7 +159,7 @@ public class ConsumerSystem
 
     }
 
-    public void createEditProgram(String tempName, Date tempDate, String showedOn, LocalTime tempDuration, ArrayList<Genre> tempGenre, String tempDesc, int createrID) {
+    public void createEditProgram(String tempName, String tempDate, String showedOn, LocalTime tempDuration, ArrayList<Genre> tempGenre, String tempDesc, int createrID) {
         Program tempProgram = new Program(tempName, tempDate, showedOn, tempDuration, tempGenre, tempDesc, createrID);
         dbSys.SaveProgram(tempProgram);
     }

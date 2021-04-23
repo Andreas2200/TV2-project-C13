@@ -102,13 +102,7 @@ public class LogicController implements Initializable {
         cs = LoginController.cs;
 
         //Plots values into comboBox
-        genreComboBox.setItems(FXCollections.observableArrayList(Genre.values()));
-        creditOccupationCB.setItems(FXCollections.observableArrayList(Occupation.values()));
-        creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
-        addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
-        addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
-        editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
-        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsers()));
+        updateComboBox();
 
         userImage = new Image(getClass().getResource("Dancingkid.jpg").toString());
         userImageView.setImage(userImage);
@@ -159,16 +153,18 @@ public class LogicController implements Initializable {
     private void createEditProgram(ActionEvent event) throws Exception {
         if(event.getSource() == saveProgramButton) {
             //converting releasedate from String to Date
-            String tempDate = releaseDateField.getText();
-            Date releaseDate = new SimpleDateFormat("dd/MM/yyyy").parse(tempDate);
+            //String tempDate = releaseDateField.getText();
+            //Date releaseDate = new SimpleDateFormat("dd/MM/yyyy").parse(tempDate);
+
             // converting duration from String to LocalTime
             LocalTime durationTime = LocalTime.parse(durationField.getText());
             // converting GenreData from object to arraylist
             ArrayList<Genre> tempGenres = new ArrayList<>();
             tempGenres.add(genreComboBox.getSelectionModel().getSelectedItem());
 
-            cs.createEditProgram(programTitleField.getText(), releaseDate, showedOnField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), 1);
+            cs.createEditProgram(programTitleField.getText(), releaseDateField.getText(), showedOnField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), 1);
             succesProgramField.setVisible(true);
+            updateComboBox();
         }
 
     }
@@ -182,6 +178,7 @@ public class LogicController implements Initializable {
         Period p = Period.between(birthdate,today);
         int age = p.getYears();
         cs.createEditPerson(age, personEmailField.getText(), personNameField.getText());
+        updateComboBox();
     }
 
     private void setUpCreateCredit()
@@ -342,16 +339,29 @@ public class LogicController implements Initializable {
     public void saveCredit(ActionEvent actionEvent)
     {
         cs.saveCredit(new Credits(creditOccupationCB.getValue(),creditPersonCB.getValue()));
+        updateComboBox();
     }
 
     public void saveCreditToProgram(ActionEvent actionEvent)
     {
         cs.saveCreditToProgram(addCreditProgramCreditCB.getValue(),addCreditProgramProgramCB.getValue().getId());
+        updateComboBox();
     }
 
     @FXML
     private void editUserSave() throws IOException {
         cs.saveUser(editUserUsersCB.getValue(),editUserRoleCB.getValue());
+        updateComboBox();
+    }
+
+    public void updateComboBox() {
+        genreComboBox.setItems(FXCollections.observableArrayList(Genre.values()));
+        creditOccupationCB.setItems(FXCollections.observableArrayList(Occupation.values()));
+        creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
+        addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
+        addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
+        editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
+        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsers()));
     }
 
 }

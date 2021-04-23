@@ -11,7 +11,7 @@ import java.util.Date;
 public class Program implements ProgramInterface
 {
     private String name;
-    private Date releaseDate;
+    private String releaseDate;
     private String showedOn;
     private int id;
     private static int programID;
@@ -22,7 +22,7 @@ public class Program implements ProgramInterface
 
     private ArrayList<CreditInterface> credits;
 
-    public Program(String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
+    public Program(String name, String releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
     {
         this.name = name;
         this.releaseDate = releaseDate;
@@ -35,7 +35,7 @@ public class Program implements ProgramInterface
         this.creatorID = creatorID;
     }
 
-    public Program(int id, String name, Date releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
+    public Program(int id, String name, String releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
     {
         this.name = name;
         this.releaseDate = releaseDate;
@@ -75,7 +75,7 @@ public class Program implements ProgramInterface
                 "Showed on: " + getShowedOn() +
                 "Release date: " + getReleaseDate() +
                 "People in credits: " + getCreditSize() +
-                "ID: " + id ;
+                "ID: " + id;
     }
 
     public String getName() {
@@ -103,12 +103,15 @@ public class Program implements ProgramInterface
 
     //FIX ME not implemented
     public ArrayList<GenreInterface> getGenre() {
-        return null;
+
+        ArrayList<GenreInterface> genreReturnList = new ArrayList<>(genre);
+
+        return genreReturnList;
     }
 
-    public String getDuration() {
+    public LocalTime getDuration() {
         //return duration.toString();
-        return "1,30,2";
+        return duration;
     }
 
     public String getDescription(){

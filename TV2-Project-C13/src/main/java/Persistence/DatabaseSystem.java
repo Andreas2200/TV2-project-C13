@@ -131,12 +131,12 @@ public class DatabaseSystem {
 
             FileWriter writer = new FileWriter(new File("programs.txt"), true);
             //Simon hjælp!
-            /*String genres = "";
+            String genres = "";
             for (GenreInterface genre : program.getGenre()){
                 genres += genre + ",";
-            }*/
+            }
 
-            writer.write(ID + ";" + program.getName() + ";" + program.getGenre() + ";" + program.getReleaseDate() + ";" + program.getDuration() + ";" + program.getDescription() + ";" + program.getCreatorID() + "\n");
+            writer.write(ID + ";" + program.getName() + ";" + genres + ";" + program.getReleaseDate() + ";" + program.getDuration() + ";" + program.getDescription() + ";" + program.getCreatorID() + "\n");
             writer.close();
             return true;
         }
@@ -309,7 +309,7 @@ public class DatabaseSystem {
         {
             if(credit.getPerson().getName() != null)
             {
-                writer.write(credit.getPerson().getAge() + ";" + credit.getPerson().getId() + ";" + credit.getPerson().getEmail() + ";" + credit.getPerson().getName() + ";" + credit.getOccupation());
+                writer.write(credit.getPerson().getAge() + ";" + credit.getPerson().getId() + ";" + credit.getPerson().getEmail() + ";" + credit.getPerson().getName() + ";" + credit.getOccupation() + "\n");
             }
         }
         catch (IOException e)

@@ -98,9 +98,9 @@ public class ProgramData implements ProgramInterface {
         return genreReturnList;
     }
 
-    public String getDuration() {
+    public LocalTime getDuration() {
         //return duration.toString();
-        return "1,30,2";
+        return duration;
     }
 
     public String getDescription(){

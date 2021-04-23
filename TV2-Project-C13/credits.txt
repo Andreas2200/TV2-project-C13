@@ -1,1 +1,9 @@
 20;9;Testmail@test.dk;Freja Kongslev;SKUESPILLER
+19;1;JohnHitler@gmail.com;John;BILLEDKUNSTNER
+22;10;Sigurdskelmose@gmail.com;Sigurd;COLOURGRADING
+19;1;JohnHitler@gmail.com;John;KAPELMESTER
+58;2;Karsten@gmail.com;Karsten;DRONE
+58;2;Karsten@gmail.com;Karsten;FORTÆLLER
+27;0;Adam@gmail.com;Adam;FORTÆLLER
+19;1;JohnHitler@gmail.com;John;LYS
+58;2;Karsten@gmail.com;Karsten;KONSULENT

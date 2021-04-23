@@ -880,11 +880,11 @@
                               </HBox>
                               <TableView fx:id="findPersonTableView" prefHeight="676.0" prefWidth="862.0">
                                 <columns>
-                                  <TableColumn minWidth="0.0" prefWidth="176.0" text="Person:" />
-                                  <TableColumn prefWidth="160.0" text="Beskæftigelse" />
-                                    <TableColumn prefWidth="159.0" text="Rolle" />
-                                    <TableColumn prefWidth="167.0" text="Produktion:" />
-                                    <TableColumn prefWidth="199.0" text="Kontakt Information:" />
+                                  <TableColumn fx:id="personCol" minWidth="0.0" prefWidth="176.0" text="Person:" />
+                                  <TableColumn fx:id="occupationCol" prefWidth="160.0" text="Beskæftigelse" />
+                                    <TableColumn fx:id="roleCol" prefWidth="159.0" text="Rolle" />
+                                    <TableColumn fx:id="programCol" prefWidth="167.0" text="Produktion:" />
+                                    <TableColumn fx:id="contactInfoCol" prefWidth="199.0" text="Kontakt Information:" />
                                 </columns>
                               </TableView>
                             </children>

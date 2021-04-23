@@ -1,5 +1,6 @@
 package Interfaces;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public interface ProgramInterface {
@@ -19,7 +20,7 @@ public interface ProgramInterface {
 
     public ArrayList<GenreInterface> getGenre();
 
-    public String getDuration();
+    public LocalTime getDuration();
 
     public String getDescription();
 
