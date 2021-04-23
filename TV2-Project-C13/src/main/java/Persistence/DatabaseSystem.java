@@ -372,6 +372,29 @@ public class DatabaseSystem {
         }
     }
 
+    public ArrayList<UserInterface> getAllUsers()
+    {
+        ArrayList<UserInterface> returnList = new ArrayList<>();
+        ArrayList<String> readValues = new ArrayList<>();
+        try(Scanner reader = new Scanner(new File("usernames.txt")))
+        {
+            while (reader.hasNextLine())
+            {
+                readValues.add(reader.nextLine());
+            }
+            for (String element: readValues)
+            {
+                String[] valuesToUse = element.split(";");
+                returnList.add(new UserData(valuesToUse[2],valuesToUse[0], valuesToUse[1],Integer.parseInt(valuesToUse[5]), valuesToUse[4], valuesToUse[3]));
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        return returnList;
+    }
+
     //FIX ME, få den til at returnere en Person og ændre navnet
     public String Search(int id) throws Exception {
         try {

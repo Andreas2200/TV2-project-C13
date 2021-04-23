@@ -38,6 +38,10 @@ import javafx.stage.Stage;
 public class LogicController implements Initializable {
 
     @FXML
+    private ComboBox<String> editUserRoleCB;
+    @FXML
+    private ComboBox<User> editUserUsersCB;
+    @FXML
     private ComboBox<Program> addCreditProgramProgramCB;
     @FXML
     private ComboBox<Credits> addCreditProgramCreditCB;
@@ -51,7 +55,7 @@ public class LogicController implements Initializable {
     @FXML
     private Button closeButton, manageCreditsButton, findPersonButton, findProgramButton, manageUsersButton,
             programButton1, programButton2, programButton3, programButton4, programButton5, programButton6, toSearchButton,
-            saveProgramButton, deleteProgramButton;
+            saveProgramButton, deleteProgramButton, editUserButton;
     @FXML
     private TitledPane addCreditTitledPane, createCreditTitledPane, createProgramTitledPane, createPersonTitledPane,
             viewUsersTitledPane, requestsTitledPane, editUserTitledPane, deleteUserTitledPane;
@@ -103,6 +107,8 @@ public class LogicController implements Initializable {
         creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
         addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
         addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
+        editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
+        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsers()));
 
         userImage = new Image(getClass().getResource("Dancingkid.jpg").toString());
         userImageView.setImage(userImage);
@@ -341,6 +347,11 @@ public class LogicController implements Initializable {
     public void saveCreditToProgram(ActionEvent actionEvent)
     {
         cs.saveCreditToProgram(addCreditProgramCreditCB.getValue(),addCreditProgramProgramCB.getValue().getId());
+    }
+
+    @FXML
+    private void editUserSave() throws IOException {
+        cs.saveUser(editUserUsersCB.getValue(),editUserRoleCB.getValue());
     }
 
 }

@@ -129,6 +129,22 @@ public class ConsumerSystem
         return returnList;
     }
 
+    public ArrayList<User> getAllUsers()
+    {
+        ArrayList<User> returnList = new ArrayList<>();
+
+        try {
+            for (UserInterface element: dbSys.getAllUsers())
+            {
+                returnList.add(new User(element.getName(),element.getUsername(), element.getPassword(), element.getAge(), element.getEmail(), element.getRole()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return returnList;
+    }
+
     private void changeUserRole()
     {
 
@@ -159,5 +175,10 @@ public class ConsumerSystem
         {
             System.out.println("Hold stadigvæk en pause og kom tilbage til det");
         }
+    }
+
+    public void saveUser(User user, String role) throws IOException {
+        user.setRole(role);
+        dbSys.SaveUser(user);
     }
 }
