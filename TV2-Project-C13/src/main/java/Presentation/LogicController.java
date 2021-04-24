@@ -8,12 +8,15 @@ import java.time.LocalTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import Domain.*;
 import Interfaces.PersonInterface;
 import Persistence.GenreData;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -22,6 +25,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Light;
@@ -68,9 +72,9 @@ public class LogicController implements Initializable {
     @FXML
     private ComboBox<Genre> genreComboBox;
     @FXML
-    private TableView<Person> findPersonTableView;
+    private TableView<Integer> findPersonTableView;
     @FXML
-    private TableColumn personCol, occupationCol, roleCol, programCol, contactInfoCol;
+    private TableColumn<Integer, String> personCol, occupationCol, roleCol, programCol, contactInfoCol;
     @FXML
     private TextField searchPersonField, programTitleField, durationField, releaseDateField, showedOnField, personNameField, personBirthdayField, personEmailField, creditActorTextField;
     @FXML
@@ -151,11 +155,58 @@ public class LogicController implements Initializable {
 
     @FXML
     private void findPersonInformation(ActionEvent event) {
+        findPersonTableView.getItems().clear();
         try{
-            cs.searchPerson(searchPersonField.getText());
+            //System.out.println(cs.searchPerson(searchPersonField.getText()));
+            //findPersonTableView.setEditable(false);
+            //Collection<String> list = cs.searchPerson(searchPersonField.getText());
+            ArrayList<String> list = cs.searchPerson(searchPersonField.getText());
+            final ObservableList<String> details = FXCollections.observableArrayList(list);
+
+            ArrayList<String> personList = new ArrayList<>();
+            ArrayList<String> occupationList = new ArrayList<>();
+            ArrayList<String> roleList = new ArrayList<>();
+            ArrayList<String> programList = new ArrayList<>();
+            ArrayList<String> contactList = new ArrayList<>();
+
+            for(String element: list) {
+                String[] elementValues = element.split(";");
+                personList.add(elementValues[0]);
+                occupationList.add(elementValues[1]);
+                roleList.add(elementValues[2]);
+                programList.add(elementValues[3]);
+                contactList.add(elementValues[4]);
+            }
+            personCol.setCellValueFactory(cellData -> {
+                Integer rowIndex = cellData.getValue();
+                return new ReadOnlyStringWrapper(personList.get(rowIndex));
+            });
+            occupationCol.setCellValueFactory(cellData -> {
+                Integer rowIndex = cellData.getValue();
+                return new ReadOnlyStringWrapper(occupationList.get(rowIndex));
+            });
+            roleCol.setCellValueFactory(cellData -> {
+                Integer rowIndex = cellData.getValue();
+                return new ReadOnlyStringWrapper(roleList.get(rowIndex));
+            });
+            programCol.setCellValueFactory(cellData -> {
+                Integer rowIndex = cellData.getValue();
+                return new ReadOnlyStringWrapper(programList.get(rowIndex));
+            });
+            contactInfoCol.setCellValueFactory(cellData -> {
+                Integer rowIndex = cellData.getValue();
+                return new ReadOnlyStringWrapper(contactList.get(rowIndex));
+            });
+            for(int i = 0; i < personList.size() && i < occupationList.size(); i++) {
+                findPersonTableView.getItems().add(i);
+            }
+            //cs.searchPerson(searchPersonField.getText());
+            //System.out.println(cs.searchPerson(searchPersonField.getText()));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
 

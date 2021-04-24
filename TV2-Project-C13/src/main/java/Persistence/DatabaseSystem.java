@@ -500,12 +500,12 @@ public class DatabaseSystem {
         ArrayList<PersonInterface> dataValues = getAllPersons();
 
         //throw out all of the lines which is not searched for
-        for (int i = 0; i < dataValues.size(); i++){
+        for (int i = 0; i < dataValues.size() - 1; i++){
             splitValue = SplitByChar(dataValues.get(i).getName(), searchParam.length());
             splitValue = splitValue.toLowerCase();
             if (splitValue.equals(searchParam)){
                 searchItems.add(dataValues.get(i));
-                System.out.println(dataValues.get(i).getName());
+                //System.out.println(dataValues.get(i).getName());
             }
         }
         //sort em
