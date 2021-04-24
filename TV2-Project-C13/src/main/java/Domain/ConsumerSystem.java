@@ -19,6 +19,51 @@ public class ConsumerSystem
 
     static DatabaseSystem dbSys = new DatabaseSystem();
 
+    public void searchPerson(String searchString) throws Exception {
+        ArrayList<String> persons = new ArrayList<>();
+        String searchedPerson = "";
+        String occupationString = "";
+        String roleString = "";
+        String programString = "";
+        PersonInterface p = null;
+        try{
+            ArrayList<PersonInterface> person = dbSys.SearchPerson(searchString);
+
+
+            for(int i = 0; i < person.size(); i++) {
+                p = person.get(i);
+                // Lav et arraylist for at kunne læse strengen og udtrække værdien for programid, samt occupation og role:
+                ArrayList<String> getCreditString = dbSys.getAllCreditsFromCreditFile(p.getId());
+                for(String element: getCreditString) {
+                    String[] values = element.split(";");
+                    occupationString = " " + values[1];
+                    roleString = " " + values[3];
+                    //Lav igen et arraylist for at kunne læse strengen og udtrække værdien for programnavn
+                    ArrayList<String> getProgramString = dbSys.getProgramFromID(values[2]);
+                    for(String e: getProgramString) {
+                        String[] programValues = e.split(";");
+                        programString = " " + programValues[1];
+                        //System.out.println(searchedPerson);
+                        searchedPerson = p.getId() + " " + p.getName() + " " + occupationString + " " + roleString + " " + programString + " " + p.getEmail();
+                        persons.add(searchedPerson);
+                    }
+                    //System.out.println(getProgramString);
+                }
+
+                //System.out.println(dbSys.getProgramFromID(6));
+                //System.out.println(getCreditString);
+                //System.out.println(dbSys.getAllCreditsFromCreditFile(p.getId()));
+                //System.out.println(searchedPerson);
+            }
+            //System.out.println(dbSys.getAllCreditsFromCreditFile(p.getId()));
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(persons);
+
+    }
+
     private void saveCredit()
     {
 

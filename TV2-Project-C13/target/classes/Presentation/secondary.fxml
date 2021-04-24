@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
@@ -24,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="834.0" prefWidth="1200.0" stylesheets="@titledPaneStylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.LogicController">
+<BorderPane prefHeight="834.0" prefWidth="1200.0" stylesheets="@titledPaneStylesheet.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.LogicController">
    <center>
       <AnchorPane prefHeight="834.0" prefWidth="923.0" style="-fx-background-color: #ffffff;">
          <children>
@@ -161,7 +155,7 @@
                                           <Insets left="50.0" right="50.0" />
                                        </VBox.margin>
                                     </ComboBox>
-                                    <Button onAction="#editUserSave" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Rediger bruger" textAlignment="CENTER">
+                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#editUserSave" prefHeight="50.0" prefWidth="167.0" text="Rediger bruger" textAlignment="CENTER">
                                        <VBox.margin>
                                           <Insets bottom="40.0" left="375.0" right="375.0" top="40.0" />
                                        </VBox.margin>
@@ -759,7 +753,7 @@
                                           <Insets />
                                        </VBox.margin>
                                        <children>
-                                          <Button  onAction="#saveCredit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Gem kreditering" textAlignment="CENTER">
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveCredit" prefHeight="50.0" prefWidth="167.0" text="Gem kreditering" textAlignment="CENTER">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -823,7 +817,7 @@
                                           <Insets />
                                        </VBox.margin>
                                        <children>
-                                          <Button onAction="#saveCreditToProgram" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="203.0" text="Tilføj kreditering til program" textAlignment="CENTER">
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveCreditToProgram" prefHeight="50.0" prefWidth="203.0" text="Tilføj kreditering til program" textAlignment="CENTER">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -865,11 +859,11 @@
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
+                                    <TextField fx:id="searchPersonField" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
                                        <font>
                                           <Font size="14.0" />
                                        </font></TextField>
-                                    <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
+                                    <Button fx:id="searchPersonButton" mnemonicParsing="false" onAction="#findPersonInformation" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
                                  </children>
                                  <padding>
                                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

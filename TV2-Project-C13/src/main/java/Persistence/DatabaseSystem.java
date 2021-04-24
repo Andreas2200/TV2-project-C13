@@ -321,6 +321,50 @@ public class DatabaseSystem {
         return true;
     }
 
+    //Lavet af Sigster
+    public ArrayList<String>  getAllCreditsFromCreditFile(int personID) {
+        ArrayList<String> readValues = new ArrayList<>();
+        //List<ArrayList<String>> credits = new ArrayList<>();
+        ArrayList<String> credit = new ArrayList<>();
+        try(Scanner reader = new Scanner(new File("credit.txt"))) {
+            while (reader.hasNextLine()) {
+                readValues.add(reader.nextLine());
+            }
+            for(String element: readValues) {
+                String[] valuesToUse = element.split(";");
+                if(String.valueOf(personID).equals(valuesToUse[0])) {
+                    credit.add(valuesToUse[0] + ";" + valuesToUse[1] + ";" + valuesToUse[2] + ";" + valuesToUse[3]);
+                    //credits.add(credit);
+                    //Evt. lav ovenstående om til fori loop og brug samme index (i) til at sætte ind på credits ?
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return credit;
+    }
+
+    //Lavet af Sigster
+    public ArrayList<String> getProgramFromID(String programID) {
+        ArrayList<String> readValues = new ArrayList<>();
+        ArrayList<String> program = new ArrayList<>();
+        try(Scanner reader = new Scanner(new File("programs.txt"))) {
+            while (reader.hasNextLine()) {
+                readValues.add(reader.nextLine());
+            }
+            for(String element: readValues) {
+                String[] valuesToUse = element.split(";");
+                if(String.valueOf(programID).equals(valuesToUse[0])) {
+                    program.add(valuesToUse[0] + ";" + valuesToUse[1] + ";" + valuesToUse[2]
+                            + ";" + valuesToUse[3] + ";" + valuesToUse[4] + ";" + valuesToUse[5] + ";" + valuesToUse[6]);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return program;
+    }
+
     public UserInterface getUser(String username, String password) {
         try (Scanner reader = new Scanner(new File("usernames.txt")))
         {

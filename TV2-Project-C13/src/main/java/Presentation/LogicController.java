@@ -72,7 +72,7 @@ public class LogicController implements Initializable {
     @FXML
     private TableColumn personCol, occupationCol, roleCol, programCol, contactInfoCol;
     @FXML
-    private TextField programTitleField, durationField, releaseDateField, showedOnField, personNameField, personBirthdayField, personEmailField, creditActorTextField;
+    private TextField searchPersonField, programTitleField, durationField, releaseDateField, showedOnField, personNameField, personBirthdayField, personEmailField, creditActorTextField;
     @FXML
     private TextArea programDescriptionArea;
 
@@ -150,6 +150,16 @@ public class LogicController implements Initializable {
     }
 
     @FXML
+    private void findPersonInformation(ActionEvent event) {
+        try{
+            cs.searchPerson(searchPersonField.getText());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+        @FXML
     private void createEditProgram(ActionEvent event) throws Exception {
         if(event.getSource() == saveProgramButton) {
             //converting releasedate from String to Date
