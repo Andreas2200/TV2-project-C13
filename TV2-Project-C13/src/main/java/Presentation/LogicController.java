@@ -38,9 +38,11 @@ import javafx.stage.Stage;
 public class LogicController implements Initializable {
 
     @FXML
+    private CheckBox deleteUserCheckBox;
+    @FXML
     private ComboBox<String> editUserRoleCB;
     @FXML
-    private ComboBox<User> editUserUsersCB;
+    private ComboBox<User> editUserUsersCB, deleteUserCB;
     @FXML
     private ComboBox<Program> addCreditProgramProgramCB;
     @FXML
@@ -74,14 +76,14 @@ public class LogicController implements Initializable {
     @FXML
     private TextField programTitleField, durationField, releaseDateField, showedOnField, personNameField, personBirthdayField, personEmailField, creditActorTextField;
     @FXML
-    private TextArea programDescriptionArea;
+    private TextArea programDescriptionArea, deleteUserReasonTXT;
 
     private Image userImage;
     private Image closeButtonImage;
     private Button button;
     private Circle circle = new Circle(75);
 
-    public Label userRoleField, succesProgramField;
+    public Label userRoleField, succesProgramField, deleteUserConfirmationLabel;
     public Label userNameField;
     @FXML
     private Label creditActorLabel;
@@ -108,7 +110,8 @@ public class LogicController implements Initializable {
         addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
         addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
         editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
-        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsers()));
+        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
+        deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
 
         userImage = new Image(getClass().getResource("Dancingkid.jpg").toString());
         userImageView.setImage(userImage);
@@ -186,7 +189,7 @@ public class LogicController implements Initializable {
 
     private void setUpCreateCredit()
     {
-        creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
+        //creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
     }
 
 
@@ -195,6 +198,10 @@ public class LogicController implements Initializable {
         if(activeUser.getRole().equals("User"))
         {
             manageCreditsButton.setVisible(false);
+            manageUsersButton.setVisible(false);
+        }
+        else if(activeUser.getRole().equals("Producer"))
+        {
             manageUsersButton.setVisible(false);
         }
     }
@@ -298,11 +305,16 @@ public class LogicController implements Initializable {
             editUserTitledPane.setStyle(CLICKED_TITLED_PANE);
             deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
         }
-        if(event.getSource() == deleteUserTitledPane) {
-            viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            requestsTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            deleteUserTitledPane.setStyle(CLICKED_TITLED_PANE);
+        if(event.getSource() == deleteUserTitledPane)
+        {
+            if(!deleteUserTitledPane.getStyle().equals(CLICKED_TITLED_PANE))
+            {
+                viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                requestsTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                deleteUserTitledPane.setStyle(CLICKED_TITLED_PANE);
+                deleteUserConfirmationLabel.setVisible(false);
+            }
         }
     }
 
@@ -352,6 +364,19 @@ public class LogicController implements Initializable {
     @FXML
     private void editUserSave() throws IOException {
         cs.saveUser(editUserUsersCB.getValue(),editUserRoleCB.getValue());
+    }
+
+    @FXML
+    private void deleteUser()
+    {
+        if(deleteUserCheckBox.isSelected())
+        {
+            cs.deleteUser(deleteUserCB.getValue(),deleteUserReasonTXT.getText());
+            System.out.println("Delete User");
+            deleteUserConfirmationLabel.setVisible(true);
+            return;
+        }
+        System.out.println("Didn't delete User");
     }
 
 }

@@ -136,7 +136,7 @@ public class ConsumerSystem
         try {
             for (UserInterface element: dbSys.getAllUsers())
             {
-                returnList.add(new User(element.getName(),element.getUsername(), element.getPassword(), element.getAge(), element.getEmail(), element.getRole()));
+                returnList.add(mapUserInterfaceUser(element));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -179,6 +179,27 @@ public class ConsumerSystem
 
     public void saveUser(User user, String role) throws IOException {
         user.setRole(role);
-        dbSys.SaveUser(user);
+        dbSys.updateUserPerms(user);
+    }
+
+    public void deleteUser(User user, String reason)
+    {
+        dbSys.deleteUser(new UserData(user.getName(), user.getUsername(), user.getPassword(), user.getAge(), user.getEmail(), user.getRole()),reason);
+    }
+
+    private User mapUserInterfaceUser(UserInterface user)
+    {
+        return new User(user.getName(),user.getUsername(), user.getPassword(), user.getAge(), user.getEmail(), user.getRole());
+    }
+
+    public ArrayList<User> getAllUsersExcept(User user)
+    {
+        ArrayList<User> returnArray = new ArrayList<>();
+
+        for (UserInterface element: dbSys.getAllUsersExceptXUser(user))
+        {
+            returnArray.add(mapUserInterfaceUser(element));
+        }
+        return returnArray;
     }
 }
