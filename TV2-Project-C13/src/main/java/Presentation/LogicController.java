@@ -325,11 +325,18 @@ public class LogicController implements Initializable {
             findPersonButton.setStyle(NOT_CLICKED_BUTTON);
             findProgramButton.setStyle(CLICKED_BUTTON);
         }
-        if(event.getSource() == programButton1); {
-            programInfoAnchorPane.toFront();
-        }
+        //Something wrong - bliver kaldt af findprogrambutton event.
+
         if(event.getSource() == toSearchButton) {
             programSearchAnchorPane.toFront();
+        }
+    }
+
+    @FXML
+    private void toFrontSearchProgramHandler(ActionEvent event) {
+        if(event.getSource() == programButton1); {
+            programInfoAnchorPane.toFront();
+            System.out.println("Yo");
         }
     }
 

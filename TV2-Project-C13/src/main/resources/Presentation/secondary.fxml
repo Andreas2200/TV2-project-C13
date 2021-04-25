@@ -246,244 +246,6 @@
                   </TitledPane>
                </panes>
             </Accordion>
-            <VBox fx:id="programVBox" prefHeight="834.0" prefWidth="910.0" style="-fx-background-color: #FFFF;">
-               <children>
-                  <AnchorPane prefHeight="824.0" prefWidth="899.0">
-                     <children>
-                        <HBox layoutX="16.0" layoutY="19.0" prefHeight="70.0" prefWidth="860.0" style="-fx-background-color: #d21e1e;">
-                           <children>
-                              <Label prefHeight="27.0" prefWidth="554.0" text="Hvilket program søger du?" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <TextField alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></TextField>
-                              <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="69.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                        </HBox>
-                        <AnchorPane fx:id="programInfoAnchorPane" layoutX="18.0" layoutY="100.0" prefHeight="697.0" prefWidth="837.0" style="-fx-background-color: #FFFF;">
-                           <children>
-                              <HBox layoutX="-3.0" layoutY="-1.0" prefHeight="696.0" prefWidth="857.0">
-                                 <children>
-                                    <VBox prefHeight="696.0" prefWidth="506.0">
-                                       <children>
-                                          <Label text="Programtitel">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="42.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets left="20.0" right="20.0" top="20.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <HBox prefHeight="100.0" prefWidth="200.0">
-                                             <children>
-                                                <Label text="programlængde">
-                                                   <padding>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <Label text="genre">
-                                                   <padding>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <Label text="udgivelsesdato">
-                                                   <padding>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                                   </padding>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                          <Label text="Resumé">
-                                             <VBox.margin>
-                                                <Insets left="20.0" right="20.0" top="20.0" />
-                                             </VBox.margin>
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                          <TextArea prefHeight="200.0" prefWidth="200.0">
-                                             <VBox.margin>
-                                                <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
-                                             </VBox.margin>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </TextArea>
-                                          <Button fx:id="toSearchButton" onAction="#toFrontHandler" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Forrige Side" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets left="20.0" top="200.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="702.0" prefWidth="359.0">
-                                       <children>
-                                          <Label prefHeight="51.0" prefWidth="345.0" text="Krediteringer til programmet">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="28.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <TextArea prefHeight="622.0" prefWidth="351.0">
-                                             <VBox.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                             </VBox.margin>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </TextArea>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="programSearchAnchorPane" layoutX="16.0" layoutY="109.0" prefHeight="694.0" prefWidth="861.0" style="-fx-background-color: #FFFF;">
-                           <children>
-                              <HBox layoutY="6.0" prefHeight="617.0" prefWidth="855.0">
-                                 <children>
-                                    <VBox alignment="CENTER" prefHeight="617.0" prefWidth="421.0">
-                                       <children>
-                                          <Button fx:id="programButton1" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                          <Button fx:id="programButton2" layoutX="67.0" layoutY="285.0" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                          <Button fx:id="programButton3" layoutX="67.0" layoutY="252.0" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                          <Button fx:id="programButton4" layoutX="67.0" layoutY="218.0" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                          <Button fx:id="programButton5" layoutX="67.0" layoutY="185.0" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                          <Button fx:id="programButton6" layoutX="67.0" layoutY="151.0" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </VBox>
-                                    <VBox alignment="CENTER" prefHeight="617.0" prefWidth="421.0">
-                                       <children>
-                                          <Button fx:id="programButton7" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                          <Button fx:id="programButton8" layoutX="67.0" layoutY="285.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                          <Button fx:id="programButton9" layoutX="67.0" layoutY="252.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                          <Button fx:id="programButton10" layoutX="67.0" layoutY="218.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                          <Button fx:id="programButton11" layoutX="67.0" layoutY="185.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                          <Button fx:id="programButton12" layoutX="67.0" layoutY="151.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="36.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                              <HBox layoutY="646.0" prefHeight="25.0" prefWidth="856.0">
-                                 <children>
-                                    <Button fx:id="secondaryButton1" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Forrige" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="20.0" />
-                                       </HBox.margin></Button>
-                                    <Label text="x ud af x">
-                                       <HBox.margin>
-                                          <Insets left="280.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Button fx:id="secondaryButton11" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Næste" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="280.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </VBox>
             <Accordion fx:id="managementAccordion" layoutX="-6.0" prefHeight="824.0" prefWidth="916.0" style="-fx-background-color: #FFFF;">
               <panes>
                 <TitledPane fx:id="createPersonTitledPane" alignment="TOP_LEFT" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="671.0" prefWidth="938.0" text="Create/Edit Person">
@@ -898,6 +660,244 @@
                               <Insets bottom="20.0" left="20.0" right="30.0" />
                            </padding>
                         </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+            <VBox fx:id="programVBox" prefHeight="834.0" prefWidth="910.0" style="-fx-background-color: #FFFF;">
+               <children>
+                  <AnchorPane prefHeight="824.0" prefWidth="899.0">
+                     <children>
+                        <HBox layoutX="16.0" layoutY="19.0" prefHeight="70.0" prefWidth="860.0" style="-fx-background-color: #d21e1e;">
+                           <children>
+                              <Label prefHeight="27.0" prefWidth="554.0" text="Hvilket program søger du?" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></TextField>
+                              <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="69.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </HBox>
+                        <AnchorPane fx:id="programInfoAnchorPane" layoutX="18.0" layoutY="100.0" prefHeight="697.0" prefWidth="837.0" style="-fx-background-color: #FFFF;">
+                           <children>
+                              <HBox layoutX="-3.0" layoutY="-1.0" prefHeight="696.0" prefWidth="857.0">
+                                 <children>
+                                    <VBox prefHeight="696.0" prefWidth="506.0">
+                                       <children>
+                                          <Label text="Programtitel">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="42.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="20.0" right="20.0" top="20.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label text="programlængde">
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label text="genre">
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label text="udgivelsesdato">
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Resumé">
+                                             <VBox.margin>
+                                                <Insets left="20.0" right="20.0" top="20.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextArea prefHeight="200.0" prefWidth="200.0">
+                                             <VBox.margin>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextArea>
+                                          <Button fx:id="toSearchButton" onAction="#toFrontHandler" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Forrige Side" textFill="WHITE">
+                                             <VBox.margin>
+                                                <Insets left="20.0" top="200.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="702.0" prefWidth="359.0">
+                                       <children>
+                                          <Label prefHeight="51.0" prefWidth="345.0" text="Krediteringer til programmet">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="28.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <TextArea prefHeight="622.0" prefWidth="351.0">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextArea>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="programSearchAnchorPane" layoutX="16.0" layoutY="109.0" prefHeight="694.0" prefWidth="861.0" style="-fx-background-color: #FFFF;">
+                           <children>
+                              <HBox layoutY="6.0" prefHeight="617.0" prefWidth="855.0">
+                                 <children>
+                                    <VBox alignment="CENTER" prefHeight="617.0" prefWidth="421.0">
+                                       <children>
+                                          <Button fx:id="programButton1" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="programButton2" layoutX="67.0" layoutY="285.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="programButton3" layoutX="67.0" layoutY="252.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="programButton4" layoutX="67.0" layoutY="218.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="programButton5" layoutX="67.0" layoutY="185.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="programButton6" layoutX="67.0" layoutY="151.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox alignment="CENTER" prefHeight="617.0" prefWidth="421.0">
+                                       <children>
+                                          <Button fx:id="programButton7" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="programButton8" layoutX="67.0" layoutY="285.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="programButton9" layoutX="67.0" layoutY="252.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="programButton10" layoutX="67.0" layoutY="218.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="programButton11" layoutX="67.0" layoutY="185.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="programButton12" layoutX="67.0" layoutY="151.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="36.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox layoutY="646.0" prefHeight="25.0" prefWidth="856.0">
+                                 <children>
+                                    <Button fx:id="secondaryButton1" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Forrige" textFill="WHITE">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin></Button>
+                                    <Label text="x ud af x">
+                                       <HBox.margin>
+                                          <Insets left="280.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Button fx:id="secondaryButton11" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Næste" textFill="WHITE">
+                                       <HBox.margin>
+                                          <Insets left="280.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
                </children>
