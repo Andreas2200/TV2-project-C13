@@ -10,3 +10,4 @@
 9;Freja Kongslev;20;Testmail@test.dk
 10;Sigurd;22;Sigurdskelmose@gmail.com
 11;Sigvald;45;Sigvaldsucks@tmail.com
+12;Sarah;44;Sarah.har@mail.com

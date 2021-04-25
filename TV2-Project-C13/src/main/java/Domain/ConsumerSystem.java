@@ -66,7 +66,11 @@ public class ConsumerSystem
     public void createEditPerson(int tempAge, String tempEmail, String tempName) {
         Person tempPerson = new Person(tempAge, tempEmail, tempName);
         try {
-            dbSys.SavePerson(tempPerson);
+            if(!dbSys.doesPersonExist(tempPerson.getName(), tempPerson.getAge(), tempPerson.getEmail())){
+                dbSys.SavePerson(tempPerson);
+            } else{
+                System.out.println("That Person already exists..");
+            }
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -146,6 +150,7 @@ public class ConsumerSystem
 
         return returnList;
     }
+
 
     public ArrayList<Person> getAllPersons()
     {

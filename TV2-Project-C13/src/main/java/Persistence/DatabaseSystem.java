@@ -16,9 +16,9 @@ class Main {
         dbSys = dbSys.getInstance();
         //User user = null;
         //System.out.println(user = (User) dbSys.getUser("Admin", "password"));
-        System.out.println(String.valueOf(dbSys.SearchPerson("tom")));
-        System.out.println(String.valueOf(dbSys.getAllPersons()));
-
+        //System.out.println(String.valueOf(dbSys.SearchPerson("tom")));
+        //System.out.println(String.valueOf(dbSys.getAllPersons()));
+        System.out.println(dbSys.doesPersonExist("Sigurd",22,"Sigurdskelmose@gmail.com"));
     }
 }
 
@@ -489,6 +489,25 @@ public class DatabaseSystem {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public boolean doesPersonExist(String name, int age, String email) {
+        try {
+            Scanner reader = new Scanner(new File("persons.txt"));
+            while(reader.hasNextLine()) {
+                String read = reader.nextLine();
+                String [] readSplit = read.split(";");
+
+                if(readSplit[1].equals(name) && readSplit[2].equals(String.valueOf(age)) && readSplit[3].equals(email)) {
+                    System.out.println(readSplit);
+                    return true;
+
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     //SearchParam uses letters to narrow the search result down, type is the searched var in object, file is the file the data is in
