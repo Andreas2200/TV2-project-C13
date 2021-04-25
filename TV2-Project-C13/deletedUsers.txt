@@ -1,0 +1,7 @@
+User: tobster;Deleted Reason: Havde "Nigger" som sit password;
+User: morten420;Deleted Reason: Akavet person;
+User: tester;Deleted Reason: Slettet grundet test bruger;
+User: asd;Deleted Reason: test;
+User: asd;Deleted Reason: test;
+User: testt;Deleted Reason: Test;
+User: test;Deleted Reason: Test;

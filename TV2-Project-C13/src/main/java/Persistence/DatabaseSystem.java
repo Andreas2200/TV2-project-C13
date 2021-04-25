@@ -580,10 +580,85 @@ public class DatabaseSystem {
                     returnLines.add(line);
                 }
             }
+            reader.close();
         }
         catch (Exception e){
             throw new FileNotFoundException();
         }
         return returnLines;
+    }
+
+    private void updateUsers(ArrayList<UserInterface> users)
+    {
+        try (FileWriter writer = new FileWriter(new File("usernames.txt")))
+        {
+            for (UserInterface user: users)
+            {
+                writer.write( user.getUsername() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getRole() + ";" + user.getEmail() + ";" + user.getAge() + "\n" );
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateUserPerms(UserInterface user)
+    {
+        ArrayList<UserInterface> tempUserArray = getAllUsers();
+        ArrayList<UserInterface> updateUserArray = new ArrayList<>();
+
+        for (UserInterface element: tempUserArray)
+        {
+            if(element.getUsername().equals(user.getUsername()))
+            {
+                updateUserArray.add(user);
+            }
+            else
+            {
+                updateUserArray.add(element);
+            }
+        }
+
+        updateUsers(updateUserArray);
+    }
+
+    public void deleteUser(UserData user, String reason)
+    {
+        ArrayList<UserInterface> tempUserArray = getAllUsers();
+        ArrayList<UserInterface> updateUserArray = new ArrayList<>();
+
+        try(FileWriter writer = new FileWriter(new File("deletedUsers.txt"),true))
+        {
+            writer.write("User: " + user.getUsername() + ";Deleted Reason: " + reason + ";\n");
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        for (UserInterface element: tempUserArray)
+        {
+            if(!element.getUsername().equals(user.getUsername()))
+            {
+                updateUserArray.add(element);
+            }
+        }
+        updateUsers(updateUserArray);
+    }
+
+    public ArrayList<UserInterface> getAllUsersExceptXUser(UserInterface user)
+    {
+        ArrayList<UserInterface> tempUserArray = getAllUsers();
+        ArrayList<UserInterface> returnArray = new ArrayList<>();
+
+        for (UserInterface element: tempUserArray)
+        {
+            if(!element.getUsername().equals(user.getUsername()))
+            {
+                returnArray.add(element);
+            }
+        }
+        return returnArray;
     }
 }
