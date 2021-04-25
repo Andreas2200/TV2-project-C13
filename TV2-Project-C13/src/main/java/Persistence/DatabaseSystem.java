@@ -4,7 +4,6 @@ package Persistence;
 import Domain.User;
 import Interfaces.*;
 import Domain.Occupation;
-
 import java.io.*;
 import java.time.LocalTime;
 import java.util.*;

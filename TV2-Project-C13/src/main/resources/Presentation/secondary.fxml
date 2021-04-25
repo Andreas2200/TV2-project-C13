@@ -408,7 +408,7 @@
                                     </VBox>
                                     <VBox alignment="CENTER" prefHeight="617.0" prefWidth="421.0">
                                        <children>
-                                          <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton7" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -416,7 +416,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button layoutX="67.0" layoutY="285.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton8" layoutX="67.0" layoutY="285.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -424,7 +424,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button layoutX="67.0" layoutY="252.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton9" layoutX="67.0" layoutY="252.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -432,7 +432,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button layoutX="67.0" layoutY="218.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton10" layoutX="67.0" layoutY="218.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -440,7 +440,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button layoutX="67.0" layoutY="185.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton11" layoutX="67.0" layoutY="185.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -448,7 +448,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button layoutX="67.0" layoutY="151.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton12" layoutX="67.0" layoutY="151.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>

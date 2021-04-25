@@ -60,7 +60,8 @@ public class LogicController implements Initializable {
     private ImageView userImageView, closeButtonImageView;
     @FXML
     private Button closeButton, manageCreditsButton, findPersonButton, findProgramButton, manageUsersButton,
-            programButton1, programButton2, programButton3, programButton4, programButton5, programButton6, toSearchButton,
+            programButton1, programButton2, programButton3, programButton4, programButton5, programButton6, programButton7, programButton8,
+            programButton9, programButton10, programButton11, programButton12, toSearchButton,
             saveProgramButton, deleteProgramButton, editUserButton;
     @FXML
     private TitledPane addCreditTitledPane, createCreditTitledPane, createProgramTitledPane, createPersonTitledPane,
