@@ -450,7 +450,7 @@ public class LogicController implements Initializable {
         addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
         addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
         editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
-        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsers()));
+        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
         deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
     }
 

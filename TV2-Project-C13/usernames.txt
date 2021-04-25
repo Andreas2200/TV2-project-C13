@@ -4,5 +4,4 @@ admin;password;Sigurd Skelmose;Admin;admins@email.com;22
 user;password;Sigurd Skelmose;User;user@email.com;22
 sigster;password;Sigudrr;User;Sigstser@gmail.com;0
 sigi123;password;Sigurd;User;SigurdSkelmose@gmail.com;3
-tobster;nigger;Tobias;User;Tobber@email.com;22
 sigko;password;Sigrid;User;Sigridko@gmail.com;6
