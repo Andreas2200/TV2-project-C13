@@ -163,6 +163,7 @@ public class LogicController implements Initializable {
             ArrayList<String> list = cs.searchPerson(searchPersonField.getText());
             final ObservableList<String> details = FXCollections.observableArrayList(list);
 
+            // Smid værdierne ind i hver deres arraylist, så cellerne kan hente værdierne.
             ArrayList<String> personList = new ArrayList<>();
             ArrayList<String> occupationList = new ArrayList<>();
             ArrayList<String> roleList = new ArrayList<>();
@@ -177,6 +178,8 @@ public class LogicController implements Initializable {
                 programList.add(elementValues[3]);
                 contactList.add(elementValues[4]);
             }
+
+            //Indsæt værdierne fra listen i de respektive celler
             personCol.setCellValueFactory(cellData -> {
                 Integer rowIndex = cellData.getValue();
                 return new ReadOnlyStringWrapper(personList.get(rowIndex));
@@ -197,21 +200,24 @@ public class LogicController implements Initializable {
                 Integer rowIndex = cellData.getValue();
                 return new ReadOnlyStringWrapper(contactList.get(rowIndex));
             });
-            for(int i = 0; i < personList.size() && i < occupationList.size(); i++) {
+
+            // Indsæt cellerne i tableview
+
+            for(int i = 0; i < personList.size(); i++) {
                 findPersonTableView.getItems().add(i);
             }
+
             //cs.searchPerson(searchPersonField.getText());
             //System.out.println(cs.searchPerson(searchPersonField.getText()));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 
-        @FXML
-    private void createEditProgram(ActionEvent event) throws Exception {
+    @FXML
+    private void createEditProgram(ActionEvent event) throws NumberFormatException {
         if(event.getSource() == saveProgramButton) {
             //converting releasedate from String to Date
             //String tempDate = releaseDateField.getText();
@@ -223,9 +229,20 @@ public class LogicController implements Initializable {
             ArrayList<Genre> tempGenres = new ArrayList<>();
             tempGenres.add(genreComboBox.getSelectionModel().getSelectedItem());
 
-            cs.createEditProgram(programTitleField.getText(), releaseDateField.getText(), showedOnField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), 1);
             succesProgramField.setVisible(true);
-            updateComboBox();
+            succesProgramField.setText("Program findes allerede..");
+            succesProgramField.setStyle("-fx-text-fill: RED");
+
+            if(!cs.doesProgramExist(programTitleField.getText())){
+                cs.createEditProgram(programTitleField.getText(), releaseDateField.getText(), showedOnField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), 1);
+                succesProgramField.setText("Program blev oprettet!");
+                succesProgramField.setStyle("-fx-text-fill: GREEN");
+                updateComboBox();
+                System.out.println(durationTime);
+            }
+            //cs.createEditProgram(programTitleField.getText(), releaseDateField.getText(), showedOnField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), 1);
+            //succesProgramField.setVisible(true);
+            //updateComboBox();
         }
 
     }

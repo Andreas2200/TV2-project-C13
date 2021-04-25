@@ -20,8 +20,8 @@ public class ConsumerSystem
     static DatabaseSystem dbSys = new DatabaseSystem();
 
     public ArrayList<String> searchPerson(String searchString) throws Exception {
-        ArrayList<String> persons = new ArrayList<>();
-        String searchedPerson = "";
+        ArrayList<String> people = new ArrayList<>();
+        String nameString = "";
         String occupationString = "";
         String roleString = "";
         String programString = "";
@@ -43,15 +43,15 @@ public class ConsumerSystem
                     for(String e: getProgramString) {
                         String[] programValues = e.split(";");
                         programString = programValues[1];
-                        searchedPerson = p.getName() + ";" + occupationString + ";" + roleString + ";" + programString + ";" + p.getEmail() + "\n";
-                        persons.add(searchedPerson);
+                        nameString = p.getName() + ";" + occupationString + ";" + roleString + ";" + programString + ";" + p.getEmail() + "\n";
+                        people.add(nameString);
                     }
                 }
             }
         } catch(Exception e) {
             e.printStackTrace();
         }
-        return persons;
+        return people;
     }
 
     private void saveCredit()
@@ -198,10 +198,23 @@ public class ConsumerSystem
     {
 
     }
+    public boolean doesProgramExist(String name) {
+        if(!dbSys.doesProgramExist(name)){
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public void createEditProgram(String tempName, String tempDate, String showedOn, LocalTime tempDuration, ArrayList<Genre> tempGenre, String tempDesc, int createrID) {
         Program tempProgram = new Program(tempName, tempDate, showedOn, tempDuration, tempGenre, tempDesc, createrID);
-        dbSys.SaveProgram(tempProgram);
+        if(!dbSys.doesProgramExist(tempProgram.getName())) {
+            dbSys.SaveProgram(tempProgram);
+            System.out.println(tempProgram.getDuration());
+        } else {
+            System.out.println("Program already exists idiot..");
+        }
+
     }
 
     public void saveCreditToProgram(Credits credit, int programID)

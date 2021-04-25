@@ -11,3 +11,5 @@
 45;11;Sigvaldsucks@tmail.com;Sigvald;KOREOGRAFI
 22;8;Sivin20@student.sdu.dk;Sigurd;SPONSORER
 22;10;Sigurdskelmose@gmail.com;Sigurd;SPONSORER
+19;13;Andreaserlang@hotman.com;Andreas;CASTING
+19;13;Andreaserlang@hotman.com;Andreas;SKUESPILLER

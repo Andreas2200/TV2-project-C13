@@ -47,7 +47,8 @@ public class DatabaseSystem {
             Date date = new Date();
             date = Calendar.getInstance().getTime();
             //Watch length
-            String[] splittetTime = (dataValues.get(4 + i).split(","));
+        // Simon, hvorfor skulle den split på komma og ikke kolon?
+            String[] splittetTime = (dataValues.get(4 + i).split(":"));
             LocalTime time = LocalTime.of(Integer.parseInt(splittetTime[0]), Integer.parseInt(splittetTime[1]), Integer.parseInt(splittetTime[2]));
 
             //Genre
@@ -130,7 +131,7 @@ public class DatabaseSystem {
             reader.close();
 
             FileWriter writer = new FileWriter(new File("programs.txt"), true);
-            //Simon hjælp!
+
             String genres = "";
             for (GenreInterface genre : program.getGenre()){
                 genres += genre + ",";
@@ -501,7 +502,22 @@ public class DatabaseSystem {
                 if(readSplit[1].equals(name) && readSplit[2].equals(String.valueOf(age)) && readSplit[3].equals(email)) {
                     System.out.println(readSplit);
                     return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+    public boolean doesProgramExist(String name) {
+        try {
+            Scanner reader = new Scanner(new File("programs.txt"));
+            while(reader.hasNextLine()) {
+                String read = reader.nextLine();
+                String[] readSplit = read.split(";");
+                if(readSplit[1].equals(name)) {
+                    return true;
                 }
             }
         } catch (FileNotFoundException e) {

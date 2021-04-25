@@ -1,8 +1,10 @@
-0;Bob the builder;ACTION,;121,3,3;1,30,2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
-1;Bob the builder;ACTION,;121,3,3;1,30,2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
-2;Bob the builder;ACTION,;121,3,3;1,30,2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
-3;Bob the builder;ACTION,;121,3,3;1,30,2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
-4;Bob the builder;ACTION,;121,3,3;1,30,2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
-5;Bob the builder;ACTION,;121,3,3;1,30,2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
-6;Bob the builder;ACTION,;121,3,3;1,30,2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
-7;Sigurd Bjørnetime;BØRNEFILM,;09/09/2006;01,30,45;Sigurd og sin bjørn laver sjov tv;1
+0;Bob the builder;ACTION,;121,3,3;1:30:2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
+1;Bob the builder;ACTION,;121,3,3;1:30:2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
+2;Bob the builder;ACTION,;121,3,3;1:30:2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
+3;Bob the builder;ACTION,;121,3,3;1:30:2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
+4;Bob the builder;ACTION,;121,3,3;1:30:2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
+5;Bob the builder;ACTION,;121,3,3;1:30:2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
+6;Bob the builder;ACTION,;121,3,3;1:30:2;BOB HAN BYGGER SÅ LORTET GÅR I STYKKER!;0
+7;Sigurd Bjørnetime;BØRNEFILM,;09/09/2006;01:30:45;Sigurd og sin bjørn laver sjov tv;1
+8;Sofie er lækker;DOKUMENTAR,;25/03/2021;01:32:43;Sofie er lækker, og min kæreste lmao;1
+9;Sofie er lækker(S2);DRAMA,;06/06/2006;01:32:33;Sofie er lækker og hun kan lide min potteplante;1
