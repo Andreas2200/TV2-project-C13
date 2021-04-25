@@ -66,7 +66,7 @@ public class ConsumerSystem
     public void createEditPerson(int tempAge, String tempEmail, String tempName) {
         Person tempPerson = new Person(tempAge, tempEmail, tempName);
         try {
-            if(!dbSys.doesPersonExist(tempPerson.getName(), tempPerson.getAge(), tempPerson.getEmail())){
+            if(!dbSys.doesPersonExist(tempPerson.getEmail())){
                 dbSys.SavePerson(tempPerson);
             } else{
                 System.out.println("That Person already exists..");

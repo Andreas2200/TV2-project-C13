@@ -18,7 +18,7 @@ class Main {
         //System.out.println(user = (User) dbSys.getUser("Admin", "password"));
         //System.out.println(String.valueOf(dbSys.SearchPerson("tom")));
         //System.out.println(String.valueOf(dbSys.getAllPersons()));
-        System.out.println(dbSys.doesPersonExist("Sigurd",22,"Sigurdskelmose@gmail.com"));
+        System.out.println(dbSys.doesPersonExist("Sigurdskelmose@gmail.com"));
     }
 }
 
@@ -492,14 +492,14 @@ public class DatabaseSystem {
         }
     }
 
-    public boolean doesPersonExist(String name, int age, String email) {
+    public boolean doesPersonExist(String email) {
         try {
             Scanner reader = new Scanner(new File("persons.txt"));
             while(reader.hasNextLine()) {
                 String read = reader.nextLine();
                 String [] readSplit = read.split(";");
 
-                if(readSplit[1].equals(name) && readSplit[2].equals(String.valueOf(age)) && readSplit[3].equals(email)) {
+                if(readSplit[3].equals(email)) {
                     System.out.println(readSplit);
                     return true;
                 }
@@ -535,12 +535,15 @@ public class DatabaseSystem {
         ArrayList<PersonInterface> dataValues = getAllPersons();
 
         //throw out all of the lines which is not searched for
-        for (int i = 0; i < dataValues.size() - 1; i++){
-            splitValue = SplitByChar(dataValues.get(i).getName(), searchParam.length());
-            splitValue = splitValue.toLowerCase();
-            if (splitValue.equals(searchParam)){
-                searchItems.add(dataValues.get(i));
-                //System.out.println(dataValues.get(i).getName());
+        for (int i = 0; i < dataValues.size(); i++){
+            if(dataValues.get(i).getName().length() == searchParam.length()) {
+                splitValue = SplitByChar(dataValues.get(i).getName(), searchParam.length());
+                splitValue = splitValue.toLowerCase();
+
+                if (splitValue.equals(searchParam)) {
+                    searchItems.add(dataValues.get(i));
+                    //System.out.println(dataValues.get(i).getName());
+                }
             }
         }
         //sort em

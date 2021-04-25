@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import Domain.ConsumerSystem;
@@ -119,7 +120,7 @@ public class LoginController implements Initializable {
     @FXML
     private void switchToSecondary(ActionEvent event) throws IOException
     {
-        activeUser = cs.logIn(userNameField.getText(),passwordField.getText());
+        activeUser = cs.logIn(userNameField.getText().toLowerCase(),passwordField.getText());
 
         if(activeUser == null)
         {
@@ -137,7 +138,7 @@ public class LoginController implements Initializable {
         var key = keyEvent.getCode();
         switch (key) {
             case ENTER:
-                activeUser = cs.logIn(userNameField.getText(),passwordField.getText());
+                activeUser = cs.logIn(userNameField.getText().toLowerCase(),passwordField.getText());
 
                 if(activeUser == null)
                 {
