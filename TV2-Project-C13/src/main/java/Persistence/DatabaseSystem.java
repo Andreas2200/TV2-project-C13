@@ -535,7 +535,7 @@ public class DatabaseSystem {
 
         //throw out all of the lines which is not searched for
         for (int i = 0; i < dataValues.size(); i++){
-            if(dataValues.get(i).getName().length() == searchParam.length()) {
+            if(dataValues.get(i).getName().length() >= searchParam.length()) {
                 splitValue = SplitByChar(dataValues.get(i).getName(), searchParam.length());
                 splitValue = splitValue.toLowerCase();
 

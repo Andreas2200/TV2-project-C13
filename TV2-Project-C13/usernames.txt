@@ -1,5 +1,4 @@
 morten420;Pa22Wo7d123;Morten Thomsen;Admin;Morten@email.com;34
-69karsten69;spiderMonkey;Karsten Kristensen;Karsten@email.com;User;16
 admin;password;Sigurd Skelmose;Admin;admins@email.com;22
 user;password;Sigurd Skelmose;User;user@email.com;22
 sigster;password;Sigudrr;User;Sigstser@gmail.com;0

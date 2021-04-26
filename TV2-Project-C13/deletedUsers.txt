@@ -5,4 +5,5 @@ User: asd;Deleted Reason: test;
 User: asd;Deleted Reason: test;
 User: testt;Deleted Reason: Test;
 User: test;Deleted Reason: Test;
+User: 69karsten69;Deleted Reason: Forkert format bruger;
 User: tobster;Deleted Reason: Tobias har skrevet "nigger" som password - det er ikke okay;
