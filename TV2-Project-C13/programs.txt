@@ -8,3 +8,18 @@
 7;Sigurd Bjørnetime;BØRNEFILM,;09/09/2006;01:30:45;Sigurd og sin bjørn laver sjov tv;1
 8;Sofie er lækker;DOKUMENTAR,;25/03/2021;01:32:43;Sofie er lækker, og min kæreste lmao;1
 9;Sofie er lækker(S2);DRAMA,;06/06/2006;01:32:33;Sofie er lækker og hun kan lide min potteplante;1
+10;Whats up dog;BØRNEFILM,;26/04/2021;01:30:20;KJHASD;1
+11;Whats up dog 2;KOMEDIE,;26/04/2021;01:25:20;asda;1
+12;Whats up dog 3;KOMEDIE,;26/04/2021;01:25:20;asda;1
+13;Whats up dog 5;KOMEDIE,;26/04/2021;01:25:20;asda;1
+14;Whats up dog 4;KOMEDIE,;26/04/2021;01:25:20;asda;1
+15;Whats up dog 6;ACTION,;26/04/2021;01:45:20;asdasdas;1
+16;Whats up dog 7;ACTION,;26/04/2021;01:45:20;asdasdas;1
+17;Whats up dog 8;ACTION,;26/04/2021;01:45:20;asdasdas;1
+18;Whats up dog 9;ACTION,;26/04/2021;01:45:20;asdasdas;1
+19;Whats up dog 11;ACTION,;26/04/2021;01:45:20;asdasdas;1
+20;Whats up dog 12;KOMEDIE,;26/04/2021;01:56:20;asd;1
+21;Whats up dog 13;KOMEDIE,;26/04/2021;01:56:20;asd;1
+22;Whats up dog 14;KOMEDIE,;26/04/2021;01:56:20;asd;1
+23;Whats up dog 15;KOMEDIE,;26/04/2021;01:56:20;asd;1
+24;Whats up dog 16;KOMEDIE,;26/04/2021;01:56:20;asd;1

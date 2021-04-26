@@ -184,6 +184,21 @@ public class ConsumerSystem
         return returnList;
     }
 
+    public ArrayList<CreditInterface> getCredits(int programID)
+    {
+        return dbSys.getCredits(programID);
+    }
+
+    public ArrayList<Program> getSearchedProgram(String title) {
+        ArrayList<Program> returnList = new ArrayList<>();
+
+        for (ProgramInterface element: dbSys.getProgram(title) )
+        {
+            returnList.add(mapProgramInterfaceProgram(element));
+        }
+        return returnList;
+    }
+
     private void changeUserRole()
     {
 
@@ -242,6 +257,16 @@ public class ConsumerSystem
     private User mapUserInterfaceUser(UserInterface user)
     {
         return new User(user.getName(),user.getUsername(), user.getPassword(), user.getAge(), user.getEmail(), user.getRole());
+    }
+
+    private Program mapProgramInterfaceProgram(ProgramInterface element)
+    {
+        ArrayList<Genre> genres = new ArrayList<>();
+        for (GenreInterface genreInterfaces: element.getGenre())
+        {
+            genres.add(Genre.valueOf(genreInterfaces.toString()));
+        }
+        return new Program(element.getId(), element.getName(), element.getReleaseDate(), element.getShowedOn(), element.getDuration(), genres, element.getDescription(), element.getCreatorID());
     }
 
     public ArrayList<User> getAllUsersExcept(User user)

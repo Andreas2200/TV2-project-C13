@@ -12,12 +12,16 @@ import java.util.*;
 class Main {
     static DatabaseSystem dbSys = new DatabaseSystem();
     public static void main(String[] args) throws Exception {
-        dbSys = dbSys.getInstance();
+        int x = 12;
+        int y = 12;
+        System.out.println(x / y);
+        System.out.println(x%y);
+        //dbSys = dbSys.getInstance();
         //User user = null;
         //System.out.println(user = (User) dbSys.getUser("Admin", "password"));
         //System.out.println(String.valueOf(dbSys.SearchPerson("tom")));
         //System.out.println(String.valueOf(dbSys.getAllPersons()));
-        System.out.println(dbSys.doesPersonExist("Sigurdskelmose@gmail.com"));
+        //System.out.println(dbSys.doesPersonExist("Sigurdskelmose@gmail.com"));
     }
 }
 
@@ -32,10 +36,15 @@ public class DatabaseSystem {
         return instance;
     }
 
-    public ArrayList<ProgramInterface> getProgram() throws Exception {
+    public ArrayList<ProgramInterface> getProgram() {
         //readlines and put em in a list
         //ArrayList<ProgramInterface> searchItems = new ArrayList<>();    hvad gør den her linje???
-        ArrayList<String> dataValues = readDataValues("programs.txt");
+        ArrayList<String> dataValues = null;
+        try {
+            dataValues = readDataValues("programs.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         ArrayList<ProgramInterface> programs = new ArrayList<>();
 
         for (int i = 0; i < dataValues.size(); i += 7){
@@ -52,7 +61,7 @@ public class DatabaseSystem {
 
             //Genre
             ArrayList<GenreData> genres = new ArrayList<>();
-            String[] splittetGenres = dataValues.get(2).split(",");
+            String[] splittetGenres = dataValues.get(2+i).split(",");
             for (int j = 0; j < splittetGenres.length; j++){
                 genres.add(GenreData.valueOf(splittetGenres[j]));
             }
@@ -60,9 +69,14 @@ public class DatabaseSystem {
             ProgramData program = new ProgramData(Integer.parseInt(dataValues.get(0 + i)), dataValues.get(1 + i), dataValues.get(3+i), null, time, genres, dataValues.get(5 + i), Integer.parseInt(dataValues.get(6 + i)));
 
             //credits
-            Scanner reader = new Scanner(new File("credits.txt"));
+            Scanner reader = null;
+            try {
+                reader = new Scanner(new File("credit.txt"));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             while (reader.hasNextLine()){
-                int programID = Integer.parseInt(reader.nextLine().split(";")[0]);
+                int programID = Integer.parseInt(reader.nextLine().split(";")[2]);
                 if (Integer.parseInt(dataValues.get(0 + i)) == programID) {
                     for (CreditInterface credit : (getCredits(programID))){
                         program.addCredit(credit);
@@ -101,7 +115,7 @@ public class DatabaseSystem {
         return null;
     }
 
-    public ArrayList<ProgramInterface> getProgram(String title) throws Exception {
+    public ArrayList<ProgramInterface> getProgram(String title) {
         ArrayList<ProgramInterface> programs = getProgram();
         //Sort em
         Collections.sort(programs, Comparator.comparing(ProgramInterface::getName));
@@ -187,11 +201,11 @@ public class DatabaseSystem {
         return credits;
     }
 
-    public ArrayList<CreditInterface> getCredits(int programID) throws Exception {
+    public ArrayList<CreditInterface> getCredits(int programID){
         ArrayList<CreditInterface> credits = new ArrayList<>();
 
         try {
-            Scanner reader = new Scanner(new File("credits.txt"));
+            Scanner reader = new Scanner(new File("credit.txt"));
 
             while (reader.hasNextLine()){
                 String read = reader.nextLine();
@@ -202,7 +216,7 @@ public class DatabaseSystem {
                     if (Integer.parseInt(readSplit[2]) != programID) continue;
                 }
                 else {
-                    if (Integer.parseInt(readSplit[3]) != programID) continue;
+                    if (Integer.parseInt(readSplit[2]) != programID) continue;
                 }
 
                 CreditData credit;
@@ -210,7 +224,7 @@ public class DatabaseSystem {
                     credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
                 }
                 else {
-                    credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
+                    credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[3]);
                 }
                 credits.add(credit);
             }
@@ -565,7 +579,7 @@ public class DatabaseSystem {
         return text.substring(0, splitBy);
     }
 
-    private ArrayList<String> readDataValues(String path) throws Exception {
+    private ArrayList<String> readDataValues(String path) throws FileNotFoundException {
         ArrayList<String> readLines = new ArrayList<>();
         ArrayList<String> returnLines = new ArrayList<>();
         try {
@@ -581,8 +595,8 @@ public class DatabaseSystem {
             }
             reader.close();
         }
-        catch (Exception e){
-            throw new FileNotFoundException();
+        catch (FileNotFoundException e){
+            e.printStackTrace();
         }
         return returnLines;
     }

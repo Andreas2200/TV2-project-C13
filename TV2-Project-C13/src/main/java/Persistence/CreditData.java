@@ -29,4 +29,8 @@ public class CreditData implements CreditInterface {
         return characterName;
     }
 
+    @Override
+    public String toString() {
+        return "Name: " + person.getName() + " Occupation: " + occupation + " Character name: " + characterName;
+    }
 }

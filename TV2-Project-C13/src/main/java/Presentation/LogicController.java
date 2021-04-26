@@ -2,30 +2,25 @@ package Presentation;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import Domain.*;
-import Interfaces.PersonInterface;
-import Persistence.GenreData;
+import Interfaces.CreditInterface;
+import Interfaces.GenreInterface;
+import Interfaces.ProgramInterface;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Light;
@@ -41,6 +36,15 @@ import javafx.stage.Stage;
 
 public class LogicController implements Initializable {
 
+    public Button secondaryButton11,secondaryButton1;
+    public Label pageCounter;
+    public TextArea searchedProgramCreditsTXT;
+    public TextArea searchedProgramDescriptionTXT;
+    public Label searchedProgramReleaseDate;
+    public Label searchedProgramGenre;
+    public Label searchedProgramDuration;
+    public Label searchedProgramTitle;
+    public TextField searchProgramField;
     @FXML
     private CheckBox deleteUserCheckBox;
     @FXML
@@ -63,6 +67,9 @@ public class LogicController implements Initializable {
             programButton1, programButton2, programButton3, programButton4, programButton5, programButton6, programButton7, programButton8,
             programButton9, programButton10, programButton11, programButton12, toSearchButton,
             saveProgramButton, deleteProgramButton, editUserButton;
+
+    private Button[] programButtons = new Button[12];
+
     @FXML
     private TitledPane addCreditTitledPane, createCreditTitledPane, createProgramTitledPane, createPersonTitledPane,
             viewUsersTitledPane, requestsTitledPane, editUserTitledPane, deleteUserTitledPane;
@@ -101,13 +108,19 @@ public class LogicController implements Initializable {
     private static final String NOT_CLICKED_BUTTON = "-fx-background-color: #d21e1e; -fx-text-fill: #FFFF";
     private static final String CLICKED_BUTTON = "-fx-background-color: #FFFF; -fx-background-color: white !important; -fx-text-fill: #AFAFAF;";
 
+    private int pageNumber = 1;
+    private final int NUMBEROFPROGRAMSTODISPLAY = 12;
+    private int numberOfAdditionalPages;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         succesProgramField.setVisible(false);
 
         activeUser = LoginController.activeUser;
         cs = LoginController.cs;
+        numberOfAdditionalPages = cs.getAllPrograms().size() / NUMBEROFPROGRAMSTODISPLAY;
 
+        setUpProgramButtons();
         //Plots values into comboBox
         updateComboBox();
 
@@ -267,6 +280,25 @@ public class LogicController implements Initializable {
         //creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
     }
 
+    private void setUpProgramButtons()
+    {
+        programButtons[0] = programButton1;
+        programButtons[1] = programButton2;
+        programButtons[2] = programButton3;
+        programButtons[3] = programButton4;
+        programButtons[4] = programButton5;
+        programButtons[5] = programButton6;
+        programButtons[6] = programButton7;
+        programButtons[7] = programButton8;
+        programButtons[8] = programButton9;
+        programButtons[9] = programButton10;
+        programButtons[10] = programButton11;
+        programButtons[11] = programButton12;
+        for (int i = 0; i < 12; i++)
+        {
+            programButtons[i].setVisible(false);
+        }
+    }
 
     private void setUserPermission()
     {
@@ -320,6 +352,7 @@ public class LogicController implements Initializable {
         }
         if(event.getSource() == findProgramButton) {
             programVBox.toFront();
+            setProgramsAllPrograms();
             manageCreditsButton.setStyle(NOT_CLICKED_BUTTON);
             manageUsersButton.setStyle(NOT_CLICKED_BUTTON);
             findPersonButton.setStyle(NOT_CLICKED_BUTTON);
@@ -334,10 +367,73 @@ public class LogicController implements Initializable {
 
     @FXML
     private void toFrontSearchProgramHandler(ActionEvent event) {
-        if(event.getSource() == programButton1); {
-            programInfoAnchorPane.toFront();
-            System.out.println("Yo");
+
+        if(searchProgramField.getText().equals(""))
+        {
+            for (int i = 0; i < programButtons.length; i++)
+            {
+                if(event.getSource() == programButtons[i]) {
+                    Program tempProgram = getChosenProgram(i);
+
+                    searchedProgramTitle.setText(tempProgram.getName());
+                    searchedProgramDuration.setText(tempProgram.getDuration().toString());
+                    searchedProgramDescriptionTXT.setText(tempProgram.getDescription());
+                    searchedProgramReleaseDate.setText(tempProgram.getReleaseDate());
+
+                    String genres = "";
+                    for (GenreInterface element: tempProgram.getGenre())
+                    {
+                        genres += Genre.valueOf(element.toString()) + "\n";
+                    }
+
+                    String credits = "";
+                    for (CreditInterface element: cs.getCredits(tempProgram.getId()))
+                    {
+                        credits += element.toString() + "\n";
+                    }
+                    searchedProgramGenre.setText(genres);
+                    searchedProgramCreditsTXT.setText(credits);
+
+                    searchedProgramCreditsTXT.setDisable(true);
+                    searchedProgramDescriptionTXT.setDisable(true);
+
+                    programInfoAnchorPane.toFront();
+                    break;
+                }
+            }
         }
+        else
+        {
+            for (int i = 0; i < programButtons.length; i++) {
+                if (event.getSource() == programButtons[i]) {
+                    Program tempProgram = getChosenSearchedProgram(i);
+
+                    searchedProgramTitle.setText(tempProgram.getName());
+                    searchedProgramDuration.setText(tempProgram.getDuration().toString());
+                    searchedProgramDescriptionTXT.setText(tempProgram.getDescription());
+                    searchedProgramReleaseDate.setText(tempProgram.getReleaseDate());
+
+                    String genres = "";
+                    for (GenreInterface element : tempProgram.getGenre()) {
+                        genres += Genre.valueOf(element.toString()) + "\n";
+                    }
+
+                    String credits = "";
+                    for (CreditInterface element : cs.getCredits(tempProgram.getId())) {
+                        credits += element.toString() + "\n";
+                    }
+                    searchedProgramGenre.setText(genres);
+                    searchedProgramCreditsTXT.setText(credits);
+
+                    searchedProgramCreditsTXT.setDisable(true);
+                    searchedProgramDescriptionTXT.setDisable(true);
+
+                    programInfoAnchorPane.toFront();
+                    break;
+                }
+            }
+        }
+
     }
 
     @FXML
@@ -419,6 +515,74 @@ public class LogicController implements Initializable {
         });
     }
 
+    private Program getChosenProgram(int buttonID)
+    {
+        return cs.getAllPrograms().get(buttonID + ((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY));
+    }
+
+    private Program getChosenSearchedProgram(int buttonID)
+    {
+        return cs.getSearchedProgram(searchProgramField.getText()).get(buttonID + ((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY));
+    }
+
+    private void setProgramsAllPrograms()
+    {
+        ArrayList<Program> programs = cs.getAllPrograms();
+
+        setUpProgramButtons();
+
+        if(pageNumber == numberOfAdditionalPages +1)
+        {
+            int numberOfActiveButtons = programs.size() - ((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY);
+            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalPages+1));
+            for (int i = 0; i < numberOfActiveButtons; i++)
+            {
+                programButtons[i].setVisible(true);
+                programButtons[i].setText(programs.get(i+((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
+            }
+        }
+        else
+        {
+            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalPages+1));
+            for (int i = 0; i < NUMBEROFPROGRAMSTODISPLAY; i++)
+            {
+                programButtons[i].setVisible(true);
+                programButtons[i].setText(programs.get(i+((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
+            }
+        }
+    }
+
+
+    @FXML
+    private void setProgramSearchedProgram()
+    {
+        ArrayList<Program> programs = cs.getSearchedProgram(searchProgramField.getText());
+
+        setUpProgramButtons();
+
+        int numberOfAdditionalSearchPages = programs.size() / NUMBEROFPROGRAMSTODISPLAY;
+
+        if(pageNumber == numberOfAdditionalSearchPages + 1)
+        {
+            int numberOfActiveButtons = programs.size() - ((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY);
+            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalSearchPages+1));
+            for (int i = 0; i < numberOfActiveButtons; i++)
+            {
+                programButtons[i].setVisible(true);
+                programButtons[i].setText(programs.get(i+((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
+            }
+        }
+        else
+        {
+            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalSearchPages+1));
+            for (int i = 0; i < NUMBEROFPROGRAMSTODISPLAY; i++)
+            {
+                programButtons[i].setVisible(true);
+                programButtons[i].setText(programs.get(i+((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
+            }
+        }
+    }
+
     public void checkOccupationCB(ActionEvent actionEvent)
     {
         if(creditOccupationCB.getValue() != Occupation.SKUESPILLER)
@@ -460,6 +624,7 @@ public class LogicController implements Initializable {
         editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
         editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
         deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
+        setProgramsAllPrograms();
     }
 
     @FXML
@@ -475,4 +640,25 @@ public class LogicController implements Initializable {
         System.out.println("Didn't delete User");
     }
 
+    public void switchPage(ActionEvent actionEvent)
+    {
+        if(actionEvent.getSource() == secondaryButton1)
+        {
+            if(pageNumber > 1)
+            {
+                pageNumber--;
+            }
+            setProgramsAllPrograms();
+            System.out.println("Page back");
+        }
+        if(actionEvent.getSource() == secondaryButton11)
+        {
+            if(pageNumber < numberOfAdditionalPages+1)
+            {
+                pageNumber++;
+            }
+            setProgramsAllPrograms();
+            System.out.println("Page forward");
+        }
+    }
 }
