@@ -234,7 +234,7 @@ public class ConsumerSystem
 
     public void saveCreditToProgram(Credits credit, int programID)
     {
-        if(dbSys.saveCredits(credit,programID))
+        if(dbSys.saveCredits(credit, programID))
         {
             System.out.println("Hold en pause, du har gjort det godt");
         }

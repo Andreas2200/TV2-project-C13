@@ -599,13 +599,13 @@ public class LogicController implements Initializable {
 
     public void saveCredit(ActionEvent actionEvent)
     {
-        cs.saveCredit(new Credits(creditOccupationCB.getValue(),creditPersonCB.getValue()));
+        cs.saveCredit(new Credits(creditOccupationCB.getValue(),creditPersonCB.getValue(), creditActorTextField.getText()));
         updateComboBox();
     }
 
     public void saveCreditToProgram(ActionEvent actionEvent)
     {
-        cs.saveCreditToProgram(addCreditProgramCreditCB.getValue(),addCreditProgramProgramCB.getValue().getId());
+        cs.saveCreditToProgram(addCreditProgramCreditCB.getValue(), addCreditProgramProgramCB.getValue().getId());
         updateComboBox();
     }
 

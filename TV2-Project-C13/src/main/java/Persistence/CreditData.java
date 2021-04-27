@@ -11,6 +11,7 @@ public class CreditData implements CreditInterface {
     public CreditData(OccupationData occupation, PersonData person) {
         this.occupation = occupation;
         this.person = person;
+        this.characterName = "N/A";
     }
 
     public CreditData(OccupationData occupation, PersonData person, String characterName) {

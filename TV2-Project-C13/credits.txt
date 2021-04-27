@@ -1,15 +1,22 @@
-20;9;Testmail@test.dk;Freja Kongslev;SKUESPILLER
-19;1;JohnHitler@gmail.com;John;BILLEDKUNSTNER
-22;10;Sigurdskelmose@gmail.com;Sigurd;COLOURGRADING
-19;1;JohnHitler@gmail.com;John;KAPELMESTER
-58;2;Karsten@gmail.com;Karsten;DRONE
-58;2;Karsten@gmail.com;Karsten;FORTÆLLER
-27;0;Adam@gmail.com;Adam;FORTÆLLER
-19;1;JohnHitler@gmail.com;John;LYS
-58;2;Karsten@gmail.com;Karsten;KONSULENT
-22;10;Sigurdskelmose@gmail.com;Sigurd;TONEMESTER
-45;11;Sigvaldsucks@tmail.com;Sigvald;KOREOGRAFI
-22;8;Sivin20@student.sdu.dk;Sigurd;SPONSORER
-22;10;Sigurdskelmose@gmail.com;Sigurd;SPONSORER
-19;13;Andreaserlang@hotman.com;Andreas;CASTING
-19;13;Andreaserlang@hotman.com;Andreas;SKUESPILLER
+20;9;Testmail@test.dk;Freja Kongslev;SKUESPILLER;N/A
+19;1;JohnHitler@gmail.com;John;BILLEDKUNSTNER;N/A
+22;10;Sigurdskelmose@gmail.com;Sigurd;COLOURGRADING;N/A
+19;1;JohnHitler@gmail.com;John;KAPELMESTER;N/A
+58;2;Karsten@gmail.com;Karsten;DRONE;N/A
+58;2;Karsten@gmail.com;Karsten;FORTÆLLER;N/A
+27;0;Adam@gmail.com;Adam;FORTÆLLER;N/A
+19;1;JohnHitler@gmail.com;John;LYS;N/A
+58;2;Karsten@gmail.com;Karsten;KONSULENT;N/A
+22;10;Sigurdskelmose@gmail.com;Sigurd;TONEMESTER;N/A
+45;11;Sigvaldsucks@tmail.com;Sigvald;KOREOGRAFI;N/A
+22;8;Sivin20@student.sdu.dk;Sigurd;SPONSORER;N/A
+22;10;Sigurdskelmose@gmail.com;Sigurd;SPONSORER;N/A
+19;13;Andreaserlang@hotman.com;Andreas;CASTING;N/A
+19;13;Andreaserlang@hotman.com;Andreas;SKUESPILLER;N/A
+19;1;JohnHitler@gmail.com;John;SKUESPILLER;N/A
+27;0;Adam@gmail.com;Adam Er cool og sej;SKUESPILLER;N/A
+20;9;Testmail@test.dk;Freja Kongslev;SKUESPILLER;N/A
+45;11;Sigvaldsucks@tmail.com;Sigvald;SKUESPILLER;Batman
+27;0;Adam@gmail.com;Adam Er cool og sej;SKUESPILLER;N/A
+45;11;Sigvaldsucks@tmail.com;Sigvald;SKUESPILLER;N/A
+20;9;Testmail@test.dk;Freja Kongslev;SKUESPILLER;Batman

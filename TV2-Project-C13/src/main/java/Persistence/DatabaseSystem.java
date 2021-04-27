@@ -220,12 +220,12 @@ public class DatabaseSystem {
                 }
 
                 CreditData credit;
-                if (readSplit.length == 3) {
-                    credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
-                }
-                else {
+                //if (readSplit.length == 3) {
+                    //credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
+                //}
+                //else {
                     credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[3]);
-                }
+                //}
                 credits.add(credit);
             }
             return credits;
@@ -279,12 +279,12 @@ public class DatabaseSystem {
             //har tilføjet programID sådan at vi altid kan finde tilbage til det program det var lavet til
             //gjort sådan at den fortæller om det lykkedes for den at gemme credits
             FileWriter writer = new FileWriter(new File("credit.txt"), true);
-            if (credit.getCharacterName() != null) {
-                writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + programID + ";" + credit.getOccupation() + "\n");
+            if (!credit.getCharacterName().equals("N/A")) {
+                writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + programID + ";" + credit.getCharacterName() + "\n");
                 writer.close();
             }
             else {
-                writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + programID + "\n");
+                writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + programID + ";" + "N/A" + "\n");
                 writer.close();
             }
         }
@@ -307,7 +307,7 @@ public class DatabaseSystem {
             for (String element: readValues)
             {
                 String[] valuesToUse = element.split(";");
-                credits.add(new CreditData(OccupationData.valueOf(valuesToUse[4]), new PersonData(Integer.parseInt(valuesToUse[0]),Integer.parseInt(valuesToUse[1]),valuesToUse[2],valuesToUse[3])));
+                credits.add(new CreditData(OccupationData.valueOf(valuesToUse[4]), new PersonData(Integer.parseInt(valuesToUse[0]),Integer.parseInt(valuesToUse[1]),valuesToUse[2],valuesToUse[3]),valuesToUse[5]));
             }
         }
         catch (IOException ex)
@@ -323,7 +323,7 @@ public class DatabaseSystem {
         {
             if(credit.getPerson().getName() != null)
             {
-                writer.write(credit.getPerson().getAge() + ";" + credit.getPerson().getId() + ";" + credit.getPerson().getEmail() + ";" + credit.getPerson().getName() + ";" + credit.getOccupation() + "\n");
+                writer.write(credit.getPerson().getAge() + ";" + credit.getPerson().getId() + ";" + credit.getPerson().getEmail() + ";" + credit.getPerson().getName() + ";" + credit.getOccupation() + ";" + credit.getCharacterName() + "\n");
             }
         }
         catch (IOException e)
