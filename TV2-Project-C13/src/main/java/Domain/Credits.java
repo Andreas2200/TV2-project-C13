@@ -15,7 +15,16 @@ public class Credits implements CreditInterface {
 
     public Credits(Occupation occupation, Person person, String characterName) {
         this(occupation, person);
-        this.characterName = characterName;
+
+        if(characterName.equals(""))
+        {
+            this.characterName = "N/A";
+            System.out.println("Credit Debug");
+        }
+        else
+        {
+            this.characterName = characterName;
+        }
     }
 
     public Occupation getOccupation() {

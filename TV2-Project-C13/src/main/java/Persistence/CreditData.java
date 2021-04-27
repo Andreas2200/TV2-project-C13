@@ -16,7 +16,16 @@ public class CreditData implements CreditInterface {
 
     public CreditData(OccupationData occupation, PersonData person, String characterName) {
         this(occupation, person);
-        this.characterName = characterName;
+
+        if(characterName.equals(""))
+        {
+            this.characterName = "N/A";
+            System.out.println("Credit Debug");
+        }
+        else
+        {
+            this.characterName = characterName;
+        }
     }
     public OccupationData getOccupation() {
         return occupation;

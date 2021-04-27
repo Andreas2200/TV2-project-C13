@@ -20,3 +20,7 @@
 27;0;Adam@gmail.com;Adam Er cool og sej;SKUESPILLER;N/A
 45;11;Sigvaldsucks@tmail.com;Sigvald;SKUESPILLER;N/A
 20;9;Testmail@test.dk;Freja Kongslev;SKUESPILLER;Batman
+45;11;Sigvaldsucks@tmail.com;Sigvald;FORTÆLLER;N/A
+44;12;Sarah.har@mail.com;Sarah;DRONE;N/A
+44;4;Børge@gmail.com;Børge;DIRIGENTER;N/A
+22;6;xXxKasperxXx@gmail.com;Kasper;CASTING;N/A
