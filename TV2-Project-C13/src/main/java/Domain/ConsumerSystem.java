@@ -109,7 +109,7 @@ public class ConsumerSystem
         {
             for (CreditInterface element: dbSys.getAllCredits())
             {
-                returnList.add(new Credits(Occupation.valueOf(element.getOccupation().toString()),new Person(element.getPerson().getAge(),element.getPerson().getId(),element.getPerson().getEmail(),element.getPerson().getName())));
+                returnList.add(new Credits(Occupation.valueOf(element.getOccupation().toString()),new Person(element.getPerson().getAge(),element.getPerson().getId(),element.getPerson().getEmail(),element.getPerson().getName()), element.getCharacterName()));
             }
         }
         catch (Exception e)
