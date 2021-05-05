@@ -1,7 +1,5 @@
-morten420;Pa22Wo7d123;Morten Thomsen;Admin;Morten@email.com;34
-admin;password;Sigurd Skelmose;Admin;admins@email.com;22
-user;password;Sigurd Skelmose;User;user@email.com;22
-sigster;password;Sigudrr;User;Sigstser@gmail.com;0
-sigi123;password;Sigurd;User;SigurdSkelmose@gmail.com;3
-sigko;password;Sigrid;User;Sigridko@gmail.com;6
-producer;password;producerTest;Producer;producer@test.com;5
+user;password;Sigurd Skelmose;User;user@email.com;1999:05:04
+sigster;password;Sigudrr;User;Sigstser@gmail.com;2021:05:05
+sigi123;password;Sigurd;User;SigurdSkelmose@gmail.com;2018:05:04
+sigko;password;Sigrid;User;Sigridko@gmail.com;2015:05:04
+producer;password;producerTest;Producer;producer@test.com;2016:05:04

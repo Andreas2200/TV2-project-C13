@@ -81,15 +81,16 @@ public class ConsumerSystem
         }
     }
 
-    /*public void createUser(String tempUsername, String tempPass, String tempSalt, String tempName, String tempEmail, LocalDate tempBirthday)
+    public void createUser(String tempUsername, String tempPass, String tempSalt, String tempName, String tempEmail, LocalDate tempBirthday)
     {
         User tempUser = new User(tempUsername,tempPass,tempSalt,tempName,tempEmail,tempBirthday);
-        try {
-            dbSys.SaveUser(tempUser);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
+        dbSys.SaveUser(tempUser);
+    }
+
+    public boolean createUser(User user)
+    {
+        return dbSys.SaveUser(user);
+    }
 
     public User logIn(String tempUsername,String tempPass)
     {
@@ -289,11 +290,12 @@ public class ConsumerSystem
         return dbSys.hashPassword(password,salt);
     }
 
-    /*
-    public static void main(String[] args) {
-        System.out.println(hashPassword("Pa22Wo7d123", "db458125-8692-4609-be2a-3f5c65585637"));
+
+    public static void main(String[] args)
+    {
+
     }
-     */
+
 }
 
 

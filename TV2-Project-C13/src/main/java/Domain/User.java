@@ -72,6 +72,8 @@ public class User implements UserInterface {
 
     public void setRole(String newRole){this.role = newRole;}
 
+    public void setSalt(String salt){this.salt = salt;}
+
     public boolean checkInfo(String name, String username, int age)
     {
         return this.getName().equals(name) && this.getUsername().equals(username) && this.getAge() == age;

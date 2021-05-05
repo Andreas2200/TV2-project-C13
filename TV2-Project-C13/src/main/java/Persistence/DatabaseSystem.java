@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.Date;
@@ -59,6 +60,8 @@ public class DatabaseSystem
         }
     }
 
+    //<editor-fold desc="Methods with SQL Implementation">
+
     public UserInterface getUser(String username, String password)
     {
         try
@@ -79,7 +82,6 @@ public class DatabaseSystem
                 {
                     return null;
                 }
-                System.out.println(new UserData(sqlReturnValues.getString(2),sqlReturnValues.getString(3),sqlReturnValues.getString(4),sqlReturnValues.getString(5),sqlReturnValues.getString(7),java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()),sqlRoleValues.getString(2)));
                 return new UserData(sqlReturnValues.getString(2),sqlReturnValues.getString(3),sqlReturnValues.getString(4),sqlReturnValues.getString(5),sqlReturnValues.getString(7),java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()),sqlRoleValues.getString(2));
             }
             return null;
@@ -90,6 +92,75 @@ public class DatabaseSystem
             return null;
         }
     }
+
+    public UserInterface getUser(String username)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+            stmt.setString(1,username);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if(!sqlReturnValues.next())
+            {
+                return null;
+            }
+            stmt = connection.prepareStatement("SELECT * FROM roles WHERE id= ?");
+            stmt.setInt(1,sqlReturnValues.getInt(6));
+            ResultSet sqlRoleValues = stmt.executeQuery();
+            if(!sqlRoleValues.next())
+            {
+                return null;
+            }
+            return new UserData(sqlReturnValues.getString(2),sqlReturnValues.getString(3),sqlReturnValues.getString(4),sqlReturnValues.getString(5),sqlReturnValues.getString(7),java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()),sqlRoleValues.getString(2));
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean SaveUser(UserInterface user){
+        if (getUser(user.getUsername()) == null)
+        {
+            try
+            {
+                int roleId;
+                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM roles WHERE role = ?");
+                stmt.setString(1,user.getRole());
+                ResultSet sqlResultValue = stmt.executeQuery();
+                if(!sqlResultValue.next())
+                {
+                    return false;
+                }
+                roleId = sqlResultValue.getInt(1);
+                stmt = connection.prepareStatement("INSERT INTO users (username, password, salt, name, role_id, email, age, active) VALUES (?,?,?,?,?,?,?,?)");
+                stmt.setString(1,user.getUsername());
+                stmt.setString(2,user.getPassword());
+                stmt.setString(3,user.getSalt());
+                stmt.setString(4,user.getName());
+                stmt.setInt(5,roleId);
+                stmt.setString(6,user.getEmail());
+                stmt.setDate(7,java.sql.Date.valueOf(user.getBirthday()));
+                stmt.setBoolean(8,true);
+                stmt.execute();
+                return true;
+            }
+            catch (SQLException ex)
+            {
+                ex.printStackTrace();
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+    //</editor-fold desc="Methods with SQL Implementation">
+
+    //<editor-fold desc="Methods missing SQL Implementation">
+
 
     public ArrayList<ProgramInterface> getProgram() {
         //readlines and put em in a list
@@ -500,7 +571,10 @@ public class DatabaseSystem
             for (String element: readValues)
             {
                 String[] valuesToUse = element.split(";");
-                //returnList.add(new UserData(valuesToUse[2],valuesToUse[0], valuesToUse[1],Integer.parseInt(valuesToUse[5]), valuesToUse[4], valuesToUse[3]));
+                String[] dates = valuesToUse[5].split(":");
+                Date date = new Date(Integer.parseInt(dates[0]),Integer.parseInt(dates[1]),Integer.parseInt(dates[2]));
+                LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                returnList.add(new UserData(valuesToUse[0],valuesToUse[1],valuesToUse[2],valuesToUse[3],valuesToUse[4],localDate));
             }
         }
         catch (IOException ex)
@@ -731,6 +805,8 @@ public class DatabaseSystem
         }
         return returnArray;
     }*/
+
+    //</editor-fold desc="Methods missing SQL Implementation">
 
     public String hashPassword(String password, String salt) {
         String returnHash = "";

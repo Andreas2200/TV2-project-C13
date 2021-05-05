@@ -162,7 +162,7 @@ public class LoginController implements Initializable {
                         && createUserPasswordField.getText() != null && createUserEmailField.getText() != null) {
                     // Create the user
                     String tempSalt = createUUID();
-                    //cs.createUser(createUserUsernameField.getText(),cs.hashPassword(createUserPasswordField.getText(), tempSalt),tempSalt,createUserNameField.getText(),createUserEmailField.getText(),birthdayDatePicker.getValue());
+                    cs.createUser(createUserUsernameField.getText(),cs.hashPassword(createUserPasswordField.getText(), tempSalt),tempSalt,createUserNameField.getText(),createUserEmailField.getText(),birthdayDatePicker.getValue());
                     //GUI controls
                     signInPane.toFront();
                     signInScreenButton.toFront();
@@ -193,7 +193,7 @@ public class LoginController implements Initializable {
                     && createUserPasswordField.getText() != null && createUserEmailField.getText() != null) {
                 // Create the user
                 String tempSalt = createUUID();
-                //cs.createUser(createUserUsernameField.getText(),cs.hashPassword(createUserPasswordField.getText(), tempSalt),tempSalt,createUserNameField.getText(),createUserEmailField.getText(),birthdayDatePicker.getValue());
+                cs.createUser(createUserUsernameField.getText(),cs.hashPassword(createUserPasswordField.getText(), tempSalt),tempSalt,createUserNameField.getText(),createUserEmailField.getText(),birthdayDatePicker.getValue());
                 //GUI controls
                 signInPane.toFront();
                 signInScreenButton.toFront();
