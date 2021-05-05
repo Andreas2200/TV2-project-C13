@@ -12,13 +12,11 @@ public interface ProgramInterface {
 
     public String getReleaseDate();
 
-    public String getShowedOn();
-
     public int getId();
 
     public int getCreditSize();
 
-    public ArrayList<GenreInterface> getGenre();
+    public String getGenre();
 
     public LocalTime getDuration();
 

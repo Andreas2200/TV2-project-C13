@@ -15,6 +15,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.Date;
@@ -26,7 +27,8 @@ class Main {
     {
         dbSys = dbSys.getInstance();
         dbSys.getUser("morten420","Pa22Wo7d123");
-        }
+        System.out.println(dbSys.getProgramFromID(1));
+    }
 }
 
 public class DatabaseSystem
@@ -85,9 +87,32 @@ public class DatabaseSystem
                 return new UserData(sqlReturnValues.getString(2),sqlReturnValues.getString(3),sqlReturnValues.getString(4),sqlReturnValues.getString(5),sqlReturnValues.getString(7),java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()),sqlRoleValues.getString(2));
             }
             return null;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
         }
-        catch (SQLException ex)
-        {
+    }
+
+    public ProgramInterface getProgramFromID(int programID) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM programs WHERE id = ?");
+            stmt.setInt(1, programID);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if (!sqlReturnValues.next()) {
+                return null;
+            }
+
+           if (programID== sqlReturnValues.getInt(1)) {
+                stmt = connection.prepareStatement("SELECT * FROM genres WHERE id= ?");
+                stmt.setInt(1, sqlReturnValues.getInt(3));
+                ResultSet sqlGenreValues = stmt.executeQuery();
+                if (!sqlGenreValues.next()) {
+                    return null;
+                }
+                return new ProgramData(sqlReturnValues.getString(2), sqlReturnValues.getString(4), LocalTime.parse(sqlReturnValues.getString(5)), sqlGenreValues.getString(2), sqlReturnValues.getString(6), sqlReturnValues.getInt(7));
+           }
+           return null;
+        } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
@@ -173,15 +198,15 @@ public class DatabaseSystem
         }
         ArrayList<ProgramInterface> programs = new ArrayList<>();
 
-        for (int i = 0; i < dataValues.size(); i += 7){
+        /*for (int i = 0; i < dataValues.size(); i += 7) {
             //Year of release
-            /*Calendar calendar = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
             String[] calendarValues = dataValues.get(3 + i).split(",");
-            calendar.set(Integer.parseInt(calendarValues[0]), Integer.parseInt(calendarValues[1]), Integer.parseInt(calendarValues[2]));*/
+            calendar.set(Integer.parseInt(calendarValues[0]), Integer.parseInt(calendarValues[1]), Integer.parseInt(calendarValues[2]));
             Date date = new Date();
             date = Calendar.getInstance().getTime();
             //Watch length
-        // Simon, hvorfor skulle den split på komma og ikke kolon?
+            // Simon, hvorfor skulle den split på komma og ikke kolon?
             String[] splittetTime = (dataValues.get(4 + i).split(":"));
             LocalTime time = LocalTime.of(Integer.parseInt(splittetTime[0]), Integer.parseInt(splittetTime[1]), Integer.parseInt(splittetTime[2]));
 
@@ -192,7 +217,7 @@ public class DatabaseSystem
                 genres.add(GenreData.valueOf(splittetGenres[j]));
             }
 
-            ProgramData program = new ProgramData(Integer.parseInt(dataValues.get(0 + i)), dataValues.get(1 + i), dataValues.get(3+i), null, time, genres, dataValues.get(5 + i), Integer.parseInt(dataValues.get(6 + i)));
+            ProgramData program = new ProgramData(Integer.parseInt(dataValues.get(0 + i)), dataValues.get(1 + i), dataValues.get(3+i), null, time, dataValues.get(2+i), dataValues.get(5 + i), Integer.parseInt(dataValues.get(6 + i)));
 
             //credits
             Scanner reader = null;
@@ -210,14 +235,14 @@ public class DatabaseSystem
                 }
             }
             programs.add(program);
-        }
+        }*/
         return programs;
     }
 
     //denne metode vil ikke kunne virke hvis den ikke kan få fat på creditteringerne for et program
-    public ArrayList<ProgramInterface> getProgram(PersonInterface person) throws Exception {
+    /*public ArrayList<ProgramInterface> getProgram(PersonInterface person) throws Exception {
         throw new Exception("Mangler en getCreditsmetode i Program før denne metode kan blive implementeret -2 Ris");
-        /*
+
         ArrayList<ProgramInterface> programs = getProgram();
         ArrayList<CreditInterface> credits = getCredits();
         ArrayList<ProgramInterface> returnPrograms = new ArrayList<>();
@@ -228,10 +253,10 @@ public class DatabaseSystem
         }
 
         return returnPrograms;
-*/
-    }
 
-    public ProgramInterface getProgram(GenreInterface genre) throws Exception {
+    }*/
+
+    /*public ProgramInterface getProgram(GenreInterface genre) throws Exception {
         ArrayList<ProgramInterface> programs = getProgram();
         for (ProgramInterface program : programs) {
             for (GenreInterface genre_ : program.getGenre()) {
@@ -239,9 +264,9 @@ public class DatabaseSystem
             }
         }
         return null;
-    }
+    }*/
 
-    public ArrayList<ProgramInterface> getProgram(String title) {
+    public ArrayList<ProgramInterface> getProgram (String title){
         ArrayList<ProgramInterface> programs = getProgram();
         //Sort em
         Collections.sort(programs, Comparator.comparing(ProgramInterface::getName));
@@ -255,13 +280,13 @@ public class DatabaseSystem
         return sortedPrograms;
     }
 
-    public boolean SaveProgram(ProgramInterface program) {
+    public boolean SaveProgram (ProgramInterface program){
         try {
             int ID = -1;
 
             //getID
             Scanner reader = new Scanner(new File("programs.txt"));
-            while (reader.hasNextLine()){
+            while (reader.hasNextLine()) {
                 String read = reader.nextLine();
                 String[] readValues = read.split(";");
                 ID = Integer.parseInt(readValues[0]);
@@ -271,27 +296,27 @@ public class DatabaseSystem
 
             FileWriter writer = new FileWriter(new File("programs.txt"), true);
 
-            String genres = "";
-            for (GenreInterface genre : program.getGenre()){
+            /*String genres = "";
+            for (GenreInterface genre : program.getGenre()) {
                 genres += genre + ",";
-            }
+            }*/
+            String genres = program.getGenre();
 
             writer.write(ID + ";" + program.getName() + ";" + genres + ";" + program.getReleaseDate() + ";" + program.getDuration() + ";" + program.getDescription() + ";" + program.getCreatorID() + "\n");
             writer.close();
             return true;
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e);
             return false;
         }
     }
 
-    public boolean SaveProgram(ProgramInterface program, int ID) {
+    /*public boolean SaveProgram (ProgramInterface program,int ID){
         try {
             FileWriter writer = new FileWriter(new File("programs.txt"), true);
             String genres = "";
-            for (GenreInterface genre : program.getGenre()){
-                if (program.getGenre().get(program.getGenre().size()).equals(genre)){
+            for (GenreInterface genre : program.getGenre()) {
+                if (program.getGenre().get(program.getGenre().size()).equals(genre)) {
                     genres += genre;
                     break;
                 }
@@ -300,26 +325,24 @@ public class DatabaseSystem
             writer.write(ID + ";" + program.getName() + ";" + genres + ";" + program.getReleaseDate() + ";" + program.getDuration() + ";" + program.getDescription() + ";" + program.getCreatorID() + "\n");
             writer.close();
             return true;
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             return false;
         }
-    }
+    }*/
 
     //denne her metode er for at få fat på alle credits uden at skulle have nogen kritiriere
-    public ArrayList<CreditInterface> getCredits() throws Exception {
-        ArrayList<CreditInterface>  credits = new ArrayList<>();
+    public ArrayList<CreditInterface> getCredits () throws Exception {
+        ArrayList<CreditInterface> credits = new ArrayList<>();
 
         Scanner reader = new Scanner(new File("credits.txt"));
         //stjal lige noget kode, det ville sku være hurtigere
-        while (reader.hasNextLine()){
+        while (reader.hasNextLine()) {
             String read = reader.nextLine();
             String[] readSplit = read.split(";");
             CreditData credit;
             if (readSplit.length == 3) {
                 credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
-            }
-            else {
+            } else {
                 credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
             }
             credits.add(credit);
@@ -327,30 +350,29 @@ public class DatabaseSystem
         return credits;
     }
 
-    public ArrayList<CreditInterface> getCredits(int programID){
+    public ArrayList<CreditInterface> getCredits ( int programID){
         ArrayList<CreditInterface> credits = new ArrayList<>();
 
         try {
             Scanner reader = new Scanner(new File("credit.txt"));
 
-            while (reader.hasNextLine()){
+            while (reader.hasNextLine()) {
                 String read = reader.nextLine();
                 String[] readSplit = read.split(";");
                 //hop til næste itteration hvis credittet ikke har rigtig ID
 
-                if (readSplit.length == 3){
+                if (readSplit.length == 3) {
                     if (Integer.parseInt(readSplit[2]) != programID) continue;
-                }
-                else {
+                } else {
                     if (Integer.parseInt(readSplit[2]) != programID) continue;
                 }
 
                 CreditData credit;
                 //if (readSplit.length == 3) {
-                    //credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
+                //credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
                 //}
                 //else {
-                    credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[3]);
+                credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[3]);
                 //}
                 credits.add(credit);
             }
@@ -361,7 +383,7 @@ public class DatabaseSystem
         }
     }
 
-    public ArrayList<CreditInterface> getCredits(String programTitle) throws Exception {
+    public ArrayList<CreditInterface> getCredits (String programTitle) throws Exception {
         //rettet i det efter jeg rettede i saveCredits
         ArrayList<CreditInterface> credits = new ArrayList<>();
         //get programID
@@ -371,27 +393,27 @@ public class DatabaseSystem
         try {
             Scanner reader = new Scanner(new File("credits.txt"));
 
-            while (reader.hasNextLine()){
-                String read = reader.nextLine();
-                String[] readSplit = read.split(";");
-                //hop til næste itteration hvis credittet ikke har rigtig ID
+    while (reader.hasNextLine()){
+        String read = reader.nextLine();
+        String[] readSplit = read.split(";");
+        //hop til næste itteration hvis credittet ikke har rigtig ID
 
-                if (readSplit.length == 3){
-                    if (Integer.parseInt(readSplit[2]) != programID) continue;
-                }
-                else {
-                    if (Integer.parseInt(readSplit[3]) != programID) continue;
-                }
+        if (readSplit.length == 3){
+            if (Integer.parseInt(readSplit[2]) != programID) continue;
+        }
+        else {
+            if (Integer.parseInt(readSplit[3]) != programID) continue;
+        }
 
-                CreditData credit;
-                if (readSplit.length == 3) {
-                    credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
-                }
-                else {
-                    credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
-                }
-                credits.add(credit);
-            }
+        CreditData credit;
+        if (readSplit.length == 3) {
+            credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
+        }
+        else {
+            credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
+        }
+        credits.add(credit);
+    }
             return credits;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -399,7 +421,7 @@ public class DatabaseSystem
         }
     }
 
-    public boolean saveCredits(CreditInterface credit, int programID){
+    public boolean saveCredits (CreditInterface credit,int programID){
         try {
             //ved ikke hvorfor den skulle lave en ny fil hvergang
             //har tilføjet programID sådan at vi altid kan finde tilbage til det program det var lavet til
@@ -408,52 +430,41 @@ public class DatabaseSystem
             if (!credit.getCharacterName().equals("N/A")) {
                 writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + programID + ";" + credit.getCharacterName() + "\n");
                 writer.close();
-            }
-            else {
+            } else {
                 writer.write(credit.getPerson().getId() + ";" + credit.getOccupation().toString() + ";" + programID + ";" + "N/A" + "\n");
                 writer.close();
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e);
             return false;
         }
         return true;
     }
 
-    public ArrayList<CreditInterface> getAllCredits() throws Exception {
+    public ArrayList<CreditInterface> getAllCredits () throws Exception {
         ArrayList<CreditInterface> credits = new ArrayList<>();
         ArrayList<String> readValues = new ArrayList<>();
-        try(Scanner reader = new Scanner(new File("credits.txt")))
-        {
-            while (reader.hasNextLine())
-            {
+        try (Scanner reader = new Scanner(new File("credits.txt"))) {
+            while (reader.hasNextLine()) {
                 readValues.add(reader.nextLine());
             }
-            for (String element: readValues)
-            {
+            for (String element : readValues) {
                 String[] valuesToUse = element.split(";");
-                credits.add(new CreditData(OccupationData.valueOf(valuesToUse[4]), new PersonData(Integer.parseInt(valuesToUse[0]),Integer.parseInt(valuesToUse[1]),valuesToUse[2],valuesToUse[3]),valuesToUse[5]));
+                credits.add(new CreditData(OccupationData.valueOf(valuesToUse[4]), new PersonData(Integer.parseInt(valuesToUse[0]), Integer.parseInt(valuesToUse[1]), valuesToUse[2], valuesToUse[3]), valuesToUse[5]));
             }
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return credits;
     }
 
-    public boolean saveCredit(CreditInterface credit)
+    public boolean saveCredit (CreditInterface credit)
     {
-        try(FileWriter writer = new FileWriter(new File("Credits.txt"),true))
-        {
-            if(credit.getPerson().getName() != null)
-            {
+        try (FileWriter writer = new FileWriter(new File("Credits.txt"), true)) {
+            if (credit.getPerson().getName() != null) {
                 writer.write(credit.getPerson().getAge() + ";" + credit.getPerson().getId() + ";" + credit.getPerson().getEmail() + ";" + credit.getPerson().getName() + ";" + credit.getOccupation() + ";" + credit.getCharacterName() + "\n");
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -462,17 +473,17 @@ public class DatabaseSystem
     }
 
     //Lavet af Sigster
-    public ArrayList<String>  getAllCreditsFromCreditFile(int personID) {
+    public ArrayList<String> getAllCreditsFromCreditFile ( int personID){
         ArrayList<String> readValues = new ArrayList<>();
         //List<ArrayList<String>> credits = new ArrayList<>();
         ArrayList<String> credit = new ArrayList<>();
-        try(Scanner reader = new Scanner(new File("credit.txt"))) {
+        try (Scanner reader = new Scanner(new File("credit.txt"))) {
             while (reader.hasNextLine()) {
                 readValues.add(reader.nextLine());
             }
-            for(String element: readValues) {
+            for (String element : readValues) {
                 String[] valuesToUse = element.split(";");
-                if(String.valueOf(personID).equals(valuesToUse[0])) {
+                if (String.valueOf(personID).equals(valuesToUse[0])) {
                     credit.add(valuesToUse[0] + ";" + valuesToUse[1] + ";" + valuesToUse[2] + ";" + valuesToUse[3]);
                     //credits.add(credit);
                     //Evt. lav ovenstående om til fori loop og brug samme index (i) til at sætte ind på credits ?
@@ -485,7 +496,7 @@ public class DatabaseSystem
     }
 
     //Lavet af Sigster
-    public ArrayList<String> getProgramFromID(String programID) {
+    /*public ArrayList<String> getProgramFromID(String programID) {
         ArrayList<String> readValues = new ArrayList<>();
         ArrayList<String> program = new ArrayList<>();
         try(Scanner reader = new Scanner(new File("programs.txt"))) {
@@ -503,7 +514,7 @@ public class DatabaseSystem
             e.printStackTrace();
         }
         return program;
-    }
+    }*/
 
     /*public UserInterface getUser(String username, String password) {
         try (Scanner reader = new Scanner(new File("usernames.txt")))
@@ -541,12 +552,12 @@ public class DatabaseSystem
             System.out.println(e);
         }
         return null;
-    }
+    }*/
 
     //returns if the username already existed
     //true == user didn't exist and adding the new user was a succes
     //false == user already exist
-    public boolean SaveUser(UserInterface user) throws IOException {
+    /*public boolean SaveUser(UserInterface user) throws IOException {
         if (getUser(user.getUsername()) == null){
             FileWriter writer = new FileWriter("usernames.txt", true);
             writer.write( user.getUsername() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getRole() + ";" + user.getEmail() + ";" + user.getAge() + "\n" );
@@ -558,67 +569,57 @@ public class DatabaseSystem
         }
     }*/
 
-    public ArrayList<UserInterface> getAllUsers()
+    public ArrayList<UserInterface> getAllUsers ()
     {
         ArrayList<UserInterface> returnList = new ArrayList<>();
         ArrayList<String> readValues = new ArrayList<>();
-        try(Scanner reader = new Scanner(new File("usernames.txt")))
-        {
-            while (reader.hasNextLine())
-            {
+        try (Scanner reader = new Scanner(new File("usernames.txt"))) {
+            while (reader.hasNextLine()) {
                 readValues.add(reader.nextLine());
             }
-            for (String element: readValues)
-            {
+            for (String element : readValues) {
                 String[] valuesToUse = element.split(";");
-                String[] dates = valuesToUse[5].split(":");
-                Date date = new Date(Integer.parseInt(dates[0]),Integer.parseInt(dates[1]),Integer.parseInt(dates[2]));
-                LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                returnList.add(new UserData(valuesToUse[0],valuesToUse[1],valuesToUse[2],valuesToUse[3],valuesToUse[4],localDate));
+                //returnList.add(new UserData(valuesToUse[2],valuesToUse[0], valuesToUse[1],Integer.parseInt(valuesToUse[5]), valuesToUse[4], valuesToUse[3]));
             }
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return returnList;
     }
 
     //FIX ME, få den til at returnere en Person og ændre navnet
-    public String Search(int id) throws Exception {
+    public String Search ( int id) throws Exception {
         try {
             ArrayList<String> readLines = new ArrayList<>();
             Scanner reader = new Scanner(new File("persons.txt"));
-            while (reader.hasNextLine()){
+            while (reader.hasNextLine()) {
                 readLines.add(reader.nextLine());
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new Exception();
         }
         return "";
     }
 
-    public void SavePerson(PersonInterface person) throws IOException {
+    public void SavePerson (PersonInterface person) throws IOException {
         Scanner reader = new Scanner(new File("persons.txt"));
-        if (person.getId() == -1){
+        if (person.getId() == -1) {
             int ID = 0;
-            while (reader.hasNextLine()){
+            while (reader.hasNextLine()) {
                 ID = Integer.parseInt(reader.nextLine().split(";")[0]) + 1;
             }
             reader.close();
             FileWriter writer = new FileWriter("persons.txt", true);
             writer.write("\n" + ID + ";" + person.getName() + ";" + person.getAge() + ";" + person.getEmail());
             writer.close();
-        }
-        else {
+        } else {
             FileWriter writer = new FileWriter("persons.txt", true);
             writer.write("\n" + person.getId() + ";" + person.getName() + ";" + person.getAge() + ";" + person.getEmail());
             writer.close();
         }
     }
 
-    public PersonInterface getPerson(int id) {
+    public PersonInterface getPerson ( int id){
         PersonData person = null;
         try {
             Scanner reader = new Scanner(new File("persons.txt"));
@@ -636,14 +637,14 @@ public class DatabaseSystem
         }
     }
 
-    public boolean doesPersonExist(String email) {
+    public boolean doesPersonExist (String email){
         try {
             Scanner reader = new Scanner(new File("persons.txt"));
-            while(reader.hasNextLine()) {
+            while (reader.hasNextLine()) {
                 String read = reader.nextLine();
-                String [] readSplit = read.split(";");
+                String[] readSplit = read.split(";");
 
-                if(readSplit[3].equals(email)) {
+                if (readSplit[3].equals(email)) {
                     System.out.println(readSplit);
                     return true;
                 }
@@ -654,13 +655,13 @@ public class DatabaseSystem
         return false;
     }
 
-    public boolean doesProgramExist(String name) {
+    public boolean doesProgramExist (String name){
         try {
             Scanner reader = new Scanner(new File("programs.txt"));
-            while(reader.hasNextLine()) {
+            while (reader.hasNextLine()) {
                 String read = reader.nextLine();
                 String[] readSplit = read.split(";");
-                if(readSplit[1].equals(name)) {
+                if (readSplit[1].equals(name)) {
                     return true;
                 }
             }
@@ -671,7 +672,7 @@ public class DatabaseSystem
     }
 
     //SearchParam uses letters to narrow the search result down, type is the searched var in object, file is the file the data is in
-    public ArrayList<PersonInterface> SearchPerson(String searchParam) throws Exception {
+    public ArrayList<PersonInterface> SearchPerson (String searchParam) throws Exception {
         //readlines and put em in a list
         String splitValue = "";
         searchParam = searchParam.toLowerCase();
@@ -679,8 +680,8 @@ public class DatabaseSystem
         ArrayList<PersonInterface> dataValues = getAllPersons();
 
         //throw out all of the lines which is not searched for
-        for (int i = 0; i < dataValues.size(); i++){
-            if(dataValues.get(i).getName().length() >= searchParam.length()) {
+        for (int i = 0; i < dataValues.size(); i++) {
+            if (dataValues.get(i).getName().length() >= searchParam.length()) {
                 splitValue = SplitByChar(dataValues.get(i).getName(), searchParam.length());
                 splitValue = splitValue.toLowerCase();
 
@@ -696,58 +697,53 @@ public class DatabaseSystem
     }
 
     //An unsorted and quicker way to get all persons, mostly used by Datasystem itself but can be used outside
-    public ArrayList<PersonInterface> getAllPersons() throws Exception {
+    public ArrayList<PersonInterface> getAllPersons () throws Exception {
         ArrayList<PersonInterface> persons = new ArrayList<>();
         ArrayList<String> personValues = readDataValues("persons.txt");
-        for (int i = 0; i < personValues.size(); i = i + 4){
+        for (int i = 0; i < personValues.size(); i = i + 4) {
             persons.add(new PersonData(Integer.parseInt(personValues.get(i + 2)), Integer.parseInt(personValues.get(i + 0)), personValues.get(i + 3), personValues.get(i + 1)));
         }
         return persons;
     }
 
 
-    private String SplitByChar(String text, int splitBy){
+    private String SplitByChar (String text,int splitBy){
         return text.substring(0, splitBy);
     }
 
-    private ArrayList<String> readDataValues(String path) throws FileNotFoundException {
+    private ArrayList<String> readDataValues (String path) throws FileNotFoundException {
         ArrayList<String> readLines = new ArrayList<>();
         ArrayList<String> returnLines = new ArrayList<>();
         try {
             Scanner reader = new Scanner(new File(path));
-            while (reader.hasNextLine()){
+            while (reader.hasNextLine()) {
                 readLines.add(reader.nextLine());
             }
-            for (String readLine : readLines){
+            for (String readLine : readLines) {
                 String[] lines = readLine.split(";");
-                for (String line : lines){
+                for (String line : lines) {
                     returnLines.add(line);
                 }
             }
             reader.close();
-        }
-        catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return returnLines;
     }
 
-    private void updateUsers(ArrayList<UserInterface> users)
+    private void updateUsers (ArrayList < UserInterface > users)
     {
-        try (FileWriter writer = new FileWriter(new File("usernames.txt")))
-        {
-            for (UserInterface user: users)
-            {
-                writer.write( user.getUsername() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getRole() + ";" + user.getEmail() + ";" + user.getAge() + "\n" );
+        try (FileWriter writer = new FileWriter(new File("usernames.txt"))) {
+            for (UserInterface user : users) {
+                writer.write(user.getUsername() + ";" + user.getPassword() + ";" + user.getName() + ";" + user.getRole() + ";" + user.getEmail() + ";" + user.getAge() + "\n");
             }
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    /*public void updateUserPerms(UserInterface user)
+    public void updateUserPerms(UserInterface user)
     {
         ArrayList<UserInterface> tempUserArray = getAllUsers();
         ArrayList<UserInterface> updateUserArray = new ArrayList<>();
@@ -804,7 +800,7 @@ public class DatabaseSystem
             }
         }
         return returnArray;
-    }*/
+    }
 
     //</editor-fold desc="Methods missing SQL Implementation">
 

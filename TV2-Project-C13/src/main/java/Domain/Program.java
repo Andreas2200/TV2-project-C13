@@ -12,21 +12,19 @@ public class Program implements ProgramInterface
 {
     private String name;
     private String releaseDate;
-    private String showedOn;
     private int id;
     private static int programID;
     private LocalTime duration;
-    private ArrayList<Genre> genre;
+    private String genre;
     private String description;
     private int creatorID;
 
     private ArrayList<CreditInterface> credits;
 
-    public Program(String name, String releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
+    public Program(String name, String releaseDate, LocalTime duration, String genre, String description, int creatorID)
     {
         this.name = name;
         this.releaseDate = releaseDate;
-        this.showedOn = showedOn;
         credits = new ArrayList<>();
         id = programID++;
         this.duration = duration;
@@ -35,11 +33,10 @@ public class Program implements ProgramInterface
         this.creatorID = creatorID;
     }
 
-    public Program(int id, String name, String releaseDate, String showedOn, LocalTime duration, ArrayList<Genre> genre, String description, int creatorID)
+    public Program(int id, String name, String releaseDate, LocalTime duration, String genre, String description, int creatorID)
     {
         this.name = name;
         this.releaseDate = releaseDate;
-        this.showedOn = showedOn;
         credits = new ArrayList<>();
         this.duration = duration;
         this.genre = genre;
@@ -55,7 +52,7 @@ public class Program implements ProgramInterface
 
     public String toSaveFile()
     {
-        return "" + getName() + ";" + getReleaseDate() + ";" + getShowedOn() + ";";
+        return "" + getName() + ";" + getReleaseDate() + ";";
     }
 
     /*@Override
@@ -72,7 +69,6 @@ public class Program implements ProgramInterface
     public String toString()
     {
         return "Name: " + getName()  +
-                "Showed on: " + getShowedOn() +
                 "Release date: " + getReleaseDate() +
                 "People in credits: " + getCreditSize() +
                 "ID: " + id;
@@ -86,11 +82,6 @@ public class Program implements ProgramInterface
         return releaseDate.toString();
     }
 
-    public String getShowedOn()
-    {
-        return showedOn;
-    }
-
     public int getId()
     {
         return id;
@@ -102,11 +93,8 @@ public class Program implements ProgramInterface
     }
 
     //FIX ME not implemented
-    public ArrayList<GenreInterface> getGenre() {
-
-        ArrayList<GenreInterface> genreReturnList = new ArrayList<>(genre);
-
-        return genreReturnList;
+    public String getGenre() {
+        return genre;
     }
 
     public LocalTime getDuration() {

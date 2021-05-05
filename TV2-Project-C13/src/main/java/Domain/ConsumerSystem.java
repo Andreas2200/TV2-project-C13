@@ -18,13 +18,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+
 public class ConsumerSystem
 {
+    public static void main(String[] args) {
+        ConsumerSystem cs = new ConsumerSystem();
+        cs.searchPerson("Freja");
+    }
     private User activeUser = null;
 
     static DatabaseSystem dbSys = new DatabaseSystem();
 
-    public ArrayList<String> searchPerson(String searchString) throws Exception {
+    public ArrayList<String> searchPerson(String searchString) {
         ArrayList<String> people = new ArrayList<>();
         String nameString = "";
         String occupationString = "";
@@ -44,13 +49,22 @@ public class ConsumerSystem
                     occupationString = values[1];
                     roleString = values[3];
                     //Lav igen et arraylist for at kunne læse strengen og udtrække værdien for programnavn
+
+                    ArrayList<ProgramInterface> programs = new ArrayList<>();
+                    programs.add(dbSys.getProgramFromID(Integer.parseInt(values[2])));
+                    System.out.println(programs);
+                    for(ProgramInterface program: programs){
+                        programString = program.getName();
+                        nameString = p.getName() + ";" + occupationString + ";" + roleString + ";" + programString + ";" + p.getEmail() + "\n";
+                        people.add(nameString);
+                    }/*
                     ArrayList<String> getProgramString = dbSys.getProgramFromID(values[2]);
                     for(String e: getProgramString) {
                         String[] programValues = e.split(";");
                         programString = programValues[1];
                         nameString = p.getName() + ";" + occupationString + ";" + roleString + ";" + programString + ";" + p.getEmail() + "\n";
                         people.add(nameString);
-                    }
+                    }*/
                 }
             }
         } catch(Exception e) {
@@ -141,12 +155,13 @@ public class ConsumerSystem
 
                 //String[] durationTime = element.getDuration().split(",");
                 //LocalTime time = LocalTime.of(Integer.parseInt(durationTime[0]), Integer.parseInt(durationTime[1]));
-                ArrayList<Genre> genres = new ArrayList<>();
+                /*ArrayList<Genre> genres = new ArrayList<>();
                 for (GenreInterface genreInterfaces: element.getGenre())
                 {
                     genres.add(Genre.valueOf(genreInterfaces.toString()));
-                }
-                returnList.add(new Program(element.getId(), element.getName(), element.getReleaseDate(), element.getShowedOn(), element.getDuration(), genres, element.getDescription(), element.getCreatorID()));
+                }*/
+
+                returnList.add(new Program(element.getId(), element.getName(), element.getReleaseDate(), element.getDuration(), element.getGenre(), element.getDescription(), element.getCreatorID()));
             }
         }
         catch (Exception e)
@@ -227,8 +242,8 @@ public class ConsumerSystem
         }
     }
 
-    public void createEditProgram(String tempName, String tempDate, String showedOn, LocalTime tempDuration, ArrayList<Genre> tempGenre, String tempDesc, int createrID) {
-        Program tempProgram = new Program(tempName, tempDate, showedOn, tempDuration, tempGenre, tempDesc, createrID);
+    public void createEditProgram(String tempName, String tempDate, LocalTime tempDuration, String tempGenre, String tempDesc, int createrID) {
+        Program tempProgram = new Program(tempName, tempDate, tempDuration, tempGenre, tempDesc, createrID);
         if(!dbSys.doesProgramExist(tempProgram.getName())) {
             dbSys.SaveProgram(tempProgram);
             System.out.println(tempProgram.getDuration());
@@ -267,12 +282,12 @@ public class ConsumerSystem
 
     private Program mapProgramInterfaceProgram(ProgramInterface element)
     {
-        ArrayList<Genre> genres = new ArrayList<>();
+        /*ArrayList<Genre> genres = new ArrayList<>();
         for (GenreInterface genreInterfaces: element.getGenre())
         {
             genres.add(Genre.valueOf(genreInterfaces.toString()));
-        }
-        return new Program(element.getId(), element.getName(), element.getReleaseDate(), element.getShowedOn(), element.getDuration(), genres, element.getDescription(), element.getCreatorID());
+        }*/
+        return new Program(element.getId(), element.getName(), element.getReleaseDate(), element.getDuration(), element.getGenre(), element.getDescription(), element.getCreatorID());
     }
 
     public ArrayList<User> getAllUsersExcept(User user)
@@ -288,12 +303,6 @@ public class ConsumerSystem
 
     public String hashPassword(String password, String salt) {
         return dbSys.hashPassword(password,salt);
-    }
-
-
-    public static void main(String[] args)
-    {
-
     }
 
 }

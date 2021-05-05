@@ -242,15 +242,17 @@ public class LogicController implements Initializable {
             // converting duration from String to LocalTime
             LocalTime durationTime = LocalTime.parse(durationField.getText());
             // converting GenreData from object to arraylist
-            ArrayList<Genre> tempGenres = new ArrayList<>();
-            tempGenres.add(genreComboBox.getSelectionModel().getSelectedItem());
+            //ArrayList<Genre> tempGenres = new ArrayList<>();
+            //tempGenres.add(genreComboBox.getSelectionModel().getSelectedItem());
+            Genre tempGenre = genreComboBox.getSelectionModel().getSelectedItem();
+            String tempGenres = tempGenre.toString();
 
             succesProgramField.setVisible(true);
             succesProgramField.setText("Program findes allerede..");
             succesProgramField.setStyle("-fx-text-fill: RED");
 
             if(!cs.doesProgramExist(programTitleField.getText())){
-                cs.createEditProgram(programTitleField.getText(), releaseDateField.getText(), showedOnField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), 1);
+                cs.createEditProgram(programTitleField.getText(), releaseDateField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), 1);
                 succesProgramField.setText("Program blev oprettet!");
                 succesProgramField.setStyle("-fx-text-fill: GREEN");
                 updateComboBox();
@@ -381,10 +383,10 @@ public class LogicController implements Initializable {
                     searchedProgramReleaseDate.setText(tempProgram.getReleaseDate());
 
                     String genres = "";
-                    for (GenreInterface element: tempProgram.getGenre())
+                    /*for (GenreInterface element: tempProgram.getGenre())
                     {
                         genres += Genre.valueOf(element.toString()) + "\n";
-                    }
+                    }*/
 
                     String credits = "";
                     for (CreditInterface element: cs.getCredits(tempProgram.getId()))
@@ -414,9 +416,9 @@ public class LogicController implements Initializable {
                     searchedProgramReleaseDate.setText(tempProgram.getReleaseDate());
 
                     String genres = "";
-                    for (GenreInterface element : tempProgram.getGenre()) {
+                    /*for (GenreInterface element : tempProgram.getGenre()) {
                         genres += Genre.valueOf(element.toString()) + "\n";
-                    }
+                    }*/
 
                     String credits = "";
                     for (CreditInterface element : cs.getCredits(tempProgram.getId())) {
