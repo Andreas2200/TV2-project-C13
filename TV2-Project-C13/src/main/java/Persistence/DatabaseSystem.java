@@ -4,33 +4,33 @@ package Persistence;
 import Domain.User;
 import Interfaces.*;
 import Domain.Occupation;
+import javafx.util.converter.LocalDateStringConverter;
+
 import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.FormatStyle;
 import java.util.*;
+import java.util.Date;
 
 //bruges kun til at teste database componenter og skal i ingen omstændigheder bruges i det endelige produkt
 class Main {
     static DatabaseSystem dbSys = new DatabaseSystem();
-    public static void main(String[] args) throws Exception {
-        int x = 12;
-        int y = 12;
-        System.out.println(x / y);
-        System.out.println(x%y);
-        //dbSys = dbSys.getInstance();
-        //User user = null;
-        //System.out.println(user = (User) dbSys.getUser("Admin", "password"));
-        //System.out.println(String.valueOf(dbSys.SearchPerson("tom")));
-        //System.out.println(String.valueOf(dbSys.getAllPersons()));
-        //System.out.println(dbSys.doesPersonExist("Sigurdskelmose@gmail.com"));
-    }
+    public static void main(String[] args) throws Exception
+    {
+        dbSys = dbSys.getInstance();
+        dbSys.getUser("morten420","Pa22Wo7d123");
+        }
 }
 
-public class DatabaseSystem {
-
-    private static DatabaseSystem instance;
+public class DatabaseSystem
+{
+    private static Persistence.DatabaseSystem instance;
     private String url = "217.61.218.112";
     private int port = 5432;
     private String databaseName = "TV2ProjectC13";
@@ -40,9 +40,9 @@ public class DatabaseSystem {
 
     public DatabaseSystem(){initializePostgresqlDatabase();}
 
-    public static synchronized DatabaseSystem getInstance(){
+    public static synchronized Persistence.DatabaseSystem getInstance(){
         if (instance == null){
-            instance = new DatabaseSystem();
+            instance = new Persistence.DatabaseSystem();
         }
         return instance;
     }
@@ -56,6 +56,38 @@ public class DatabaseSystem {
             ex.printStackTrace(System.err);
         } finally {
             if (connection == null) System.exit(-1);
+        }
+    }
+
+    public UserInterface getUser(String username, String password)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+            stmt.setString(1,username);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if(!sqlReturnValues.next())
+            {
+                return null;
+            }
+            if(hashPassword(password,sqlReturnValues.getString(4)).equals(sqlReturnValues.getString(3)))
+            {
+                stmt = connection.prepareStatement("SELECT * FROM roles WHERE id= ?");
+                stmt.setInt(1,sqlReturnValues.getInt(6));
+                ResultSet sqlRoleValues = stmt.executeQuery();
+                if(!sqlRoleValues.next())
+                {
+                    return null;
+                }
+                System.out.println(new UserData(sqlReturnValues.getString(2),sqlReturnValues.getString(3),sqlReturnValues.getString(4),sqlReturnValues.getString(5),sqlReturnValues.getString(7),java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()),sqlRoleValues.getString(2)));
+                return new UserData(sqlReturnValues.getString(2),sqlReturnValues.getString(3),sqlReturnValues.getString(4),sqlReturnValues.getString(5),sqlReturnValues.getString(7),java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()),sqlRoleValues.getString(2));
+            }
+            return null;
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return null;
         }
     }
 
@@ -402,7 +434,7 @@ public class DatabaseSystem {
         return program;
     }
 
-    public UserInterface getUser(String username, String password) {
+    /*public UserInterface getUser(String username, String password) {
         try (Scanner reader = new Scanner(new File("usernames.txt")))
         {
             //har haft nogle problemer med at få pathen til filen til at fungere
@@ -420,9 +452,11 @@ public class DatabaseSystem {
             System.out.println(e);
         }
         return null;
-    }
+    }*/
 
-    public UserInterface getUser(String username) {
+
+
+    /*public UserInterface getUser(String username) {
         try (Scanner reader = new Scanner(new File("usernames.txt")))
         {
             while (reader.hasNext()){
@@ -451,7 +485,7 @@ public class DatabaseSystem {
         else {
             return false;
         }
-    }
+    }*/
 
     public ArrayList<UserInterface> getAllUsers()
     {
@@ -466,7 +500,7 @@ public class DatabaseSystem {
             for (String element: readValues)
             {
                 String[] valuesToUse = element.split(";");
-                returnList.add(new UserData(valuesToUse[2],valuesToUse[0], valuesToUse[1],Integer.parseInt(valuesToUse[5]), valuesToUse[4], valuesToUse[3]));
+                //returnList.add(new UserData(valuesToUse[2],valuesToUse[0], valuesToUse[1],Integer.parseInt(valuesToUse[5]), valuesToUse[4], valuesToUse[3]));
             }
         }
         catch (IOException ex)
@@ -639,7 +673,7 @@ public class DatabaseSystem {
         }
     }
 
-    public void updateUserPerms(UserInterface user)
+    /*public void updateUserPerms(UserInterface user)
     {
         ArrayList<UserInterface> tempUserArray = getAllUsers();
         ArrayList<UserInterface> updateUserArray = new ArrayList<>();
@@ -696,5 +730,22 @@ public class DatabaseSystem {
             }
         }
         return returnArray;
+    }*/
+
+    public String hashPassword(String password, String salt) {
+        String returnHash = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] bytes = md.digest((password + salt).getBytes(StandardCharsets.UTF_8));
+            BigInteger bigInteger = new BigInteger(1, bytes);
+            returnHash = bigInteger.toString(16);
+            while (returnHash.length() < 32) {
+                returnHash = "0" + returnHash;
+            }
+        }
+        catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return returnHash;
     }
 }

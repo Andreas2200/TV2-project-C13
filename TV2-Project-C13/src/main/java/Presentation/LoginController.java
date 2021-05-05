@@ -153,20 +153,16 @@ public class LoginController implements Initializable {
                 }
         }
     }
-
-    public void handleCreateUserEnter(javafx.scene.input.KeyEvent keyEvent) throws IOException {
+    @FXML
+    private void handleCreateUserEnter(javafx.scene.input.KeyEvent keyEvent) throws IOException {
         var key = keyEvent.getCode();
         switch (key) {
             case ENTER:
                 if(createUserNameField.getText() != null && createUserUsernameField.getText() != null && birthdayDatePicker.getValue() != null
                         && createUserPasswordField.getText() != null && createUserEmailField.getText() != null) {
-                    //Convert datepicker value to an age
-                    LocalDate today = LocalDate.now();
-                    LocalDate birthdate = birthdayDatePicker.getValue();
-                    Period p = Period.between(birthdate,today);
-                    int age = p.getYears();
                     // Create the user
-                    cs.createUser(createUserNameField.getText(), createUserUsernameField.getText(), cs.hashPassword(createUserPasswordField.getText(), createUUID()), age, createUserEmailField.getText());
+                    String tempSalt = createUUID();
+                    //cs.createUser(createUserUsernameField.getText(),cs.hashPassword(createUserPasswordField.getText(), tempSalt),tempSalt,createUserNameField.getText(),createUserEmailField.getText(),birthdayDatePicker.getValue());
                     //GUI controls
                     signInPane.toFront();
                     signInScreenButton.toFront();
@@ -195,13 +191,9 @@ public class LoginController implements Initializable {
         if(event.getSource() == signUpLoginButton) {
             if(createUserNameField.getText() != null && createUserUsernameField.getText() != null && birthdayDatePicker.getValue() != null
                     && createUserPasswordField.getText() != null && createUserEmailField.getText() != null) {
-                //Convert datepicker value to an age
-                LocalDate today = LocalDate.now();
-                LocalDate birthdate = birthdayDatePicker.getValue();
-                Period p = Period.between(birthdate,today);
-                int age = p.getYears();
                 // Create the user
-                cs.createUser(createUserNameField.getText(), createUserUsernameField.getText(), cs.hashPassword(createUserPasswordField.getText(), createUUID()), age, createUserEmailField.getText());
+                String tempSalt = createUUID();
+                //cs.createUser(createUserUsernameField.getText(),cs.hashPassword(createUserPasswordField.getText(), tempSalt),tempSalt,createUserNameField.getText(),createUserEmailField.getText(),birthdayDatePicker.getValue());
                 //GUI controls
                 signInPane.toFront();
                 signInScreenButton.toFront();

@@ -1,5 +1,7 @@
 package Interfaces;
 
+import java.time.LocalDate;
+
 public interface UserInterface {
     public String getName();
 
@@ -9,9 +11,13 @@ public interface UserInterface {
 
     public int getAge();
 
+    public LocalDate getBirthday();
+
     public String getRole();
 
     public String getEmail();
+
+    public String getSalt();
 
     public void setPassword(String newPas);
 

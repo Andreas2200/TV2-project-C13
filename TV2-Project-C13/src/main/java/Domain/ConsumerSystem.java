@@ -6,6 +6,7 @@ import Persistence.GenreData;
 import Persistence.ProgramData;
 import Persistence.UserData;
 
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -80,24 +81,24 @@ public class ConsumerSystem
         }
     }
 
-    public void createUser(String tempName, String tempUsername, String tempPass, int tempBirthday, String tempEmail)
+    /*public void createUser(String tempUsername, String tempPass, String tempSalt, String tempName, String tempEmail, LocalDate tempBirthday)
     {
-        User tempUser = new User(tempName, tempUsername, tempPass, tempBirthday, tempEmail);
+        User tempUser = new User(tempUsername,tempPass,tempSalt,tempName,tempEmail,tempBirthday);
         try {
             dbSys.SaveUser(tempUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public User logIn(String tempUsername,String tempPass)
     {
-         UserData userData = (UserData) dbSys.getUser(tempUsername,tempPass);
-         try {
-             return new User(userData.getName(), userData.getUsername(), userData.getPassword(), userData.getAge(), userData.getEmail(), userData.getRole());
-         } catch(NullPointerException e) {
-             return null;
-         }
+        UserData userData = (UserData) dbSys.getUser(tempUsername,tempPass);
+        try {
+            return new User(userData.getUsername(),userData.getPassword(),userData.getSalt(),userData.getName(),userData.getEmail(),userData.getBirthday(),userData.getRole());
+        } catch(NullPointerException e) {
+            return null;
+        }
     }
 
     public void saveCredit(Credits credit)
@@ -250,17 +251,17 @@ public class ConsumerSystem
 
     public void saveUser(User user, String role) throws IOException {
         user.setRole(role);
-        dbSys.updateUserPerms(user);
+        //dbSys.updateUserPerms(user);
     }
 
     public void deleteUser(User user, String reason)
     {
-        dbSys.deleteUser(new UserData(user.getName(), user.getUsername(), user.getPassword(), user.getAge(), user.getEmail(), user.getRole()),reason);
+        //dbSys.deleteUser(new UserData(user.getName(), user.getUsername(), user.getPassword(), user.getAge(), user.getEmail(), user.getRole()),reason);
     }
 
     private User mapUserInterfaceUser(UserInterface user)
     {
-        return new User(user.getName(),user.getUsername(), user.getPassword(), user.getAge(), user.getEmail(), user.getRole());
+        return new User(user.getUsername(),user.getPassword(),user.getSalt(),user.getName(),user.getEmail(),user.getBirthday(),user.getRole());
     }
 
     private Program mapProgramInterfaceProgram(ProgramInterface element)
@@ -277,28 +278,15 @@ public class ConsumerSystem
     {
         ArrayList<User> returnArray = new ArrayList<>();
 
-        for (UserInterface element: dbSys.getAllUsersExceptXUser(user))
+        /*for (UserInterface element: dbSys.getAllUsersExceptXUser(user))
         {
             returnArray.add(mapUserInterfaceUser(element));
-        }
+        }*/
         return returnArray;
     }
 
     public String hashPassword(String password, String salt) {
-        String returnHash = "";
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] bytes = md.digest((password + salt).getBytes(StandardCharsets.UTF_8));
-            BigInteger bigInteger = new BigInteger(1, bytes);
-            returnHash = bigInteger.toString(16);
-            while (returnHash.length() < 32) {
-                returnHash = "0" + returnHash;
-            }
-        }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return returnHash;
+        return dbSys.hashPassword(password,salt);
     }
 
     /*
