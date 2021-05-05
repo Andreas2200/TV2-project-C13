@@ -7,6 +7,10 @@ import Persistence.ProgramData;
 import Persistence.UserData;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -279,4 +283,29 @@ public class ConsumerSystem
         }
         return returnArray;
     }
+
+    public String hashPassword(String password, String salt) {
+        String returnHash = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] bytes = md.digest((password + salt).getBytes(StandardCharsets.UTF_8));
+            BigInteger bigInteger = new BigInteger(1, bytes);
+            returnHash = bigInteger.toString(16);
+            while (returnHash.length() < 32) {
+                returnHash = "0" + returnHash;
+            }
+        }
+        catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return returnHash;
+    }
+
+    /*
+    public static void main(String[] args) {
+        System.out.println(hashPassword("Pa22Wo7d123", "db458125-8692-4609-be2a-3f5c65585637"));
+    }
+     */
 }
+
+

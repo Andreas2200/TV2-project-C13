@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 import Domain.ConsumerSystem;
 import Domain.User;
@@ -165,7 +166,7 @@ public class LoginController implements Initializable {
                     Period p = Period.between(birthdate,today);
                     int age = p.getYears();
                     // Create the user
-                    cs.createUser(createUserNameField.getText(), createUserUsernameField.getText(), createUserPasswordField.getText(), age, createUserEmailField.getText());
+                    cs.createUser(createUserNameField.getText(), createUserUsernameField.getText(), cs.hashPassword(createUserPasswordField.getText(), createUUID()), age, createUserEmailField.getText());
                     //GUI controls
                     signInPane.toFront();
                     signInScreenButton.toFront();
@@ -200,7 +201,7 @@ public class LoginController implements Initializable {
                 Period p = Period.between(birthdate,today);
                 int age = p.getYears();
                 // Create the user
-                cs.createUser(createUserNameField.getText(), createUserUsernameField.getText(), createUserPasswordField.getText(), age, createUserEmailField.getText());
+                cs.createUser(createUserNameField.getText(), createUserUsernameField.getText(), cs.hashPassword(createUserPasswordField.getText(), createUUID()), age, createUserEmailField.getText());
                 //GUI controls
                 signInPane.toFront();
                 signInScreenButton.toFront();
@@ -272,5 +273,10 @@ public class LoginController implements Initializable {
                 button.getTransforms().remove(bigScale);
             }
         });
+    }
+
+    private String createUUID() {
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
     }
 }
