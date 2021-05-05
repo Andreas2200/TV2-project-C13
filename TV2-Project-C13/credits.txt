@@ -24,3 +24,6 @@
 44;12;Sarah.har@mail.com;Sarah;DRONE;N/A
 44;4;Børge@gmail.com;Børge;DIRIGENTER;N/A
 22;6;xXxKasperxXx@gmail.com;Kasper;CASTING;N/A
+23;15;test@test.com;Sigurd;CASTING;N/A
+50;16;Mads@Mikkelsen.dk;Mads Mikkelsen;SKUESPILLER;Rune
+45;11;Sigvaldsucks@tmail.com;Sigvald;KLIPPER;Rune

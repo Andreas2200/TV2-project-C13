@@ -13,3 +13,5 @@
 12;Sarah;44;Sarah.har@mail.com
 13;Andreas;19;Andreaserlang@hotman.com
 14;Adam;19;Adam@gmail.com
+15;Sigurd;23;test@test.com
+16;Mads Mikkelsen;50;Mads@Mikkelsen.dk

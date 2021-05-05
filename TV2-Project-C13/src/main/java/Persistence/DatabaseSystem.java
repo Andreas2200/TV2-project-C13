@@ -5,6 +5,9 @@ import Domain.User;
 import Interfaces.*;
 import Domain.Occupation;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -28,12 +31,32 @@ class Main {
 public class DatabaseSystem {
 
     private static DatabaseSystem instance;
+    private String url = "217.61.218.112";
+    private int port = 5432;
+    private String databaseName = "TV2ProjectC13";
+    private String username = "postgres";
+    private String password = "Basse1234";
+    private Connection connection = null;
+
+    public DatabaseSystem(){initializePostgresqlDatabase();}
 
     public static synchronized DatabaseSystem getInstance(){
         if (instance == null){
             instance = new DatabaseSystem();
         }
         return instance;
+    }
+
+    private void initializePostgresqlDatabase() {
+        try {
+            DriverManager.registerDriver(new org.postgresql.Driver());
+            connection = DriverManager.getConnection("jdbc:postgresql://" + url + ":" + port + "/" + databaseName, username, password);
+            System.out.println("Connection made");
+        } catch (SQLException | IllegalArgumentException ex) {
+            ex.printStackTrace(System.err);
+        } finally {
+            if (connection == null) System.exit(-1);
+        }
     }
 
     public ArrayList<ProgramInterface> getProgram() {

@@ -23,3 +23,4 @@
 22;Whats up dog 14;KOMEDIE,;26/04/2021;01:56:20;asd;1
 23;Whats up dog 15;KOMEDIE,;26/04/2021;01:56:20;asd;1
 24;Whats up dog 16;KOMEDIE,;26/04/2021;01:56:20;asd;1
+25;Rune' brandert;DOKUMENTAR,;27/04/2021;01:30:20;Her følger vi Rune i sin brandert og på hans eventyr;1

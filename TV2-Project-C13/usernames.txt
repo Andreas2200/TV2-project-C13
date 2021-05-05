@@ -4,3 +4,4 @@ user;password;Sigurd Skelmose;User;user@email.com;22
 sigster;password;Sigudrr;User;Sigstser@gmail.com;0
 sigi123;password;Sigurd;User;SigurdSkelmose@gmail.com;3
 sigko;password;Sigrid;User;Sigridko@gmail.com;6
+producer;password;producerTest;Producer;producer@test.com;5
