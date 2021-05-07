@@ -58,7 +58,7 @@ public class LogicController implements Initializable {
     @FXML
     private ComboBox<Person> creditPersonCB;
     @FXML
-    private ComboBox<Occupation> creditOccupationCB;
+    private ComboBox<String> creditOccupationCB;
 
     @FXML
     private ImageView userImageView, closeButtonImageView;
@@ -86,7 +86,7 @@ public class LogicController implements Initializable {
     @FXML
     private TableColumn<Integer, String> personCol, occupationCol, roleCol, programCol, contactInfoCol;
     @FXML
-    private TextField searchPersonField, programTitleField, durationField, releaseDateField, showedOnField, personNameField, personBirthdayField, personEmailField, creditActorTextField;
+    private TextField searchPersonField, programTitleField, durationField, releaseDateField, personNameField, personBirthdayField, personEmailField, creditActorTextField;
     @FXML
     private TextArea programDescriptionArea, deleteUserReasonTXT;
 
@@ -389,10 +389,10 @@ public class LogicController implements Initializable {
                     }*/
 
                     String credits = "";
-                    for (CreditInterface element: cs.getCredits(tempProgram.getId()))
+                    /*for (CreditInterface element: cs.getCredits(tempProgram.getId()))
                     {
                         credits += element.toString() + "\n";
-                    }
+                    }*/
                     searchedProgramGenre.setText(genres);
                     searchedProgramCreditsTXT.setText(credits);
 
@@ -421,9 +421,9 @@ public class LogicController implements Initializable {
                     }*/
 
                     String credits = "";
-                    for (CreditInterface element : cs.getCredits(tempProgram.getId())) {
+                    /*for (CreditInterface element : cs.getCredits(tempProgram.getId())) {
                         credits += element.toString() + "\n";
-                    }
+                    }*/
                     searchedProgramGenre.setText(genres);
                     searchedProgramCreditsTXT.setText(credits);
 
@@ -587,7 +587,7 @@ public class LogicController implements Initializable {
 
     public void checkOccupationCB(ActionEvent actionEvent)
     {
-        if(creditOccupationCB.getValue() != Occupation.SKUESPILLER)
+        if(!creditOccupationCB.getValue().equals(Occupation.SKUESPILLER))
         {
             creditActorLabel.setVisible(false);
             creditActorTextField.setVisible(false);
@@ -601,8 +601,8 @@ public class LogicController implements Initializable {
 
     public void saveCredit(ActionEvent actionEvent)
     {
-        cs.saveCredit(new Credits(creditOccupationCB.getValue(),creditPersonCB.getValue(), creditActorTextField.getText()));
-        updateComboBox();
+        /*cs.saveCredit(new Credits(creditOccupationCB.getValue(),creditPersonCB.getValue(), creditActorTextField.getText()));
+        updateComboBox();*/
     }
 
     public void saveCreditToProgram(ActionEvent actionEvent)
@@ -619,9 +619,9 @@ public class LogicController implements Initializable {
 
     public void updateComboBox() {
         genreComboBox.setItems(FXCollections.observableArrayList(Genre.values()));
-        creditOccupationCB.setItems(FXCollections.observableArrayList(Occupation.values()));
+        creditOccupationCB.setItems(FXCollections.observableArrayList(Occupation.values().toString()));
         creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
-        addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
+        //addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
         addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
         editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
         editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));

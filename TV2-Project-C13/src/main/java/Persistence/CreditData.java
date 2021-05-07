@@ -4,17 +4,19 @@ import Interfaces.CreditInterface;
 
 
 public class CreditData implements CreditInterface {
-    private OccupationData occupation;
+    private String occupation;
     private PersonData person;
     private String characterName;
+    private ProgramData program;
+    int createrID;
 
-    public CreditData(OccupationData occupation, PersonData person) {
+    /*public CreditData(String occupation, PersonData person) {
         this.occupation = occupation;
         this.person = person;
         this.characterName = "N/A";
     }
 
-    public CreditData(OccupationData occupation, PersonData person, String characterName) {
+    public CreditData(String occupation, PersonData person, String characterName) {
         this(occupation, person);
 
         if(characterName.equals(""))
@@ -26,8 +28,26 @@ public class CreditData implements CreditInterface {
         {
             this.characterName = characterName;
         }
+    }*/
+
+    public CreditData(PersonData person, ProgramData program, String occupation, String characterName, int createrID) {
+        this.person = person;
+        this.program = program;
+        this.occupation = occupation;
+        this.createrID = createrID;
+
+        if(characterName.equals(""))
+        {
+            this.characterName = "N/A";
+            System.out.println("Credit Debug");
+        }
+        else
+        {
+            this.characterName = characterName;
+        }
     }
-    public OccupationData getOccupation() {
+
+    public String getOccupation() {
         return occupation;
     }
 
@@ -37,6 +57,10 @@ public class CreditData implements CreditInterface {
 
     public String getCharacterName() {
         return characterName;
+    }
+
+    public ProgramData getProgram() {
+        return program;
     }
 
     @Override

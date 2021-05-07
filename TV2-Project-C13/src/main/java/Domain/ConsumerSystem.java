@@ -121,7 +121,7 @@ public class ConsumerSystem
         dbSys.saveCredit(credit);
     }
 
-    public ArrayList<Credits> getAllCredits()
+    /*public ArrayList<Credits> getAllCredits()
     {
         ArrayList<Credits> returnList = new ArrayList<>();
 
@@ -129,7 +129,7 @@ public class ConsumerSystem
         {
             for (CreditInterface element: dbSys.getAllCredits())
             {
-                returnList.add(new Credits(Occupation.valueOf(element.getOccupation().toString()),new Person(element.getPerson().getAge(),element.getPerson().getId(),element.getPerson().getEmail(),element.getPerson().getName()), element.getCharacterName()));
+                returnList.add(new Credits(element.getOccupation(),new Person(element.getPerson().getAge(),element.getPerson().getId(),element.getPerson().getEmail(),element.getPerson().getName()), element.getCharacterName()));
             }
         }
         catch (Exception e)
@@ -137,7 +137,7 @@ public class ConsumerSystem
             e.printStackTrace();
         }
         return returnList;
-    }
+    }*/
 
     public ArrayList<Program> getAllPrograms()
     {
@@ -205,10 +205,10 @@ public class ConsumerSystem
         return returnList;
     }
 
-    public ArrayList<CreditInterface> getCredits(int programID)
+    /*public ArrayList<CreditInterface> getCredits(int programID)
     {
         return dbSys.getCredits(programID);
-    }
+    }*/
 
     public ArrayList<Program> getSearchedProgram(String title) {
         ArrayList<Program> returnList = new ArrayList<>();

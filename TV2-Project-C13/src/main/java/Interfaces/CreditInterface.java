@@ -3,9 +3,11 @@ package Interfaces;
 import Persistence.OccupationData;
 
 public interface CreditInterface {
-    public OccupationInterface getOccupation();
+    public String getOccupation();
 
     public PersonInterface getPerson();
+
+    public ProgramInterface getProgram();
 
     public String getCharacterName();
 }

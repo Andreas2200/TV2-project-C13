@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -27,7 +28,9 @@ class Main {
     {
         dbSys = dbSys.getInstance();
         dbSys.getUser("morten420","Pa22Wo7d123");
-        System.out.println(dbSys.getProgramFromID(1));
+        //System.out.println(dbSys.getProgramFromID(1));
+        //System.out.println(dbSys.getPersonsFromName("l"));
+        System.out.println(dbSys.getCreditFromID(1));
     }
 }
 
@@ -182,6 +185,69 @@ public class DatabaseSystem
         }
     }
 
+    public List<PersonInterface> getPersonsFromName(String searchParam) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM persons WHERE name LIKE CONCAT('%',?,'%')");
+            //String search = searchParam + "%";
+            stmt.setString(1, searchParam);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            List<PersonInterface> returnValue = new ArrayList<>();
+            while(sqlReturnValues.next()) {
+                LocalDate today = LocalDate.now();
+                LocalDate birthdate = java.time.LocalDate.parse(sqlReturnValues.getDate(3).toString());
+                Period p = Period.between(birthdate,today);
+                int age = p.getYears();
+                returnValue.add(new PersonData(age, sqlReturnValues.getString(4), sqlReturnValues.getString(2)));
+            }
+            return returnValue;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<CreditInterface> getCreditFromID(int personID) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM credits WHERE person_id = ?");
+            stmt.setInt(1, personID);
+            ResultSet sqlCreditValues = stmt.executeQuery();
+            List<CreditInterface> returnValue = new ArrayList<>();
+            if (!sqlCreditValues.next()) {
+                return null;
+            }
+
+            while(sqlCreditValues.next()) {
+                PreparedStatement stmt1 = connection.prepareStatement("SELECT * FROM programs WHERE id IN(SELECT program_id FROM credits WHERE person_id = ?)");
+                stmt1.setInt(1, personID);
+                ResultSet sqlProgramValues = stmt1.executeQuery();
+                if(!sqlProgramValues.next()) {
+                    return null;
+                }
+            }
+            return returnValue;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getMovieRole(int creditID) {
+        try {
+            String role;
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM movie_role WHERE id = ?");
+            stmt.setInt(1, creditID);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if (!sqlReturnValues.next()) {
+                role = "N/A";
+                return role;
+            }
+            role = sqlReturnValues.getString(2);
+            return role;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
     //</editor-fold desc="Methods with SQL Implementation">
 
     //<editor-fold desc="Methods missing SQL Implementation">
@@ -331,7 +397,7 @@ public class DatabaseSystem
     }*/
 
     //denne her metode er for at få fat på alle credits uden at skulle have nogen kritiriere
-    public ArrayList<CreditInterface> getCredits () throws Exception {
+    /*public ArrayList<CreditInterface> getCredits () throws Exception {
         ArrayList<CreditInterface> credits = new ArrayList<>();
 
         Scanner reader = new Scanner(new File("credits.txt"));
@@ -341,16 +407,16 @@ public class DatabaseSystem
             String[] readSplit = read.split(";");
             CreditData credit;
             if (readSplit.length == 3) {
-                credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
+                credit = new CreditData(readSplit[1], (PersonData) getPerson(Integer.parseInt(readSplit[0])));
             } else {
-                credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
+                credit = new CreditData(readSplit[1], (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
             }
             credits.add(credit);
         }
         return credits;
-    }
+    }*/
 
-    public ArrayList<CreditInterface> getCredits ( int programID){
+    /*public ArrayList<CreditInterface> getCredits ( int programID){
         ArrayList<CreditInterface> credits = new ArrayList<>();
 
         try {
@@ -372,7 +438,7 @@ public class DatabaseSystem
                 //credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
                 //}
                 //else {
-                credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[3]);
+                credit = new CreditData(readSplit[1], (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[3]);
                 //}
                 credits.add(credit);
             }
@@ -381,9 +447,9 @@ public class DatabaseSystem
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
-    public ArrayList<CreditInterface> getCredits (String programTitle) throws Exception {
+    /*public ArrayList<CreditInterface> getCredits (String programTitle) throws Exception {
         //rettet i det efter jeg rettede i saveCredits
         ArrayList<CreditInterface> credits = new ArrayList<>();
         //get programID
@@ -407,10 +473,10 @@ public class DatabaseSystem
 
         CreditData credit;
         if (readSplit.length == 3) {
-            credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])));
+            credit = new CreditData(readSplit[1], (PersonData) getPerson(Integer.parseInt(readSplit[0])));
         }
         else {
-            credit = new CreditData(OccupationData.valueOf(readSplit[1]), (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
+            credit = new CreditData(readSplit[1], (PersonData) getPerson(Integer.parseInt(readSplit[0])), readSplit[2]);
         }
         credits.add(credit);
     }
@@ -419,7 +485,7 @@ public class DatabaseSystem
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
     public boolean saveCredits (CreditInterface credit,int programID){
         try {
@@ -441,7 +507,7 @@ public class DatabaseSystem
         return true;
     }
 
-    public ArrayList<CreditInterface> getAllCredits () throws Exception {
+    /*public ArrayList<CreditInterface> getAllCredits () throws Exception {
         ArrayList<CreditInterface> credits = new ArrayList<>();
         ArrayList<String> readValues = new ArrayList<>();
         try (Scanner reader = new Scanner(new File("credits.txt"))) {
@@ -450,13 +516,13 @@ public class DatabaseSystem
             }
             for (String element : readValues) {
                 String[] valuesToUse = element.split(";");
-                credits.add(new CreditData(OccupationData.valueOf(valuesToUse[4]), new PersonData(Integer.parseInt(valuesToUse[0]), Integer.parseInt(valuesToUse[1]), valuesToUse[2], valuesToUse[3]), valuesToUse[5]));
+                credits.add(new CreditData(valuesToUse[4], new PersonData(Integer.parseInt(valuesToUse[0]), Integer.parseInt(valuesToUse[1]), valuesToUse[2], valuesToUse[3]), valuesToUse[5]));
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return credits;
-    }
+    }*/
 
     public boolean saveCredit (CreditInterface credit)
     {
