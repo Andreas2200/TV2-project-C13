@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ConsumerSystem
@@ -21,7 +22,18 @@ public class ConsumerSystem
 
     static DatabaseSystem dbSys = new DatabaseSystem();
 
-    public ArrayList<String> searchPerson(String searchString) {
+    public List<CreditInterface> searchPerson(String searchString) {
+        List<PersonInterface> people = dbSys.getPersonsFromName(searchString);
+        List<CreditInterface> credits = new ArrayList<>();
+        for(PersonInterface p: people) {
+            for(CreditInterface c: dbSys.getCreditFromID(p.getId())) {
+                credits.add(c);
+            }
+        }
+        return credits;
+    }
+
+    /*public ArrayList<String> searchPerson(String searchString) {
         ArrayList<String> people = new ArrayList<>();
         String nameString = "";
         String occupationString = "";
@@ -49,21 +61,22 @@ public class ConsumerSystem
                         programString = program.getName();
                         nameString = p.getName() + ";" + occupationString + ";" + roleString + ";" + programString + ";" + p.getEmail() + "\n";
                         people.add(nameString);
-                    }/*
+                    }
                     ArrayList<String> getProgramString = dbSys.getProgramFromID(values[2]);
                     for(String e: getProgramString) {
                         String[] programValues = e.split(";");
                         programString = programValues[1];
                         nameString = p.getName() + ";" + occupationString + ";" + roleString + ";" + programString + ";" + p.getEmail() + "\n";
                         people.add(nameString);
-                    }*/
+                    }
                 }
             }
         } catch(Exception e) {
             e.printStackTrace();
         }
         return people;
-    }
+    }*/
+
 
     private void saveCredit()
     {

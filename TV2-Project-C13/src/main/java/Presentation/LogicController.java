@@ -7,11 +7,13 @@ import java.time.LocalTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import Domain.*;
 import Interfaces.CreditInterface;
 import Interfaces.GenreInterface;
+import Interfaces.PersonInterface;
 import Interfaces.ProgramInterface;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -176,8 +178,8 @@ public class LogicController implements Initializable {
             //System.out.println(cs.searchPerson(searchPersonField.getText()));
             //findPersonTableView.setEditable(false);
             //Collection<String> list = cs.searchPerson(searchPersonField.getText());
-            ArrayList<String> list = cs.searchPerson(searchPersonField.getText());
-            final ObservableList<String> details = FXCollections.observableArrayList(list);
+            List<CreditInterface> list = cs.searchPerson(searchPersonField.getText());
+            final ObservableList<CreditInterface> details = FXCollections.observableArrayList(list);
 
             // Smid værdierne ind i hver deres arraylist, så cellerne kan hente værdierne.
             ArrayList<String> personList = new ArrayList<>();
@@ -186,13 +188,13 @@ public class LogicController implements Initializable {
             ArrayList<String> programList = new ArrayList<>();
             ArrayList<String> contactList = new ArrayList<>();
 
-            for(String element: list) {
-                String[] elementValues = element.split(";");
-                personList.add(elementValues[0]);
-                occupationList.add(elementValues[1]);
-                roleList.add(elementValues[2]);
-                programList.add(elementValues[3]);
-                contactList.add(elementValues[4]);
+            for(CreditInterface element: list) {
+                //String[] elementValues = element.split(";");
+                personList.add(element.getPerson().getName());
+                occupationList.add(element.getOccupation());
+                roleList.add(element.getCharacterName());
+                programList.add(element.getProgram().getName());
+                contactList.add(element.getPerson().getEmail());
             }
 
             //Indsæt værdierne fra listen i de respektive celler
@@ -223,7 +225,7 @@ public class LogicController implements Initializable {
                 findPersonTableView.getItems().add(i);
             }
 
-            //cs.searchPerson(searchPersonField.getText());
+            cs.searchPerson(searchPersonField.getText());
             //System.out.println(cs.searchPerson(searchPersonField.getText()));
 
         } catch (Exception e) {

@@ -29,17 +29,17 @@ class Main {
         dbSys = dbSys.getInstance();
         //dbSys.getUser("morten420","Pa22Wo7d123");
         //System.out.println(dbSys.getProgramFromID(1));
-        //System.out.println(dbSys.getPersonsFromName("l"));
+        System.out.println(dbSys.getPersonsFromName("B"));
         //System.out.println(dbSys.getCreditFromID(1));
 
-        for (CreditInterface element: dbSys.getCreditFromID(1))
+        /*for (CreditInterface element: dbSys.getCreditFromID(1))
         {
             String printString = "Program Name: " + element.getProgram().getName() + "\n" +
                     "Person Name: " + element.getPerson().getName() + "\n" +
                     "Occupation: " + element.getOccupation() + "\n" +
                     "Character Name: " + element.getCharacterName();
             System.out.println(printString);
-        }
+        }*/
     }
 }
 
@@ -204,7 +204,7 @@ public class DatabaseSystem
                 LocalDate birthdate = java.time.LocalDate.parse(sqlReturnValues.getDate(3).toString());
                 Period p = Period.between(birthdate,today);
                 int age = p.getYears();
-                returnValue.add(new PersonData(age, sqlReturnValues.getString(4), sqlReturnValues.getString(2)));
+                returnValue.add(new PersonData(age, sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2)));
             }
             return returnValue;
         } catch (SQLException ex) {
@@ -223,7 +223,7 @@ public class DatabaseSystem
             ResultSet sqlCreditReturnValue = stmt.executeQuery();
             while(sqlCreditReturnValue.next())
             {
-                System.out.println("ID: " + sqlCreditReturnValue.getInt(1));
+                //System.out.println("ID: " + sqlCreditReturnValue.getInt(1));
                 //Gets program
                 stmt = connection.prepareStatement("SELECT * FROM programs WHERE id = ?");
                 stmt.setInt(1,sqlCreditReturnValue.getInt(2));
@@ -253,7 +253,7 @@ public class DatabaseSystem
                 LocalDate today = LocalDate.now();
                 LocalDate birthdate = java.time.LocalDate.parse(sqlPersonReturnValue.getDate(3).toString());
                 Period p = Period.between(birthdate,today);
-                PersonData tempPerson = new PersonData(p.getYears(),sqlPersonReturnValue.getString(4),sqlPersonReturnValue.getString(2));
+                PersonData tempPerson = new PersonData(p.getYears(), sqlPersonReturnValue.getInt(1),sqlPersonReturnValue.getString(4),sqlPersonReturnValue.getString(2));
 
                 //Gets occupation
                 stmt = connection.prepareStatement("SELECT * FROM occupation where id = ?");
