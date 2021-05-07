@@ -2,21 +2,13 @@ package Domain;
 
 import Interfaces.*;
 import Persistence.DatabaseSystem;
-import Persistence.GenreData;
-import Persistence.ProgramData;
 import Persistence.UserData;
 
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 
 public class ConsumerSystem
@@ -98,12 +90,12 @@ public class ConsumerSystem
     public void createUser(String tempUsername, String tempPass, String tempSalt, String tempName, String tempEmail, LocalDate tempBirthday)
     {
         User tempUser = new User(tempUsername,tempPass,tempSalt,tempName,tempEmail,tempBirthday);
-        dbSys.SaveUser(tempUser);
+        dbSys.saveUser(tempUser);
     }
 
     public boolean createUser(User user)
     {
-        return dbSys.SaveUser(user);
+        return dbSys.saveUser(user);
     }
 
     public User logIn(String tempUsername,String tempPass)

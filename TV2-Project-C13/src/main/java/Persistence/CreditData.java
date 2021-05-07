@@ -14,9 +14,9 @@ public class CreditData implements CreditInterface {
         this.occupation = occupation;
         this.person = person;
         this.characterName = "N/A";
-    }
+    }*/
 
-    public CreditData(String occupation, PersonData person, String characterName) {
+    /*public CreditData(String occupation, PersonData person, String characterName) {
         this(occupation, person);
 
         if(characterName.equals(""))
@@ -30,21 +30,22 @@ public class CreditData implements CreditInterface {
         }
     }*/
 
+    public CreditData(PersonData person, ProgramData program, String occupation, int createrID)
+    {
+        this.person = person;
+        this.program = program;
+        this.occupation = occupation;
+        this.createrID = createrID;
+        this.characterName = "N/A";
+    }
+
     public CreditData(PersonData person, ProgramData program, String occupation, String characterName, int createrID) {
         this.person = person;
         this.program = program;
         this.occupation = occupation;
         this.createrID = createrID;
+        this.characterName = characterName;
 
-        if(characterName.equals(""))
-        {
-            this.characterName = "N/A";
-            System.out.println("Credit Debug");
-        }
-        else
-        {
-            this.characterName = characterName;
-        }
     }
 
     public String getOccupation() {

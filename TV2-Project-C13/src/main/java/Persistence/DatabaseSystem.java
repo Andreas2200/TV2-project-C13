@@ -27,16 +27,25 @@ class Main {
     public static void main(String[] args) throws Exception
     {
         dbSys = dbSys.getInstance();
-        dbSys.getUser("morten420","Pa22Wo7d123");
+        //dbSys.getUser("morten420","Pa22Wo7d123");
         //System.out.println(dbSys.getProgramFromID(1));
         //System.out.println(dbSys.getPersonsFromName("l"));
-        System.out.println(dbSys.getCreditFromID(1));
+        //System.out.println(dbSys.getCreditFromID(1));
+
+        for (CreditInterface element: dbSys.getCreditFromID(1))
+        {
+            String printString = "Program Name: " + element.getProgram().getName() + "\n" +
+                    "Person Name: " + element.getPerson().getName() + "\n" +
+                    "Occupation: " + element.getOccupation() + "\n" +
+                    "Character Name: " + element.getCharacterName();
+            System.out.println(printString);
+        }
     }
 }
 
 public class DatabaseSystem
 {
-    private static Persistence.DatabaseSystem instance;
+    private static DatabaseSystem instance;
     private String url = "217.61.218.112";
     private int port = 5432;
     private String databaseName = "TV2ProjectC13";
@@ -67,8 +76,7 @@ public class DatabaseSystem
 
     //<editor-fold desc="Methods with SQL Implementation">
 
-    public UserInterface getUser(String username, String password)
-    {
+    public UserInterface getUser(String username, String password){
         try
         {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
@@ -96,7 +104,7 @@ public class DatabaseSystem
         }
     }
 
-    public ProgramInterface getProgramFromID(int programID) {
+    public ProgramInterface getProgramFromID(int programID){
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM programs WHERE id = ?");
             stmt.setInt(1, programID);
@@ -121,8 +129,7 @@ public class DatabaseSystem
         }
     }
 
-    public UserInterface getUser(String username)
-    {
+    public UserInterface getUser(String username){
         try
         {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
@@ -148,7 +155,7 @@ public class DatabaseSystem
         }
     }
 
-    public boolean SaveUser(UserInterface user){
+    public boolean saveUser(UserInterface user){
         if (getUser(user.getUsername()) == null)
         {
             try
@@ -207,23 +214,70 @@ public class DatabaseSystem
     }
 
     public List<CreditInterface> getCreditFromID(int personID) {
-        try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM credits WHERE person_id = ?");
-            stmt.setInt(1, personID);
-            ResultSet sqlCreditValues = stmt.executeQuery();
+        try
+        {
             List<CreditInterface> returnValue = new ArrayList<>();
-            if (!sqlCreditValues.next()) {
-                return null;
-            }
 
-            while(sqlCreditValues.next()) {
-                PreparedStatement stmt1 = connection.prepareStatement("SELECT * FROM programs WHERE id IN(SELECT program_id FROM credits WHERE person_id = ?)");
-                stmt1.setInt(1, personID);
-                ResultSet sqlProgramValues = stmt1.executeQuery();
-                if(!sqlProgramValues.next()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM credits WHERE person_id = ?");
+            stmt.setInt(1,personID);
+            ResultSet sqlCreditReturnValue = stmt.executeQuery();
+            while(sqlCreditReturnValue.next())
+            {
+                System.out.println("ID: " + sqlCreditReturnValue.getInt(1));
+                //Gets program
+                stmt = connection.prepareStatement("SELECT * FROM programs WHERE id = ?");
+                stmt.setInt(1,sqlCreditReturnValue.getInt(2));
+                ResultSet sqlProgramReturnValue = stmt.executeQuery();
+                if(!sqlProgramReturnValue.next())
+                {
                     return null;
                 }
+                //Gets genre from the program
+                stmt = connection.prepareStatement("SELECT * FROM genres WHERE id = ?");
+                stmt.setInt(1,sqlProgramReturnValue.getInt(3));
+                ResultSet sqlGenreReturnValue = stmt.executeQuery();
+                if(!sqlGenreReturnValue.next())
+                {
+                    return null;
+                }
+                ProgramData tempProgram = new ProgramData(sqlProgramReturnValue.getString(2),sqlProgramReturnValue.getString(4),LocalTime.parse(sqlProgramReturnValue.getString(5)),sqlGenreReturnValue.getString(2),sqlProgramReturnValue.getString(6),sqlProgramReturnValue.getInt(7));
+
+                //Gets person
+                stmt = connection.prepareStatement("SELECT * FROM persons WHERE id = ?");
+                stmt.setInt(1,sqlCreditReturnValue.getInt(3));
+                ResultSet sqlPersonReturnValue = stmt.executeQuery();
+                if(!sqlPersonReturnValue.next())
+                {
+                    return null;
+                }
+                LocalDate today = LocalDate.now();
+                LocalDate birthdate = java.time.LocalDate.parse(sqlPersonReturnValue.getDate(3).toString());
+                Period p = Period.between(birthdate,today);
+                PersonData tempPerson = new PersonData(p.getYears(),sqlPersonReturnValue.getString(4),sqlPersonReturnValue.getString(2));
+
+                //Gets occupation
+                stmt = connection.prepareStatement("SELECT * FROM occupation where id = ?");
+                stmt.setInt(1,sqlCreditReturnValue.getInt(4));
+                ResultSet sqlOccupationReturnValue = stmt.executeQuery();
+                if(!sqlOccupationReturnValue.next())
+                {
+                    return null;
+                }
+                String tempOccupation = sqlOccupationReturnValue.getString(2);
+
+                int tempCreatedID = sqlCreditReturnValue.getInt(5);
+
+                if(sqlOccupationReturnValue.getInt(1) == 36)
+                {
+                    String tempCharacterName = getMovieRole(sqlCreditReturnValue.getInt(1));
+                    returnValue.add(new CreditData(tempPerson,tempProgram,tempOccupation,tempCharacterName,tempCreatedID));
+                }
+                else
+                {
+                    returnValue.add(new CreditData(tempPerson,tempProgram,tempOccupation,tempCreatedID));
+                }
             }
+
             return returnValue;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -234,14 +288,13 @@ public class DatabaseSystem
     public String getMovieRole(int creditID) {
         try {
             String role;
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM movie_role WHERE id = ?");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM movie_role WHERE credits_id = ?");
             stmt.setInt(1, creditID);
             ResultSet sqlReturnValues = stmt.executeQuery();
             if (!sqlReturnValues.next()) {
-                role = "N/A";
-                return role;
+                return null;
             }
-            role = sqlReturnValues.getString(2);
+            role = sqlReturnValues.getString(3);
             return role;
         } catch (SQLException ex) {
             ex.printStackTrace();
