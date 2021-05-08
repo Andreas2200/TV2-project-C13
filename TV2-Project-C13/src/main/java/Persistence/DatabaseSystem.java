@@ -113,7 +113,7 @@ public class DatabaseSystem
                 return null;
             }
 
-           if (programID== sqlReturnValues.getInt(1)) {
+           if (programID == sqlReturnValues.getInt(1)) {
                 stmt = connection.prepareStatement("SELECT * FROM genres WHERE id= ?");
                 stmt.setInt(1, sqlReturnValues.getInt(3));
                 ResultSet sqlGenreValues = stmt.executeQuery();
@@ -720,58 +720,56 @@ public class DatabaseSystem
         return "";
     }
 
-    public void SavePerson (PersonInterface person) throws IOException {
-        Scanner reader = new Scanner(new File("persons.txt"));
-        if (person.getId() == -1) {
-            int ID = 0;
-            while (reader.hasNextLine()) {
-                ID = Integer.parseInt(reader.nextLine().split(";")[0]) + 1;
-            }
-            reader.close();
-            FileWriter writer = new FileWriter("persons.txt", true);
-            writer.write("\n" + ID + ";" + person.getName() + ";" + person.getAge() + ";" + person.getEmail());
-            writer.close();
-        } else {
-            FileWriter writer = new FileWriter("persons.txt", true);
-            writer.write("\n" + person.getId() + ";" + person.getName() + ";" + person.getAge() + ";" + person.getEmail());
-            writer.close();
+    public void SavePerson (PersonInterface person) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO persons (name, age, email) VALUES (?,?,?)");
+            stmt.setString(1,person.getName());
+            stmt.setInt(2,person.getAge());
+            stmt.setString(3,person.getEmail());
+            stmt.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
-    public PersonInterface getPerson ( int id){
-        PersonData person = null;
+    public PersonInterface getPersonFromID (int id){
         try {
-            Scanner reader = new Scanner(new File("persons.txt"));
-            while (reader.hasNextLine()) {
-                String read = reader.nextLine();
-                String[] readSplit = read.split(";");
-                if (Integer.parseInt(readSplit[0]) == id) {
-                    person = new PersonData(Integer.parseInt(readSplit[2]), id, readSplit[3], readSplit[1]);
-                }
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM persons WHERE id = ?");
+            stmt.setInt(1, id);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if (!sqlReturnValues.next()) {
+                return null;
             }
-            return person;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return new PersonData(sqlReturnValues.getInt(3), sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2));
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
             return null;
         }
     }
 
     public boolean doesPersonExist (String email){
         try {
-            Scanner reader = new Scanner(new File("persons.txt"));
-            while (reader.hasNextLine()) {
-                String read = reader.nextLine();
-                String[] readSplit = read.split(";");
-
-                if (readSplit[3].equals(email)) {
-                    System.out.println(readSplit);
-                    return true;
-                }
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM persons WHERE email = ?");
+            stmt.setString(1, email);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if (sqlReturnValues.next()) {
+                return true;
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return false;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
         }
-        return false;
+    }
+
+    public void editPerson (PersonInterface person) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("UPDATE persons SET name = '" + person.getName() + "', age = " + person.getAge() + "WHERE email = '" + person.getEmail() + "';");
+            stmt.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public boolean doesProgramExist (String name){

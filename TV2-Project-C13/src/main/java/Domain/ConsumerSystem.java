@@ -87,17 +87,20 @@ public class ConsumerSystem
     {
 
     }
-    public void createEditPerson(int tempAge, String tempEmail, String tempName) {
+    public boolean createPerson(int tempAge, String tempEmail, String tempName) {
         Person tempPerson = new Person(tempAge, tempEmail, tempName);
-        try {
-            if(!dbSys.doesPersonExist(tempPerson.getEmail())){
-                dbSys.SavePerson(tempPerson);
-            } else{
-                System.out.println("That Person already exists..");
-            }
-        } catch(IOException e) {
-            e.printStackTrace();
+        if(!dbSys.doesPersonExist(tempPerson.getEmail())){
+            dbSys.SavePerson(tempPerson);
+            return false;
+        } else{
+            System.out.println("That Person already exists..");
+            return true;
         }
+    }
+
+    public void editPerson(int tempAge, String tempEmail, String tempName) {
+        Person tempPerson = new Person(tempAge, tempEmail, tempName);
+        dbSys.editPerson(tempPerson);
     }
 
     public void createUser(String tempUsername, String tempPass, String tempSalt, String tempName, String tempEmail, LocalDate tempBirthday)

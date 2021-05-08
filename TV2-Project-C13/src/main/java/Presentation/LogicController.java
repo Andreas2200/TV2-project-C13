@@ -38,6 +38,7 @@ import javafx.stage.Stage;
 
 public class LogicController implements Initializable {
 
+    private boolean personAlreadyExists = false;
     public Button secondaryButton11,secondaryButton1;
     public Label pageCounter;
     public TextArea searchedProgramCreditsTXT;
@@ -275,7 +276,18 @@ public class LogicController implements Initializable {
         LocalDate birthdate = LocalDate.parse(birthdateString, dtf);
         Period p = Period.between(birthdate,today);
         int age = p.getYears();
-        cs.createEditPerson(age, personEmailField.getText(), personNameField.getText());
+        if (personAlreadyExists == false) {
+            personAlreadyExists = cs.createPerson(age, personEmailField.getText(), personNameField.getText());
+            if (personAlreadyExists) {
+                //gør så man kan se noget tekst her
+            }
+        }
+        else {
+            cs.editPerson(age, personEmailField.getText(), personNameField.getText());
+            personAlreadyExists = false;
+            //gør så man ikke kan se tekst mere
+            //husk lige at tilføje userID når man gemmer btw
+        }
         updateComboBox();
     }
 
