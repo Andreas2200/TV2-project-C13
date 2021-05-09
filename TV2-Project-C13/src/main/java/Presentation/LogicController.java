@@ -82,7 +82,7 @@ public class LogicController implements Initializable {
     @FXML
     private AnchorPane programInfoAnchorPane, programSearchAnchorPane;
     @FXML
-    private ComboBox<Genre> genreComboBox;
+    private ComboBox<String> genreComboBox;
     @FXML
     private TableView<Integer> findPersonTableView;
     @FXML
@@ -237,32 +237,48 @@ public class LogicController implements Initializable {
     @FXML
     private void createEditProgram(ActionEvent event) throws NumberFormatException {
         if(event.getSource() == saveProgramButton) {
-            //converting releasedate from String to Date
-            //String tempDate = releaseDateField.getText();
-            //Date releaseDate = new SimpleDateFormat("dd/MM/yyyy").parse(tempDate);
-
-            // converting duration from String to LocalTime
             LocalTime durationTime = LocalTime.parse(durationField.getText());
-            // converting GenreData from object to arraylist
-            //ArrayList<Genre> tempGenres = new ArrayList<>();
-            //tempGenres.add(genreComboBox.getSelectionModel().getSelectedItem());
-            Genre tempGenre = genreComboBox.getSelectionModel().getSelectedItem();
-            String tempGenres = tempGenre.toString();
+            String tempGenres = genreComboBox.getSelectionModel().getSelectedItem();
 
             succesProgramField.setVisible(true);
-            succesProgramField.setText("Program findes allerede..");
-            succesProgramField.setStyle("-fx-text-fill: RED");
 
             if(!cs.doesProgramExist(programTitleField.getText())){
-                cs.createEditProgram(programTitleField.getText(), releaseDateField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), 1);
+                cs.createEditProgram(programTitleField.getText(), releaseDateField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), cs.getUserID(activeUser));
                 succesProgramField.setText("Program blev oprettet!");
                 succesProgramField.setStyle("-fx-text-fill: GREEN");
                 updateComboBox();
                 System.out.println(durationTime);
             }
-            //cs.createEditProgram(programTitleField.getText(), releaseDateField.getText(), showedOnField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), 1);
-            //succesProgramField.setVisible(true);
-            //updateComboBox();
+            else if(cs.doesProgramExist(programTitleField.getText()))
+            {
+                if(succesProgramField.getText().equals("Program findes allerede."))
+                {
+                    cs.updateProgram(programTitleField.getText(), releaseDateField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), cs.getUserID(activeUser));
+                    succesProgramField.setText("Program blev oprettet!");
+                    succesProgramField.setStyle("-fx-text-fill: GREEN");
+                    updateComboBox();
+                    return;
+                }
+                succesProgramField.setText("Program findes allerede.");
+                succesProgramField.setStyle("-fx-text-fill: RED");
+
+            }
+        }
+        if(event.getSource() == deleteProgramButton)
+        {
+            succesProgramField.setVisible(true);
+
+            if(succesProgramField.getText().equals("Er du sikker på du vil slette programmet?"))
+            {
+                cs.deleteProgram(programTitleField.getText());
+                succesProgramField.setText("Program slettet");
+                updateComboBox();
+            }
+            else
+            {
+                succesProgramField.setText("Er du sikker på du vil slette programmet?");
+                succesProgramField.setStyle("-fx-text-fill: RED");
+            }
         }
 
     }
@@ -620,7 +636,7 @@ public class LogicController implements Initializable {
     }
 
     public void updateComboBox() {
-        genreComboBox.setItems(FXCollections.observableArrayList(Genre.values()));
+        genreComboBox.setItems(FXCollections.observableArrayList(cs.getAllGenres()));
         creditOccupationCB.setItems(FXCollections.observableArrayList(Occupation.values().toString()));
         creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
         //addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));

@@ -148,32 +148,10 @@ public class ConsumerSystem
     {
         ArrayList<Program> returnList = new ArrayList<>();
 
-        try
+        for (ProgramInterface element: dbSys.getAllPrograms())
         {
-            for (ProgramInterface element: dbSys.getProgram())
-            {
-                //Calendar calendar = Calendar.getInstance();
-                //String[] calendarValues = element.getReleaseDate().split(",");
-                //calendar.set(Integer.parseInt(calendarValues[0]), Integer.parseInt(calendarValues[1]), Integer.parseInt(calendarValues[2]));
-                //Date date = new Date();
-                //date = Calendar.getInstance().getTime();
-
-                //String[] durationTime = element.getDuration().split(",");
-                //LocalTime time = LocalTime.of(Integer.parseInt(durationTime[0]), Integer.parseInt(durationTime[1]));
-                /*ArrayList<Genre> genres = new ArrayList<>();
-                for (GenreInterface genreInterfaces: element.getGenre())
-                {
-                    genres.add(Genre.valueOf(genreInterfaces.toString()));
-                }*/
-
-                returnList.add(new Program(element.getId(), element.getName(), element.getReleaseDate(), element.getDuration(), element.getGenre(), element.getDescription(), element.getCreatorID()));
-            }
+            returnList.add(mapProgramInterfaceProgram(element));
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
         return returnList;
     }
 
@@ -218,7 +196,7 @@ public class ConsumerSystem
     public ArrayList<Program> getSearchedProgram(String title) {
         ArrayList<Program> returnList = new ArrayList<>();
 
-        for (ProgramInterface element: dbSys.getProgram(title) )
+        for (ProgramInterface element: dbSys.getProgramBySearch(title) )
         {
             returnList.add(mapProgramInterfaceProgram(element));
         }
@@ -248,14 +226,7 @@ public class ConsumerSystem
     }
 
     public void createEditProgram(String tempName, String tempDate, LocalTime tempDuration, String tempGenre, String tempDesc, int createrID) {
-        Program tempProgram = new Program(tempName, tempDate, tempDuration, tempGenre, tempDesc, createrID);
-        if(!dbSys.doesProgramExist(tempProgram.getName())) {
-            dbSys.SaveProgram(tempProgram);
-            System.out.println(tempProgram.getDuration());
-        } else {
-            System.out.println("Program already exists idiot..");
-        }
-
+        dbSys.saveProgram(new Program(tempName, tempDate, tempDuration, tempGenre, tempDesc, createrID));
     }
 
     public void saveCreditToProgram(Credits credit, int programID)
@@ -287,11 +258,6 @@ public class ConsumerSystem
 
     private Program mapProgramInterfaceProgram(ProgramInterface element)
     {
-        /*ArrayList<Genre> genres = new ArrayList<>();
-        for (GenreInterface genreInterfaces: element.getGenre())
-        {
-            genres.add(Genre.valueOf(genreInterfaces.toString()));
-        }*/
         return new Program(element.getId(), element.getName(), element.getReleaseDate(), element.getDuration(), element.getGenre(), element.getDescription(), element.getCreatorID());
     }
 
@@ -304,6 +270,26 @@ public class ConsumerSystem
             returnArray.add(mapUserInterfaceUser(element));
         }*/
         return returnArray;
+    }
+
+    public ArrayList<String> getAllGenres()
+    {
+        return dbSys.getAllGenres();
+    }
+
+    public int getUserID(UserInterface user)
+    {
+        return dbSys.getUserID(user.getUsername());
+    }
+
+    public void updateProgram(String tempName, String tempDate, LocalTime tempDuration, String tempGenre, String tempDesc, int createrID)
+    {
+        dbSys.updateProgram(new Program(tempName, tempDate, tempDuration, tempGenre, tempDesc, createrID));
+    }
+
+    public void deleteProgram(String name)
+    {
+        dbSys.deleteProgram(name);
     }
 
     public String hashPassword(String password, String salt) {

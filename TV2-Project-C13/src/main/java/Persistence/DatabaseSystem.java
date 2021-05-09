@@ -12,6 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
@@ -20,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.Date;
+import java.util.logging.SimpleFormatter;
 
 //bruges kun til at teste database componenter og skal i ingen omstændigheder bruges i det endelige produkt
 class Main {
@@ -76,6 +79,26 @@ public class DatabaseSystem
 
     //<editor-fold desc="Methods with SQL Implementation">
 
+    public ArrayList<String> getAllGenres()
+    {
+        ArrayList<String> returnList = new ArrayList<>();
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM genres");
+            ResultSet sqlGenreReturnValue = stmt.executeQuery();
+            while (sqlGenreReturnValue.next())
+            {
+                returnList.add(sqlGenreReturnValue.getString(2));
+            }
+            return returnList;
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public UserInterface getUser(String username, String password){
         try
         {
@@ -129,6 +152,26 @@ public class DatabaseSystem
         }
     }
 
+    public int getUserID(String username)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+            stmt.setString(1,username);
+            ResultSet sqlReturnValue = stmt.executeQuery();
+            if(!sqlReturnValue.next())
+            {
+                return -1;
+            }
+            return sqlReturnValue.getInt(1);
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
+
     public UserInterface getUser(String username){
         try
         {
@@ -152,6 +195,37 @@ public class DatabaseSystem
         {
             ex.printStackTrace();
             return null;
+        }
+    }
+
+    public boolean updateProgram(ProgramInterface program)
+    {
+        try
+        {
+            int genreId;
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM genres WHERE genre = ?");
+            stmt.setString(1, program.getGenre());
+            ResultSet sqlResultValue = stmt.executeQuery();
+            if(!sqlResultValue.next())
+            {
+                return false;
+            }
+            genreId = sqlResultValue.getInt(1);
+            stmt = connection.prepareStatement("UPDATE programs SET genre_id = ?,release_date = ?,length = ?, description = ? WHERE title = ?");
+            stmt.setInt(1, genreId);
+            java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(program.getReleaseDate());
+            java.sql.Date sql = new java.sql.Date(date.getTime());
+            stmt.setDate(2,sql);
+            stmt.setString(3,program.getDuration().toString());
+            stmt.setString(4,program.getDescription());
+            stmt.setString(5,program.getName());
+            stmt.execute();
+            return true;
+        }
+        catch (SQLException | ParseException ex)
+        {
+            ex.printStackTrace();
+            return false;
         }
     }
 
@@ -189,6 +263,158 @@ public class DatabaseSystem
         }
         else {
             return false;
+        }
+    }
+
+    public boolean saveProgram(ProgramInterface program)
+    {
+        if(getProgram(program.getName()) == null)
+        {
+            try
+            {
+                int genreId;
+                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM genres WHERE genre = ?");
+                stmt.setString(1, program.getGenre());
+                ResultSet sqlResultValue = stmt.executeQuery();
+                if(!sqlResultValue.next())
+                {
+                    return false;
+                }
+                genreId = sqlResultValue.getInt(1);
+                stmt = connection.prepareStatement("INSERT INTO programs (title,genre_id,release_date,length,description,created) VALUES (?,?,?,?,?,?)");
+                stmt.setString(1,program.getName());
+                stmt.setInt(2,genreId);
+                java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(program.getReleaseDate());
+                java.sql.Date sql = new java.sql.Date(date.getTime());
+                stmt.setDate(3,sql);
+                stmt.setString(4,program.getDuration().toString());
+                stmt.setString(5,program.getDescription());
+                stmt.setInt(6,program.getCreatorID());
+                stmt.execute();
+                return true;
+            }
+            catch (SQLException | ParseException ex)
+            {
+                ex.printStackTrace();
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean deleteProgram(String programName)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM programs WHERE title = ?");
+            stmt.setString(1,programName);
+            stmt.execute();
+            return true;
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean doesProgramExist (String name)
+    {
+        if(getProgram(name) == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public ArrayList<ProgramInterface> getProgramBySearch(String name)
+    {
+        try
+        {
+            ArrayList<ProgramInterface> returnList = new ArrayList<>();
+
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM programs WHERE position(? in title) > 0");
+            stmt.setString(1, name);
+            ResultSet sqlProgramReturnValue = stmt.executeQuery();
+            while(sqlProgramReturnValue.next())
+            {
+                stmt = connection.prepareStatement("SELECT * FROM genres WHERE id = ?");
+                stmt.setInt(1,sqlProgramReturnValue.getInt(3));
+                ResultSet sqlGenreReturnValue = stmt.executeQuery();
+                if(!sqlGenreReturnValue.next())
+                {
+                    return null;
+                }
+                returnList.add(new ProgramData(sqlProgramReturnValue.getString(2),sqlProgramReturnValue.getString(4),LocalTime.parse(sqlProgramReturnValue.getString(5)),sqlGenreReturnValue.getString(2),sqlProgramReturnValue.getString(6),sqlProgramReturnValue.getInt(7)));
+            }
+            return returnList;
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<ProgramInterface> getAllPrograms()
+    {
+        try
+        {
+            ArrayList<ProgramInterface> returnList = new ArrayList<>();
+
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM programs");
+            ResultSet sqlProgramReturnValue = stmt.executeQuery();
+            while(sqlProgramReturnValue.next())
+            {
+                stmt = connection.prepareStatement("SELECT * FROM genres WHERE id = ?");
+                stmt.setInt(1,sqlProgramReturnValue.getInt(3));
+                ResultSet sqlGenreReturnValue = stmt.executeQuery();
+                if(!sqlGenreReturnValue.next())
+                {
+                    return null;
+                }
+                returnList.add(new ProgramData(sqlProgramReturnValue.getString(2),sqlProgramReturnValue.getString(4),LocalTime.parse(sqlProgramReturnValue.getString(5)),sqlGenreReturnValue.getString(2),sqlProgramReturnValue.getString(6),sqlProgramReturnValue.getInt(7)));
+            }
+            return returnList;
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public ProgramInterface getProgram(String programTitle)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM programs WHERE title = ?");
+            stmt.setString(1,programTitle);
+            ResultSet sqlProgramReturnValue = stmt.executeQuery();
+            if(!sqlProgramReturnValue.next())
+            {
+                return null;
+            }
+            //Gets genre from the program
+            stmt = connection.prepareStatement("SELECT * FROM genres WHERE id = ?");
+            stmt.setInt(1,sqlProgramReturnValue.getInt(3));
+            ResultSet sqlGenreReturnValue = stmt.executeQuery();
+            if(!sqlGenreReturnValue.next())
+            {
+                return null;
+            }
+            return new ProgramData(sqlProgramReturnValue.getString(2),sqlProgramReturnValue.getString(4),LocalTime.parse(sqlProgramReturnValue.getString(5)),sqlGenreReturnValue.getString(2),sqlProgramReturnValue.getString(6),sqlProgramReturnValue.getInt(7));
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return null;
         }
     }
 
@@ -301,6 +527,8 @@ public class DatabaseSystem
             return null;
         }
     }
+
+
     //</editor-fold desc="Methods with SQL Implementation">
 
     //<editor-fold desc="Methods missing SQL Implementation">
@@ -385,7 +613,7 @@ public class DatabaseSystem
         return null;
     }*/
 
-    public ArrayList<ProgramInterface> getProgram (String title){
+    /*public ArrayList<ProgramInterface> getProgram (String title){
         ArrayList<ProgramInterface> programs = getProgram();
         //Sort em
         Collections.sort(programs, Comparator.comparing(ProgramInterface::getName));
@@ -397,7 +625,7 @@ public class DatabaseSystem
             if (splitValues.equals(title)) sortedPrograms.add(program);
         }
         return sortedPrograms;
-    }
+    }*/
 
     public boolean SaveProgram (ProgramInterface program){
         try {
@@ -774,7 +1002,7 @@ public class DatabaseSystem
         return false;
     }
 
-    public boolean doesProgramExist (String name){
+    /*public boolean doesProgramExist (String name){
         try {
             Scanner reader = new Scanner(new File("programs.txt"));
             while (reader.hasNextLine()) {
@@ -788,7 +1016,7 @@ public class DatabaseSystem
             e.printStackTrace();
         }
         return false;
-    }
+    }*/
 
     //SearchParam uses letters to narrow the search result down, type is the searched var in object, file is the file the data is in
     public ArrayList<PersonInterface> SearchPerson (String searchParam) throws Exception {
