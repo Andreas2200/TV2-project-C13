@@ -87,8 +87,8 @@ public class ConsumerSystem
     {
 
     }
-    public boolean createPerson(int tempAge, String tempEmail, String tempName) {
-        Person tempPerson = new Person(tempAge, tempEmail, tempName);
+    public boolean createPerson(LocalDate tempBirthDate, String tempEmail, String tempName) {
+        Person tempPerson = new Person(tempBirthDate, tempEmail, tempName);
         if(!dbSys.doesPersonExist(tempPerson.getEmail())){
             dbSys.SavePerson(tempPerson);
             return false;
@@ -98,8 +98,8 @@ public class ConsumerSystem
         }
     }
 
-    public void editPerson(int tempAge, String tempEmail, String tempName) {
-        Person tempPerson = new Person(tempAge, tempEmail, tempName);
+    public void editPerson(LocalDate tempBirthDate, String tempEmail, String tempName) {
+        Person tempPerson = new Person(tempBirthDate, tempEmail, tempName);
         dbSys.editPerson(tempPerson);
     }
 
@@ -180,7 +180,7 @@ public class ConsumerSystem
         return returnList;
     }
 
-
+    /*
     public ArrayList<Person> getAllPersons()
     {
         ArrayList<Person> returnList = new ArrayList<>();
@@ -196,6 +196,7 @@ public class ConsumerSystem
 
         return returnList;
     }
+     */
 
     public ArrayList<User> getAllUsers()
     {

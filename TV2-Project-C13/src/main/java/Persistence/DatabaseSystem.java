@@ -202,9 +202,7 @@ public class DatabaseSystem
             while(sqlReturnValues.next()) {
                 LocalDate today = LocalDate.now();
                 LocalDate birthdate = java.time.LocalDate.parse(sqlReturnValues.getDate(3).toString());
-                Period p = Period.between(birthdate,today);
-                int age = p.getYears();
-                returnValue.add(new PersonData(age, sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2)));
+                returnValue.add(new PersonData(birthdate, sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2)));
             }
             return returnValue;
         } catch (SQLException ex) {
@@ -250,10 +248,8 @@ public class DatabaseSystem
                 {
                     return null;
                 }
-                LocalDate today = LocalDate.now();
                 LocalDate birthdate = java.time.LocalDate.parse(sqlPersonReturnValue.getDate(3).toString());
-                Period p = Period.between(birthdate,today);
-                PersonData tempPerson = new PersonData(p.getYears(), sqlPersonReturnValue.getInt(1),sqlPersonReturnValue.getString(4),sqlPersonReturnValue.getString(2));
+                PersonData tempPerson = new PersonData(birthdate, sqlPersonReturnValue.getInt(1),sqlPersonReturnValue.getString(4),sqlPersonReturnValue.getString(2));
 
                 //Gets occupation
                 stmt = connection.prepareStatement("SELECT * FROM occupation where id = ?");
@@ -722,10 +718,11 @@ public class DatabaseSystem
 
     public void SavePerson (PersonInterface person) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO persons (name, age, email) VALUES (?,?,?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO persons (name, age, email, created) VALUES (?,?,?,?)");
             stmt.setString(1,person.getName());
-            stmt.setInt(2,person.getAge());
+            stmt.setDate(2,java.sql.Date.valueOf(person.getBirthDate()));
             stmt.setString(3,person.getEmail());
+            stmt.setInt(4,1);
             stmt.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -740,7 +737,8 @@ public class DatabaseSystem
             if (!sqlReturnValues.next()) {
                 return null;
             }
-            return new PersonData(sqlReturnValues.getInt(3), sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2));
+            LocalDate birthdate = java.time.LocalDate.parse(sqlReturnValues.getDate(3).toString());
+            return new PersonData(birthdate, sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2));
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -765,7 +763,10 @@ public class DatabaseSystem
 
     public void editPerson (PersonInterface person) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("UPDATE persons SET name = '" + person.getName() + "', age = " + person.getAge() + "WHERE email = '" + person.getEmail() + "';");
+            PreparedStatement stmt = connection.prepareStatement("UPDATE persons SET name = ?, age = ? WHERE email = ?");
+            stmt.setString(1,person.getName());
+            stmt.setDate(2,java.sql.Date.valueOf(person.getBirthDate()));
+            stmt.setString(3,person.getEmail());
             stmt.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -789,6 +790,7 @@ public class DatabaseSystem
     }
 
     //SearchParam uses letters to narrow the search result down, type is the searched var in object, file is the file the data is in
+    /*
     public ArrayList<PersonInterface> SearchPerson (String searchParam) throws Exception {
         //readlines and put em in a list
         String splitValue = "";
@@ -812,8 +814,10 @@ public class DatabaseSystem
         Collections.sort(searchItems, Comparator.comparing(PersonInterface::getName));
         return searchItems;
     }
+     */
 
     //An unsorted and quicker way to get all persons, mostly used by Datasystem itself but can be used outside
+    /*
     public ArrayList<PersonInterface> getAllPersons () throws Exception {
         ArrayList<PersonInterface> persons = new ArrayList<>();
         ArrayList<String> personValues = readDataValues("persons.txt");
@@ -822,6 +826,7 @@ public class DatabaseSystem
         }
         return persons;
     }
+     */
 
 
     private String SplitByChar (String text,int splitBy){

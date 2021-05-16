@@ -79,7 +79,7 @@ public class LogicController implements Initializable {
     @FXML
     private Accordion managementAccordion, managementAccordionUsers;
     @FXML
-    private VBox personVBox, programVBox;
+    private VBox personVBox, programVBox, personAlreadyExistsVBoks;
     @FXML
     private AnchorPane programInfoAnchorPane, programSearchAnchorPane;
     @FXML
@@ -270,22 +270,19 @@ public class LogicController implements Initializable {
 
     @FXML
     private void createEditPerson(ActionEvent event) {
-        LocalDate today = LocalDate.now();
         String birthdateString = personBirthdayField.getText();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate birthdate = LocalDate.parse(birthdateString, dtf);
-        Period p = Period.between(birthdate,today);
-        int age = p.getYears();
         if (personAlreadyExists == false) {
-            personAlreadyExists = cs.createPerson(age, personEmailField.getText(), personNameField.getText());
+            personAlreadyExists = cs.createPerson(birthdate, personEmailField.getText(), personNameField.getText());
             if (personAlreadyExists) {
-                //gør så man kan se noget tekst her
+                personAlreadyExistsVBoks.setVisible(true);
             }
         }
         else {
-            cs.editPerson(age, personEmailField.getText(), personNameField.getText());
+            cs.editPerson(birthdate, personEmailField.getText(), personNameField.getText());
             personAlreadyExists = false;
-            //gør så man ikke kan se tekst mere
+            personAlreadyExistsVBoks.setVisible(false);
             //husk lige at tilføje userID når man gemmer btw
         }
         updateComboBox();
@@ -634,7 +631,7 @@ public class LogicController implements Initializable {
     public void updateComboBox() {
         genreComboBox.setItems(FXCollections.observableArrayList(Genre.values()));
         creditOccupationCB.setItems(FXCollections.observableArrayList(Occupation.values().toString()));
-        creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
+        //creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
         //addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
         addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
         editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
