@@ -80,4 +80,13 @@
     -fx-text-fill: #FFFF;
 }
 
+#viewUsersTableview{
+    -fx-font-size: 15px;
+    -fx-font-family: "Times New Roman";
+    -fx-table-cell-border-color: transparent;
+}
+#viewUsersTableview .table-cell{
+    -fx-alignment: CENTER;
+}
+
 

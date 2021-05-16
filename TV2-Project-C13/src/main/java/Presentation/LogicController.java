@@ -11,10 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import Domain.*;
-import Interfaces.CreditInterface;
-import Interfaces.GenreInterface;
-import Interfaces.PersonInterface;
-import Interfaces.ProgramInterface;
+import Interfaces.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -88,6 +85,10 @@ public class LogicController implements Initializable {
     @FXML
     private TableColumn<Integer, String> personCol, occupationCol, roleCol, programCol, contactInfoCol;
     @FXML
+    private TableView<Integer> viewUsersTableview;
+    @FXML
+    private TableColumn<Integer, String> idColumn, nameColumn, roleColumn, emailColumn;
+    @FXML
     private TextField searchPersonField, programTitleField, durationField, releaseDateField, personNameField, personBirthdayField, personEmailField, creditActorTextField;
     @FXML
     private TextArea programDescriptionArea, deleteUserReasonTXT;
@@ -97,7 +98,7 @@ public class LogicController implements Initializable {
     private Button button;
     private Circle circle = new Circle(75);
 
-    public Label userRoleField, succesProgramField, deleteUserConfirmationLabel;
+    public Label userRoleField, succesProgramField, deleteUserConfirmationLabel, editUserRoleConfirmationLabel;;
     public Label userNameField;
     @FXML
     private Label creditActorLabel;
@@ -510,8 +511,10 @@ public class LogicController implements Initializable {
                 viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
                 requestsTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
                 editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                editUserRoleConfirmationLabel.setVisible(false);
                 deleteUserTitledPane.setStyle(CLICKED_TITLED_PANE);
                 deleteUserConfirmationLabel.setVisible(false);
+
             }
         }
     }
@@ -630,10 +633,50 @@ public class LogicController implements Initializable {
     }
 
     @FXML
-    private void editUserSave() throws IOException {
-        cs.saveUser(editUserUsersCB.getValue(),editUserRoleCB.getValue());
-        updateComboBox();
+    private void viewUsers(){
+        viewUsersTableview.getItems().clear();
+        try {
+            List<UserInterface> list = cs.viewUser();
+            final ObservableList<UserInterface> users = FXCollections.observableArrayList(list);
+
+            ArrayList<String> idList = new ArrayList<>();
+            ArrayList<String> nameList = new ArrayList<>();
+            ArrayList<String> roleList = new ArrayList<>();
+            ArrayList<String> emailList = new ArrayList<>();
+
+            for (UserInterface element : users) {
+                idList.add(String.valueOf(element.getId()));
+                nameList.add(element.getName());
+                roleList.add(element.getRole());
+                emailList.add(element.getEmail());
+            }
+
+            idColumn.setCellValueFactory(cellData -> {
+                Integer rowIndex = cellData.getValue();
+                return new ReadOnlyStringWrapper(idList.get(rowIndex));
+            });
+            nameColumn.setCellValueFactory(cellData -> {
+                Integer rowIndex = cellData.getValue();
+                return new ReadOnlyStringWrapper(nameList.get(rowIndex));
+            });
+            roleColumn.setCellValueFactory(cellData -> {
+                Integer rowIndex = cellData.getValue();
+                return new ReadOnlyStringWrapper(roleList.get(rowIndex));
+            });
+            emailColumn.setCellValueFactory(cellData -> {
+                Integer rowIndex = cellData.getValue();
+                return new ReadOnlyStringWrapper(emailList.get(rowIndex));
+            });
+
+            for(int i = 0; i < idList.size(); i++){
+                viewUsersTableview.getItems().add(i);
+        }
+
+            cs.viewUser();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
 
     public void updateComboBox() {
         genreComboBox.setItems(FXCollections.observableArrayList(cs.getAllGenres()));
@@ -641,24 +684,59 @@ public class LogicController implements Initializable {
         creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
         //addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
         addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
-        editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
-        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
-        deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
+        editUserRoleCB.setItems(FXCollections.observableArrayList("Admin", "Producer" , "User"));
+        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
+        deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
         setProgramsAllPrograms();
+        viewUsers();
     }
 
-    @FXML
-    private void deleteUser()
-    {
-        if(deleteUserCheckBox.isSelected())
-        {
-            cs.deleteUser(deleteUserCB.getValue(),deleteUserReasonTXT.getText());
-            System.out.println("Delete User");
-            deleteUserConfirmationLabel.setVisible(true);
-            return;
-        }
-        System.out.println("Didn't delete User");
+    public void updateUserRole(ActionEvent event) {
+        int id = editUserUsersCB.getValue().getId();
+        String role_id = editUserRoleCB.getValue();
+
+
+        cs.updateUserRole(id, newUserRole(role_id));
+        editUserRoleConfirmationLabel.setText("Brugerrolle blev ændret <3");
+        editUserRoleConfirmationLabel.setStyle("-fx-text-fill: GREEN; -fx-font-family: Times New Roman" );
+        updateComboBox();
     }
+
+//    public void deleteUser(ActionEvent event) {
+//        int id = deleteUserCB.getValue().getId();
+//        String reason = deleteUserReasonTXT.getText();
+//        int deleted_by_id = cs.getUserID(activeUser);
+//
+//
+//        cs.deleteUser(id, deleted_by_id, reason);
+//        deleteUserConfirmationLabel.setText("Bruger er slettet");
+//        deleteUserConfirmationLabel.setStyle("-fx-text-fill: GREEN; -fx-font-family: Times New Roman" );
+//        updateComboBox();
+//    }
+
+    private int newUserRole(String role_id){
+        int rolleid = 0;
+        if (role_id == "Admin"){
+            rolleid = 1;
+        } if (role_id == "Producer"){
+            rolleid = 2; }
+        if ( role_id == "User"){
+            rolleid = 3; }
+        return rolleid;
+    }
+
+//    @FXML
+//    private void deleteUser()
+//    {
+//        if(deleteUserCheckBox.isSelected())
+//        {
+//            cs.deleteUser(deleteUserCB.getValue(),deleteUserReasonTXT.getText());
+//            System.out.println("Delete User");
+//            deleteUserConfirmationLabel.setVisible(true);
+//            return;
+//        }
+//        System.out.println("Didn't delete User");
+//    }
 
     public void switchPage(ActionEvent actionEvent)
     {

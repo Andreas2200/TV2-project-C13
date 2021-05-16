@@ -19,6 +19,8 @@ public interface UserInterface {
 
     public String getSalt();
 
+    public int getId();
+
     public void setPassword(String newPas);
 
     public void changeName(String newName);

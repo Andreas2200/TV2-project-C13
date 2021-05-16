@@ -10,6 +10,7 @@ public class User implements UserInterface {
     private String username;
     private String password;
     private String salt;
+    private int id;
     private String name;
     private String role;
     private String email;
@@ -32,6 +33,16 @@ public class User implements UserInterface {
         this.role = role;
     }
 
+    public User(int id, String name, String role, String email) {
+        this.id = id;
+        this.name = name;
+        this.role = role;
+        this.email = email;
+    }
+
+    public int getId(){
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -81,6 +92,6 @@ public class User implements UserInterface {
 
     @Override
     public String toString() {
-        return "" + getName() + ";" + getUsername() + ";" + getPassword() + ";" + getAge() + ";" + getRole() + ";" + getEmail() + ";";
+        return "Bruger ID: " + getId() + ", " + "Navn: " + getName()  + ", " + "E-mail: " + getEmail()  + ", " + "Rolle: " + getRole();
     }
 }

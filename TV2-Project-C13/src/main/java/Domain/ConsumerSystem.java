@@ -172,14 +172,14 @@ public class ConsumerSystem
         return returnList;
     }
 
-    public ArrayList<User> getAllUsers()
+    public ArrayList<User> getAllUser()
     {
         ArrayList<User> returnList = new ArrayList<>();
 
         try {
-            for (UserInterface element: dbSys.getAllUsers())
+            for (UserInterface element: dbSys.getViewUser())
             {
-                returnList.add(mapUserInterfaceUser(element));
+                returnList.add(new User(element.getId(), element.getName(), element.getRole(), element.getEmail()));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -240,6 +240,23 @@ public class ConsumerSystem
             System.out.println("Hold stadigvæk en pause og kom tilbage til det");
         }
     }
+
+
+    public List<UserInterface> viewUser(){
+        List<UserInterface> users = new ArrayList<>();
+
+        for (UserInterface u : dbSys.getViewUser()) {
+            users.add(u);
+        }
+        return users;
+    }
+
+    public void updateUserRole (int id, int tempRole_id){
+        dbSys.updateUserRole(id, tempRole_id);
+    }
+//    public void deleteUser (int id, int deleted_by, String reason){
+//        dbSys.deleteUser(id, deleted_by, reason);
+//    }
 
     public void saveUser(User user, String role) throws IOException {
         user.setRole(role);

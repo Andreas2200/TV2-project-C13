@@ -9,6 +9,7 @@ public class UserData implements UserInterface {
     private String username;
     private String password;
     private String salt;
+    private int id;
     private String name;
     private String role;
     private String email;
@@ -27,6 +28,24 @@ public class UserData implements UserInterface {
     {
         this(username,password,salt,name,email, birthday);
         this.role = role;
+    }
+    public UserData(int id, String name, String role, String email){
+        this.id = id;
+        this.name = name;
+        this.role = role;
+        this.email = email;
+    }
+
+//    public UserData(int id, String username, String name, String email, String role) {
+//        this.id = id;
+//        this.name = name;
+//        this.role = role;
+//        this.email = email;
+//    }
+
+
+    public int getId(){
+        return id;
     }
 
     public String getName() {
@@ -75,6 +94,6 @@ public class UserData implements UserInterface {
 
     @Override
     public String toString() {
-        return "" + getName() + ";" + getUsername() + ";" + getPassword() + ";" + getAge() + ";" + getEmail() + ";" + getRole() + ";";
+        return "Bruger ID: " + getId() + ", " + "Brugernavn: " + getUsername() + ", " + "Navn: " + getName()  + ", " + "E-mail: " + getEmail()  + ", " + "Rolle: " + getRole();
     }
 }

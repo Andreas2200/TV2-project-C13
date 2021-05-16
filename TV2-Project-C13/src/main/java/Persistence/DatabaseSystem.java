@@ -3,8 +3,6 @@ package Persistence;
 
 import Domain.User;
 import Interfaces.*;
-import Domain.Occupation;
-import javafx.util.converter.LocalDateStringConverter;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -17,12 +15,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.*;
-import java.util.Date;
-import java.util.logging.SimpleFormatter;
 
 //bruges kun til at teste database componenter og skal i ingen omstændigheder bruges i det endelige produkt
 class Main {
@@ -46,8 +40,7 @@ class Main {
     }
 }
 
-public class DatabaseSystem
-{
+public class DatabaseSystem {
     private static DatabaseSystem instance;
     private String url = "217.61.218.112";
     private int port = 5432;
@@ -56,10 +49,12 @@ public class DatabaseSystem
     private String password = "Basse1234";
     private Connection connection = null;
 
-    public DatabaseSystem(){initializePostgresqlDatabase();}
+    public DatabaseSystem() {
+        initializePostgresqlDatabase();
+    }
 
-    public static synchronized Persistence.DatabaseSystem getInstance(){
-        if (instance == null){
+    public static synchronized Persistence.DatabaseSystem getInstance() {
+        if (instance == null) {
             instance = new Persistence.DatabaseSystem();
         }
         return instance;
@@ -79,46 +74,61 @@ public class DatabaseSystem
 
     //<editor-fold desc="Methods with SQL Implementation">
 
-    public ArrayList<String> getAllGenres()
-    {
+    public ArrayList<String> getAllGenres() {
         ArrayList<String> returnList = new ArrayList<>();
-        try
-        {
+        try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM genres");
             ResultSet sqlGenreReturnValue = stmt.executeQuery();
-            while (sqlGenreReturnValue.next())
-            {
+            while (sqlGenreReturnValue.next()) {
                 returnList.add(sqlGenreReturnValue.getString(2));
             }
             return returnList;
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public UserInterface getUser(String username, String password){
-        try
-        {
+    public List<UserInterface> getViewUser() {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT us.id, us.name, ro.role, us.email FROM users us JOIN roles ro ON us.role_id = ro.id ORDER BY name;");
+            ResultSet rs = stmt.executeQuery();
+            List<UserInterface> returnValue = new ArrayList<>();
+            while (rs.next()) {
+                returnValue.add(new UserData(rs.getInt("id"), rs.getString("name"), rs.getString("role"), rs.getString("email")));
+            }
+            return returnValue;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+//    public ArrayList<PersonInterface> getAllPersons () throws Exception {
+//        ArrayList<PersonInterface> persons = new ArrayList<>();
+//        ArrayList<String> personValues = readDataValues("persons.txt");
+//        for (int i = 0; i < personValues.size(); i = i + 4) {
+//            persons.add(new PersonData(Integer.parseInt(personValues.get(i + 2)), Integer.parseInt(personValues.get(i + 0)), personValues.get(i + 3), personValues.get(i + 1)));
+//        }
+//        return persons;
+//    }
+
+    public UserInterface getUser(String username, String password) {
+        try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
-            stmt.setString(1,username);
+            stmt.setString(1, username);
             ResultSet sqlReturnValues = stmt.executeQuery();
-            if(!sqlReturnValues.next())
-            {
+            if (!sqlReturnValues.next()) {
                 return null;
             }
-            if(hashPassword(password,sqlReturnValues.getString(4)).equals(sqlReturnValues.getString(3)))
-            {
+            if (hashPassword(password, sqlReturnValues.getString(4)).equals(sqlReturnValues.getString(3))) {
                 stmt = connection.prepareStatement("SELECT * FROM roles WHERE id= ?");
-                stmt.setInt(1,sqlReturnValues.getInt(6));
+                stmt.setInt(1, sqlReturnValues.getInt(6));
                 ResultSet sqlRoleValues = stmt.executeQuery();
-                if(!sqlRoleValues.next())
-                {
+                if (!sqlRoleValues.next()) {
                     return null;
                 }
-                return new UserData(sqlReturnValues.getString(2),sqlReturnValues.getString(3),sqlReturnValues.getString(4),sqlReturnValues.getString(5),sqlReturnValues.getString(7),java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()),sqlRoleValues.getString(2));
+                return new UserData(sqlReturnValues.getString(2), sqlReturnValues.getString(3), sqlReturnValues.getString(4), sqlReturnValues.getString(5), sqlReturnValues.getString(7), java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()), sqlRoleValues.getString(2));
             }
             return null;
         } catch (SQLException ex) {
@@ -127,7 +137,7 @@ public class DatabaseSystem
         }
     }
 
-    public ProgramInterface getProgramFromID(int programID){
+    public ProgramInterface getProgramFromID(int programID) {
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM programs WHERE id = ?");
             stmt.setInt(1, programID);
@@ -136,7 +146,7 @@ public class DatabaseSystem
                 return null;
             }
 
-           if (programID== sqlReturnValues.getInt(1)) {
+            if (programID == sqlReturnValues.getInt(1)) {
                 stmt = connection.prepareStatement("SELECT * FROM genres WHERE id= ?");
                 stmt.setInt(1, sqlReturnValues.getInt(3));
                 ResultSet sqlGenreValues = stmt.executeQuery();
@@ -144,70 +154,57 @@ public class DatabaseSystem
                     return null;
                 }
                 return new ProgramData(sqlReturnValues.getString(2), sqlReturnValues.getString(4), LocalTime.parse(sqlReturnValues.getString(5)), sqlGenreValues.getString(2), sqlReturnValues.getString(6), sqlReturnValues.getInt(7));
-           }
-           return null;
+            }
+            return null;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public int getUserID(String username)
-    {
-        try
-        {
+    public int getUserID(String username) {
+        try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
-            stmt.setString(1,username);
+            stmt.setString(1, username);
             ResultSet sqlReturnValue = stmt.executeQuery();
-            if(!sqlReturnValue.next())
-            {
+            if (!sqlReturnValue.next()) {
                 return -1;
             }
             return sqlReturnValue.getInt(1);
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             ex.printStackTrace();
             return -1;
         }
     }
 
-    public UserInterface getUser(String username){
-        try
-        {
+    public UserInterface getUser(String username) {
+        try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
-            stmt.setString(1,username);
+            stmt.setString(1, username);
             ResultSet sqlReturnValues = stmt.executeQuery();
-            if(!sqlReturnValues.next())
-            {
+            if (!sqlReturnValues.next()) {
                 return null;
             }
             stmt = connection.prepareStatement("SELECT * FROM roles WHERE id= ?");
-            stmt.setInt(1,sqlReturnValues.getInt(6));
+            stmt.setInt(1, sqlReturnValues.getInt(6));
             ResultSet sqlRoleValues = stmt.executeQuery();
-            if(!sqlRoleValues.next())
-            {
+            if (!sqlRoleValues.next()) {
                 return null;
             }
-            return new UserData(sqlReturnValues.getString(2),sqlReturnValues.getString(3),sqlReturnValues.getString(4),sqlReturnValues.getString(5),sqlReturnValues.getString(7),java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()),sqlRoleValues.getString(2));
-        }
-        catch (SQLException ex)
-        {
+            return new UserData(sqlReturnValues.getString(2), sqlReturnValues.getString(3), sqlReturnValues.getString(4), sqlReturnValues.getString(5), sqlReturnValues.getString(7), java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()), sqlRoleValues.getString(2));
+        } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public boolean updateProgram(ProgramInterface program)
-    {
-        try
-        {
+    public boolean updateProgram(ProgramInterface program) {
+        try {
             int genreId;
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM genres WHERE genre = ?");
             stmt.setString(1, program.getGenre());
             ResultSet sqlResultValue = stmt.executeQuery();
-            if(!sqlResultValue.next())
-            {
+            if (!sqlResultValue.next()) {
                 return false;
             }
             genreId = sqlResultValue.getInt(1);
@@ -215,20 +212,29 @@ public class DatabaseSystem
             stmt.setInt(1, genreId);
             java.util.Date date = new SimpleDateFormat("dd-MM-yyyy").parse(program.getReleaseDate());
             java.sql.Date sql = new java.sql.Date(date.getTime());
-            stmt.setDate(2,sql);
-            stmt.setString(3,program.getDuration().toString());
-            stmt.setString(4,program.getDescription());
-            stmt.setString(5,program.getName());
+            stmt.setDate(2, sql);
+            stmt.setString(3, program.getDuration().toString());
+            stmt.setString(4, program.getDescription());
+            stmt.setString(5, program.getName());
             stmt.execute();
             return true;
-        }
-        catch (SQLException | ParseException ex)
-        {
+        } catch (SQLException | ParseException ex) {
             ex.printStackTrace();
             return false;
         }
     }
-
+    public boolean updateUserRole(int id, int rolleid) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("UPDATE users SET role_id = ? WHERE id = ?");
+            stmt.setInt(1, rolleid);
+            stmt.setInt(2, id);
+            stmt.execute();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
     public boolean saveUser(UserInterface user){
         if (getUser(user.getUsername()) == null)
         {
