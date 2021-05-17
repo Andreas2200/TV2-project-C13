@@ -47,6 +47,7 @@ public class LogicController implements Initializable {
     public Label searchedProgramDuration;
     public Label searchedProgramTitle;
     public TextField searchProgramField;
+    public Button searchProgramButtonText;
     @FXML
     private CheckBox deleteUserCheckBox;
     @FXML

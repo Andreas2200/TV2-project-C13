@@ -263,11 +263,11 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <TextField alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
+                              <TextField fx:id="searchProgramField" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
                                  <font>
                                     <Font size="14.0" />
                                  </font></TextField>
-                              <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="69.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
+                              <Button fx:id="searchProgramButtonText" onAction="#setProgramSearchedProgram" mnemonicParsing="false" prefHeight="29.0" prefWidth="69.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
                            </children>
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -279,7 +279,7 @@
                                  <children>
                                     <VBox prefHeight="696.0" prefWidth="506.0">
                                        <children>
-                                          <Label text="Programtitel">
+                                          <Label fx:id="searchedProgramTitle" text="Programtitel">
                                              <font>
                                                 <Font name="Gill Sans MT" size="42.0" />
                                              </font>
@@ -289,17 +289,17 @@
                                           </Label>
                                           <HBox prefHeight="100.0" prefWidth="200.0">
                                              <children>
-                                                <Label text="programlængde">
+                                                <Label fx:id="searchedProgramDuration" text="programlængde">
                                                    <padding>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label text="genre">
+                                                <Label fx:id="searchedProgramGenre" text="genre">
                                                    <padding>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label text="udgivelsesdato">
+                                                <Label fx:id="searchedProgramReleaseDate" text="udgivelsesdato">
                                                    <padding>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                                                    </padding>
@@ -314,7 +314,7 @@
                                                 <Font size="20.0" />
                                              </font>
                                           </Label>
-                                          <TextArea prefHeight="200.0" prefWidth="200.0">
+                                          <TextArea fx:id="searchedProgramDescriptionTXT" prefHeight="200.0" prefWidth="200.0">
                                              <VBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
                                              </VBox.margin>
@@ -339,7 +339,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Label>
-                                          <TextArea prefHeight="622.0" prefWidth="351.0">
+                                          <TextArea fx:id="searchedProgramCreditsTXT" prefHeight="622.0" prefWidth="351.0">
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </VBox.margin>
@@ -359,7 +359,7 @@
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="617.0" prefWidth="421.0">
                                        <children>
-                                          <Button fx:id="programButton1" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton1" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -367,7 +367,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="programButton2" layoutX="67.0" layoutY="285.0" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton2" layoutX="67.0" layoutY="285.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -375,7 +375,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="programButton3" layoutX="67.0" layoutY="252.0" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton3" layoutX="67.0" layoutY="252.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -383,7 +383,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="programButton4" layoutX="67.0" layoutY="218.0" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton4" layoutX="67.0" layoutY="218.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -391,7 +391,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="programButton5" layoutX="67.0" layoutY="185.0" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton5" layoutX="67.0" layoutY="185.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -399,7 +399,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="programButton6" layoutX="67.0" layoutY="151.0" mnemonicParsing="false" onAction="#toFrontHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton6" layoutX="67.0" layoutY="151.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -422,7 +422,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="programButton8" layoutX="67.0" layoutY="285.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton8" layoutX="67.0" layoutY="285.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -430,7 +430,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="programButton9" layoutX="67.0" layoutY="252.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton9" layoutX="67.0" layoutY="252.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -438,7 +438,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="programButton10" layoutX="67.0" layoutY="218.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton10" layoutX="67.0" layoutY="218.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -446,7 +446,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="programButton11" layoutX="67.0" layoutY="185.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton11" layoutX="67.0" layoutY="185.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -454,7 +454,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button fx:id="programButton12" layoutX="67.0" layoutY="151.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
+                                          <Button fx:id="programButton12" layoutX="67.0" layoutY="151.0" mnemonicParsing="false" onAction="#toFrontSearchProgramHandler" style="-fx-background-color: transparent;" text="PROGRAMTITEL">
                                              <font>
                                                 <Font name="Gill Sans MT" size="36.0" />
                                              </font>
@@ -468,7 +468,7 @@
                               </HBox>
                               <HBox layoutY="646.0" prefHeight="25.0" prefWidth="856.0">
                                  <children>
-                                    <Button fx:id="secondaryButton1" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Forrige" textFill="WHITE">
+                                    <Button fx:id="secondaryButton1" onAction="#switchPage" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Forrige" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="20.0" />
                                        </HBox.margin></Button>
@@ -477,7 +477,7 @@
                                           <Insets left="280.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Button fx:id="secondaryButton11" onAction="#switchToPrimary" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Næste" textFill="WHITE">
+                                    <Button fx:id="secondaryButton11" onAction="#switchPage" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Næste" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="280.0" />
                                        </HBox.margin>
@@ -686,7 +686,7 @@
                                                 <Insets right="10.0" />
                                              </HBox.margin>
                                           </Button>
-                                          <Button fx:id="deleteProgramButton" onAction="#createEditProgram" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Slet program" textAlignment="CENTER">
+                                          <Button fx:id="deleteProgramButton" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#createEditProgram" prefHeight="50.0" prefWidth="167.0" text="Slet program" textAlignment="CENTER">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>

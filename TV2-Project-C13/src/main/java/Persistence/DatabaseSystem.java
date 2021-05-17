@@ -52,8 +52,8 @@ public class DatabaseSystem
     private String url = "217.61.218.112";
     private int port = 5432;
     private String databaseName = "TV2ProjectC13";
-    private String username = "postgres";
-    private String password = "Basse1234";
+    private String username = "TV2Project";
+    private String password = "1234";
     private Connection connection = null;
 
     public DatabaseSystem(){initializePostgresqlDatabase();}
