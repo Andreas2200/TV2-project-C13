@@ -578,7 +578,7 @@ public class LogicController implements Initializable {
     private void setProgramSearchedProgram()
     {
         ArrayList<Program> programs = cs.getSearchedProgram(searchProgramField.getText());
-
+        pageNumber = 1;
         setUpProgramButtons();
 
         int numberOfAdditionalSearchPages = programs.size() / NUMBEROFPROGRAMSTODISPLAY;
