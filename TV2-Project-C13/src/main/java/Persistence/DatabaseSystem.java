@@ -716,13 +716,13 @@ public class DatabaseSystem
         return "";
     }
 
-    public void SavePerson (PersonInterface person) {
+    public void SavePerson (PersonInterface person, int userId) {
         try {
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO persons (name, age, email, created) VALUES (?,?,?,?)");
             stmt.setString(1,person.getName());
             stmt.setDate(2,java.sql.Date.valueOf(person.getBirthDate()));
             stmt.setString(3,person.getEmail());
-            stmt.setInt(4,1);
+            stmt.setInt(4,userId);
             stmt.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -925,6 +925,26 @@ public class DatabaseSystem
     }
 
     //</editor-fold desc="Methods missing SQL Implementation">
+
+    public int getUserID(String username)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+            stmt.setString(1,username);
+            ResultSet sqlReturnValue = stmt.executeQuery();
+            if(!sqlReturnValue.next())
+            {
+                return -1;
+            }
+            return sqlReturnValue.getInt(1);
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
 
     public String hashPassword(String password, String salt) {
         String returnHash = "";
