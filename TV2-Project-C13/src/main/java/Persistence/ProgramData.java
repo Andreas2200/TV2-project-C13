@@ -11,8 +11,6 @@ import java.util.Date;
 public class ProgramData implements ProgramInterface {
     private String name;
     private String releaseDate;
-    private int id;
-    private static int programID;
     private LocalTime duration;
     private String genre;
     private String description;
@@ -46,8 +44,7 @@ public class ProgramData implements ProgramInterface {
     {
         return "\nName: " + getName() + "\n" +
                 "Release date: " + getReleaseDate() + "\n" +
-                "People in credits: " + getCreditSize() + "\n" +
-                "ID: " + id + "\n";
+                "People in credits: " + getCreditSize() + "\n";
     }
 
     public String getName() {
@@ -56,11 +53,6 @@ public class ProgramData implements ProgramInterface {
 
     public String getReleaseDate() {
         return releaseDate;
-    }
-
-    public int getId()
-    {
-        return id;
     }
 
     public int getCreditSize()

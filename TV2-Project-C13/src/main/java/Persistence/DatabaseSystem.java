@@ -1,6 +1,7 @@
 package Persistence;
 
 
+import Domain.Person;
 import Domain.User;
 import Interfaces.*;
 import Domain.Occupation;
@@ -79,6 +80,26 @@ public class DatabaseSystem
 
     //<editor-fold desc="Methods with SQL Implementation">
 
+    public ArrayList<String> getAllOccupations()
+    {
+        ArrayList<String> returnList = new ArrayList<>();
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM occupation");
+            ResultSet sqlOccupationReturnValue = stmt.executeQuery();
+            while (sqlOccupationReturnValue.next())
+            {
+                returnList.add(sqlOccupationReturnValue.getString(2));
+            }
+            return returnList;
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public ArrayList<String> getAllGenres()
     {
         ArrayList<String> returnList = new ArrayList<>();
@@ -147,6 +168,34 @@ public class DatabaseSystem
            }
            return null;
         } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<ProgramInterface> getAllProgramsByCreatorId(int id)
+    {
+        try
+        {
+            ArrayList<ProgramInterface> returnList = new ArrayList<>();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM programs WHERE created = ?");
+            stmt.setInt(1,id);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            while (sqlReturnValues.next())
+            {
+                stmt = connection.prepareStatement("SELECT * FROM genres WHERE id = ?");
+                stmt.setInt(1,sqlReturnValues.getInt(3));
+                ResultSet sqlGenreReturnValue = stmt.executeQuery();
+                if(!sqlGenreReturnValue.next())
+                {
+                    return null;
+                }
+                returnList.add(new ProgramData(sqlReturnValues.getString(2), sqlReturnValues.getString(4), LocalTime.parse(sqlReturnValues.getString(5)), sqlGenreReturnValue.getString(2), sqlReturnValues.getString(6), sqlReturnValues.getInt(7)));
+            }
+            return returnList;
+        }
+        catch (SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
@@ -305,6 +354,29 @@ public class DatabaseSystem
         }
     }
 
+    public boolean deleteCredit(CreditInterface credit)
+    {
+        try
+        {
+            PreparedStatement stmt;
+            if(getOccupationId(credit.getOccupation()) == 36)
+            {
+                stmt = connection.prepareStatement("DELETE FROM movie_role WHERE credits_id = ?");
+                stmt.setInt(1,getCreditId(credit));
+                stmt.execute();
+            }
+            stmt = connection.prepareStatement("DELETE FROM credits WHERE id = ?");
+            stmt.setInt(1,getCreditId(credit));
+            stmt.execute();
+            return true;
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean deleteProgram(String programName)
     {
         try
@@ -321,6 +393,85 @@ public class DatabaseSystem
         }
     }
 
+    public boolean saveCredit(CreditInterface credit)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO credits (program_id,person_id,occupation,created) VALUES (?,?,?,?)");
+            stmt.setInt(1,getProgramId(credit.getProgram().getName()));
+            stmt.setInt(2,getPersonId(credit.getPerson().getEmail()));
+            stmt.setInt(3,getOccupationId(credit.getOccupation()));
+            stmt.setInt(4,credit.getCreatorId());
+            stmt.execute();
+            if(getOccupationId(credit.getOccupation()) == 36)
+            {
+                stmt = connection.prepareStatement("SELECT * FROM credits WHERE program_id = ? AND person_id = ? AND occupation = ? AND created = ?");
+                stmt.setInt(1,getProgramId(credit.getProgram().getName()));
+                stmt.setInt(2,getPersonId(credit.getPerson().getEmail()));
+                stmt.setInt(3,getOccupationId(credit.getOccupation()));
+                stmt.setInt(4,credit.getCreatorId());
+                ResultSet sqlReturnValue = stmt.executeQuery();
+                if(!sqlReturnValue.next())
+                {
+                    return false;
+                }
+                stmt = connection.prepareStatement("INSERT INTO movie_role (credits_id, role_in_movie) VALUES (?,?)");
+                stmt.setInt(1,sqlReturnValue.getInt(1));
+                stmt.setString(2,credit.getCharacterName());
+                stmt.execute();
+                return true;
+            }
+            return true;
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean doesCreditExist(CreditInterface credit)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM credits WHERE program_id = ? AND person_id = ? AND occupation = ? AND created = ?");
+            stmt.setInt(1,getProgramId(credit.getProgram().getName()));
+            stmt.setInt(2,getPersonId(credit.getPerson().getEmail()));
+            stmt.setInt(3,getOccupationId(credit.getOccupation()));
+            stmt.setInt(4,credit.getCreatorId());
+            ResultSet sqlReturnValue = stmt.executeQuery();
+            return sqlReturnValue.next();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public int getCreditId(CreditInterface credit)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM credits WHERE program_id = ? AND person_id = ? AND occupation = ? AND created = ?");
+            stmt.setInt(1,getProgramId(credit.getProgram().getName()));
+            stmt.setInt(2,getPersonId(credit.getPerson().getEmail()));
+            stmt.setInt(3,getOccupationId(credit.getOccupation()));
+            stmt.setInt(4,credit.getCreatorId());
+            ResultSet sqlReturnValue = stmt.executeQuery();
+            if(!sqlReturnValue.next())
+            {
+                return -1;
+            }
+            return sqlReturnValue.getInt(1);
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
+
     public boolean doesProgramExist (String name)
     {
         if(getProgram(name) == null)
@@ -330,6 +481,46 @@ public class DatabaseSystem
         else
         {
             return true;
+        }
+    }
+
+    public int getOccupationId(String occupation)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM occupation WHERE occupation = ?");
+            stmt.setString(1,occupation);
+            ResultSet sqlReturnValue = stmt.executeQuery();
+            if(!sqlReturnValue.next())
+            {
+                return -1;
+            }
+            return sqlReturnValue.getInt(1);
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
+
+    public int getPersonId(String personMail)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM persons WHERE email = ?");
+            stmt.setString(1,personMail);
+            ResultSet sqlReturnValue = stmt.executeQuery();
+            if(!sqlReturnValue.next())
+            {
+                return -1;
+            }
+            return sqlReturnValue.getInt(1);
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return -1;
         }
     }
 
@@ -426,17 +617,86 @@ public class DatabaseSystem
             ResultSet sqlReturnValues = stmt.executeQuery();
             List<PersonInterface> returnValue = new ArrayList<>();
             while(sqlReturnValues.next()) {
-                LocalDate today = LocalDate.now();
                 LocalDate birthdate = java.time.LocalDate.parse(sqlReturnValues.getDate(3).toString());
-                Period p = Period.between(birthdate,today);
-                int age = p.getYears();
-                returnValue.add(new PersonData(age, sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2)));
+                returnValue.add(new PersonData(birthdate, sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2)));
             }
             return returnValue;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    public int getProgramId(String programName)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM programs WHERE title = ?");
+            stmt.setString(1,programName);
+            ResultSet sqlReturnValue = stmt.executeQuery();
+            if(!sqlReturnValue.next())
+            {
+                return -1;
+            }
+            return sqlReturnValue.getInt(1);
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
+
+    public String getCreditsFromProgramId(int id)
+    {
+        String returnString = "";
+
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM credits WHERE program_id = ?");
+            stmt.setInt(1,id);
+            ResultSet sqlCreditsReturnValues = stmt.executeQuery();
+            while (sqlCreditsReturnValues.next())
+            {
+                String stringToAdd = "";
+                stmt = connection.prepareStatement("SELECT * FROM persons WHERE id = ?");
+                stmt.setInt(1,sqlCreditsReturnValues.getInt(3));
+                ResultSet sqlPersonReturnValue = stmt.executeQuery();
+                if(!sqlPersonReturnValue.next())
+                {
+                    return null;
+                }
+                stringToAdd += sqlPersonReturnValue.getString(2) + ", ";
+                stmt = connection.prepareStatement("SELECT * FROM occupation WHERE id = ?");
+                stmt.setInt(1,sqlCreditsReturnValues.getInt(4));
+                ResultSet sqlOccupationReturnValue = stmt.executeQuery();
+                if(!sqlOccupationReturnValue.next())
+                {
+                    return null;
+                }
+                stringToAdd += sqlOccupationReturnValue.getString(2);
+                if(sqlOccupationReturnValue.getInt(1) == 36)
+                {
+                    stmt = connection.prepareStatement("SELECT * FROM movie_role WHERE credits_id = ?");
+                    stmt.setInt(1,sqlCreditsReturnValues.getInt(1));
+                    ResultSet sqlMovieRoleReturnValue = stmt.executeQuery();
+                    if(!sqlMovieRoleReturnValue.next())
+                    {
+                        return null;
+                    }
+                    stringToAdd += ", " + sqlMovieRoleReturnValue.getString(3);
+                }
+                stringToAdd += "\n";
+                returnString += stringToAdd;
+            }
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+
+        return returnString;
     }
 
     public List<CreditInterface> getCreditFromID(int personID) {
@@ -476,10 +736,8 @@ public class DatabaseSystem
                 {
                     return null;
                 }
-                LocalDate today = LocalDate.now();
                 LocalDate birthdate = java.time.LocalDate.parse(sqlPersonReturnValue.getDate(3).toString());
-                Period p = Period.between(birthdate,today);
-                PersonData tempPerson = new PersonData(p.getYears(), sqlPersonReturnValue.getInt(1),sqlPersonReturnValue.getString(4),sqlPersonReturnValue.getString(2));
+                PersonData tempPerson = new PersonData(birthdate, sqlPersonReturnValue.getInt(1),sqlPersonReturnValue.getString(4),sqlPersonReturnValue.getString(2));
 
                 //Gets occupation
                 stmt = connection.prepareStatement("SELECT * FROM occupation where id = ?");
@@ -805,20 +1063,6 @@ public class DatabaseSystem
         return credits;
     }*/
 
-    public boolean saveCredit (CreditInterface credit)
-    {
-        try (FileWriter writer = new FileWriter(new File("Credits.txt"), true)) {
-            if (credit.getPerson().getName() != null) {
-                writer.write(credit.getPerson().getAge() + ";" + credit.getPerson().getId() + ";" + credit.getPerson().getEmail() + ";" + credit.getPerson().getName() + ";" + credit.getOccupation() + ";" + credit.getCharacterName() + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
-
     //Lavet af Sigster
     public ArrayList<String> getAllCreditsFromCreditFile ( int personID){
         ArrayList<String> readValues = new ArrayList<>();
@@ -966,20 +1210,19 @@ public class DatabaseSystem
         }
     }
 
-    public PersonInterface getPerson ( int id){
-        PersonData person = null;
+    public PersonInterface getPersonFromID (int id){
         try {
-            Scanner reader = new Scanner(new File("persons.txt"));
-            while (reader.hasNextLine()) {
-                String read = reader.nextLine();
-                String[] readSplit = read.split(";");
-                if (Integer.parseInt(readSplit[0]) == id) {
-                    person = new PersonData(Integer.parseInt(readSplit[2]), id, readSplit[3], readSplit[1]);
-                }
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM persons WHERE id = ?");
+            stmt.setInt(1, id);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if (!sqlReturnValues.next()) {
+                return null;
             }
-            return person;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LocalDate birthdate = java.time.LocalDate.parse(sqlReturnValues.getDate(3).toString());
+            return new PersonData(birthdate, sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2));
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
             return null;
         }
     }
@@ -1019,7 +1262,7 @@ public class DatabaseSystem
     }*/
 
     //SearchParam uses letters to narrow the search result down, type is the searched var in object, file is the file the data is in
-    public ArrayList<PersonInterface> SearchPerson (String searchParam) throws Exception {
+    /*public ArrayList<PersonInterface> SearchPerson (String searchParam) throws Exception {
         //readlines and put em in a list
         String splitValue = "";
         searchParam = searchParam.toLowerCase();
@@ -1051,6 +1294,30 @@ public class DatabaseSystem
             persons.add(new PersonData(Integer.parseInt(personValues.get(i + 2)), Integer.parseInt(personValues.get(i + 0)), personValues.get(i + 3), personValues.get(i + 1)));
         }
         return persons;
+    }*/
+
+    public ArrayList<PersonInterface> getAllPersonsByCreatorId(int id)
+    {
+        ArrayList<PersonInterface> returnList = new ArrayList<>();
+
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM persons WHERE created = ?");
+            stmt.setInt(1,id);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            while(sqlReturnValues.next())
+            {
+                LocalDate birthdate = java.time.LocalDate.parse(sqlReturnValues.getDate(3).toString());
+                returnList.add(new PersonData(birthdate,sqlReturnValues.getString(4),sqlReturnValues.getString(2)));
+            }
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+
+        return returnList;
     }
 
 

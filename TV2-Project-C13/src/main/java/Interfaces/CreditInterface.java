@@ -10,4 +10,6 @@ public interface CreditInterface {
     public ProgramInterface getProgram();
 
     public String getCharacterName();
+
+    public int getCreatorId();
 }

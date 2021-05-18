@@ -39,7 +39,7 @@ public class Credits implements CreditInterface {
 
         if(characterName.equals(""))
         {
-            this.characterName = "N/A";
+            this.characterName = "";
             System.out.println("Credit Debug");
         }
         else
@@ -63,6 +63,8 @@ public class Credits implements CreditInterface {
     public Program getProgram() {
         return program;
     }
+
+    public int getCreatorId(){return createrID;}
 
     @Override
     public String toString() {

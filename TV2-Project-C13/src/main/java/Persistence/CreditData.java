@@ -64,6 +64,8 @@ public class CreditData implements CreditInterface {
         return program;
     }
 
+    public int getCreatorId(){return createrID;}
+
     @Override
     public String toString() {
         return "Name: " + person.getName() + " Occupation: " + occupation + " Character name: " + characterName;

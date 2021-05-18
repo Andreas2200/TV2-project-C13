@@ -1,6 +1,7 @@
 package Domain;
 
 import Interfaces.*;
+import Persistence.CreditData;
 import Persistence.DatabaseSystem;
 import Persistence.UserData;
 
@@ -33,60 +34,21 @@ public class ConsumerSystem
         return credits;
     }
 
-    /*public ArrayList<String> searchPerson(String searchString) {
-        ArrayList<String> people = new ArrayList<>();
-        String nameString = "";
-        String occupationString = "";
-        String roleString = "";
-        String programString = "";
-        PersonInterface p = null;
-        try{
-            // Lav et arraylist af personinterfaces, for at få personer
-            ArrayList<PersonInterface> person = dbSys.SearchPerson(searchString);
-            // Søg igennem personinterface, og få alle personers id
-            for(int i = 0; i < person.size(); i++) {
-                p = person.get(i);
-                // Lav et arraylist for at kunne læse strengen og udtrække værdien for programid, samt occupation og role
-                ArrayList<String> getCreditString = dbSys.getAllCreditsFromCreditFile(p.getId());
-                for(String element: getCreditString) {
-                    String[] values = element.split(";");
-                    occupationString = values[1];
-                    roleString = values[3];
-                    //Lav igen et arraylist for at kunne læse strengen og udtrække værdien for programnavn
-
-                    ArrayList<ProgramInterface> programs = new ArrayList<>();
-                    programs.add(dbSys.getProgramFromID(Integer.parseInt(values[2])));
-                    System.out.println(programs);
-                    for(ProgramInterface program: programs){
-                        programString = program.getName();
-                        nameString = p.getName() + ";" + occupationString + ";" + roleString + ";" + programString + ";" + p.getEmail() + "\n";
-                        people.add(nameString);
-                    }
-                    ArrayList<String> getProgramString = dbSys.getProgramFromID(values[2]);
-                    for(String e: getProgramString) {
-                        String[] programValues = e.split(";");
-                        programString = programValues[1];
-                        nameString = p.getName() + ";" + occupationString + ";" + roleString + ";" + programString + ";" + p.getEmail() + "\n";
-                        people.add(nameString);
-                    }
-                }
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return people;
-    }*/
-
-
-    private void saveCredit()
+    public boolean saveCredit(Person person, Program program, String occupation, String characterName)
     {
-
+        return dbSys.saveCredit(new Credits(person,program,occupation,characterName, getUserID(activeUser)));
     }
 
-    private void saveLinkedCredit()
+    public boolean doesCreditExist(Person person, Program program, String occupation, String characterName)
     {
-
+        return dbSys.doesCreditExist(new Credits(person,program,occupation,characterName, getUserID(activeUser)));
     }
+
+    public boolean deleteCredit(Person person, Program program, String occupation, String characterName)
+    {
+        return dbSys.deleteCredit(new Credits(person,program,occupation,characterName, getUserID(activeUser)));
+    }
+
     public void createEditPerson(int tempAge, String tempEmail, String tempName) {
         Person tempPerson = new Person(tempAge, tempEmail, tempName);
         try {
@@ -114,8 +76,10 @@ public class ConsumerSystem
     public User logIn(String tempUsername,String tempPass)
     {
         UserData userData = (UserData) dbSys.getUser(tempUsername,tempPass);
-        try {
-            return new User(userData.getUsername(),userData.getPassword(),userData.getSalt(),userData.getName(),userData.getEmail(),userData.getBirthday(),userData.getRole());
+        try
+        {
+            activeUser = new User(userData.getUsername(),userData.getPassword(),userData.getSalt(),userData.getName(),userData.getEmail(),userData.getBirthday(),userData.getRole());
+            return activeUser;
         } catch(NullPointerException e) {
             return null;
         }
@@ -144,6 +108,11 @@ public class ConsumerSystem
         return returnList;
     }*/
 
+    public String getCreditsFromProgramTitle(String name)
+    {
+        return dbSys.getCreditsFromProgramId(dbSys.getProgramId(name));
+    }
+
     public ArrayList<Program> getAllPrograms()
     {
         ArrayList<Program> returnList = new ArrayList<>();
@@ -155,18 +124,30 @@ public class ConsumerSystem
         return returnList;
     }
 
+    public ArrayList<Program> getAllProgramsByCreatorId()
+    {
+        ArrayList<Program> returnList = new ArrayList<>();
 
-    public ArrayList<Person> getAllPersons()
+        for (ProgramInterface element:dbSys.getAllProgramsByCreatorId(getUserID(activeUser)))
+        {
+            returnList.add(mapProgramInterfaceProgram(element));
+        }
+
+        return returnList;
+    }
+
+    public ArrayList<String> getAllOccupations()
+    {
+        return dbSys.getAllOccupations();
+    }
+
+    public ArrayList<Person> getAllPersonByCreatorId()
     {
         ArrayList<Person> returnList = new ArrayList<>();
 
-        try {
-            for (PersonInterface element: dbSys.getAllPersons())
-            {
-                returnList.add(new Person(element.getAge(),element.getId(), element.getEmail(), element.getName()));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (PersonInterface element : dbSys.getAllPersonsByCreatorId(getUserID(activeUser)))
+        {
+            returnList.add(new Person(element.getAge(), element.getEmail(), element.getName()));
         }
 
         return returnList;
@@ -258,7 +239,7 @@ public class ConsumerSystem
 
     private Program mapProgramInterfaceProgram(ProgramInterface element)
     {
-        return new Program(element.getId(), element.getName(), element.getReleaseDate(), element.getDuration(), element.getGenre(), element.getDescription(), element.getCreatorID());
+        return new Program(element.getName(), element.getReleaseDate(), element.getDuration(), element.getGenre(), element.getDescription(), element.getCreatorID());
     }
 
     public ArrayList<User> getAllUsersExcept(User user)
