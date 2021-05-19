@@ -45,6 +45,7 @@ public class LogicController implements Initializable {
     public Label searchedProgramDuration;
     public Label searchedProgramTitle;
     public TextField searchProgramField;
+    public Button searchProgramButtonText;
     @FXML
     private CheckBox deleteUserCheckBox;
     @FXML
@@ -589,7 +590,7 @@ public class LogicController implements Initializable {
     private void setProgramSearchedProgram()
     {
         ArrayList<Program> programs = cs.getSearchedProgram(searchProgramField.getText());
-
+        pageNumber = 1;
         setUpProgramButtons();
 
         int numberOfAdditionalSearchPages = programs.size() / NUMBEROFPROGRAMSTODISPLAY;
