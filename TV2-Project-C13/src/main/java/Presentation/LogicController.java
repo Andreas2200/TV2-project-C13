@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import Domain.*;
-import Interfaces.*;
+import Interfaces.CreditInterface;
+import Interfaces.GenreInterface;
+import Interfaces.PersonInterface;
+import Interfaces.ProgramInterface;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,6 +49,9 @@ public class LogicController implements Initializable {
     public Label searchedProgramTitle;
     public TextField searchProgramField;
     public Button searchProgramButtonText;
+    public Label succesCreditField;
+    public Button saveCredit;
+    public Button deleteCredit;
     @FXML
     private CheckBox deleteUserCheckBox;
     @FXML
@@ -72,7 +78,7 @@ public class LogicController implements Initializable {
     private Button[] programButtons = new Button[12];
 
     @FXML
-    private TitledPane addCreditTitledPane, createCreditTitledPane, createProgramTitledPane, createPersonTitledPane,
+    private TitledPane createCreditTitledPane, createProgramTitledPane, createPersonTitledPane,
             viewUsersTitledPane, requestsTitledPane, editUserTitledPane, deleteUserTitledPane;
     @FXML
     private Accordion managementAccordion, managementAccordionUsers;
@@ -141,7 +147,6 @@ public class LogicController implements Initializable {
         personVBox.toFront();
         programSearchAnchorPane.toFront();
 
-        addCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
         createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
         createProgramTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
         createPersonTitledPane.setStyle(CLICKED_TITLED_PANE);
@@ -236,6 +241,47 @@ public class LogicController implements Initializable {
         }
     }
 
+    @FXML
+    private void saveCredit(ActionEvent actionEvent)
+    {
+        if(actionEvent.getSource() == saveCredit)
+        {
+            succesCreditField.setVisible(true);
+
+            if(!cs.doesCreditExist(creditPersonCB.getValue(),addCreditProgramProgramCB.getValue(),creditOccupationCB.getValue(),creditActorTextField.getText()))
+            {
+                if(cs.saveCredit(creditPersonCB.getValue(),addCreditProgramProgramCB.getValue(),creditOccupationCB.getValue(),creditActorTextField.getText()))
+                {
+                    succesCreditField.setText("Kreditering blev oprettet!");
+                    succesCreditField.setStyle("-fx-text-fill: GREEN");
+                    creditOccupationCB.setValue(null);
+                    updateComboBox();
+                }
+            }
+            else if(cs.doesCreditExist(creditPersonCB.getValue(),addCreditProgramProgramCB.getValue(),creditOccupationCB.getValue(),creditActorTextField.getText()))
+            {
+                succesCreditField.setText("Kreditering findes allerede.");
+                succesCreditField.setStyle("-fx-text-fill: RED");
+            }
+        }
+        if(actionEvent.getSource() == deleteCredit)
+        {
+            succesCreditField.setVisible(true);
+            if(succesCreditField.getText().equals("Er du sikker på du vil slette krediteringen?"))
+            {
+                cs.deleteCredit(creditPersonCB.getValue(),addCreditProgramProgramCB.getValue(),creditOccupationCB.getValue(),creditActorTextField.getText());
+                succesCreditField.setText("Kreditering slettet");
+                creditOccupationCB.setValue(null);
+                updateComboBox();
+            }
+            else
+            {
+                succesCreditField.setText("Er du sikker på du vil slette krediteringen?");
+                succesCreditField.setStyle("-fx-text-fill: RED");
+            }
+        }
+
+    }
 
     @FXML
     private void createEditProgram(ActionEvent event) throws NumberFormatException {
@@ -304,11 +350,6 @@ public class LogicController implements Initializable {
             //husk lige at tilføje userID når man gemmer btw
         }
         updateComboBox();
-    }
-
-    private void setUpCreateCredit()
-    {
-        //creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
     }
 
     private void setUpProgramButtons()
@@ -410,20 +451,8 @@ public class LogicController implements Initializable {
                     searchedProgramDuration.setText(tempProgram.getDuration().toString());
                     searchedProgramDescriptionTXT.setText(tempProgram.getDescription());
                     searchedProgramReleaseDate.setText(tempProgram.getReleaseDate());
-
-                    String genres = "";
-                    /*for (GenreInterface element: tempProgram.getGenre())
-                    {
-                        genres += Genre.valueOf(element.toString()) + "\n";
-                    }*/
-
-                    String credits = "";
-                    /*for (CreditInterface element: cs.getCredits(tempProgram.getId()))
-                    {
-                        credits += element.toString() + "\n";
-                    }*/
-                    searchedProgramGenre.setText(genres);
-                    searchedProgramCreditsTXT.setText(credits);
+                    searchedProgramGenre.setText(tempProgram.getGenre());
+                    searchedProgramCreditsTXT.setText(cs.getCreditsFromProgramTitle(tempProgram.getName()));
 
                     searchedProgramCreditsTXT.setDisable(true);
                     searchedProgramDescriptionTXT.setDisable(true);
@@ -470,31 +499,24 @@ public class LogicController implements Initializable {
     @FXML
     private void titledPaneHandler(MouseEvent event) {
 
-        if(event.getSource() == addCreditTitledPane) {
-            createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            createPersonTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            createProgramTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            addCreditTitledPane.setStyle(CLICKED_TITLED_PANE);
-        }
         if(event.getSource() == createCreditTitledPane) {
-            createCreditTitledPane.setStyle(CLICKED_TITLED_PANE);
-            createPersonTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            createProgramTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            addCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            setUpCreateCredit();
-            System.out.println("Debug");
+            if(!createCreditTitledPane.getStyle().equals(CLICKED_TITLED_PANE))
+            {
+                createCreditTitledPane.setStyle(CLICKED_TITLED_PANE);
+                createPersonTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                createProgramTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                System.out.println("Debug");
+            }
         }
         if(event.getSource() == createPersonTitledPane) {
             createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
             createPersonTitledPane.setStyle(CLICKED_TITLED_PANE);
             createProgramTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            addCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
         }
         if(event.getSource() == createProgramTitledPane) {
             createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
             createPersonTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
             createProgramTitledPane.setStyle(CLICKED_TITLED_PANE);
-            addCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
         }
         if(event.getSource() == viewUsersTitledPane) {
             viewUsersTitledPane.setStyle(CLICKED_TITLED_PANE);
@@ -618,29 +640,24 @@ public class LogicController implements Initializable {
 
     public void checkOccupationCB(ActionEvent actionEvent)
     {
-        if(!creditOccupationCB.getValue().equals(Occupation.SKUESPILLER))
+        if(creditOccupationCB.getValue() != null)
         {
-            creditActorLabel.setVisible(false);
-            creditActorTextField.setVisible(false);
+            if(!creditOccupationCB.getValue().equals("Skuespiller"))
+            {
+                creditActorLabel.setVisible(false);
+                creditActorTextField.setVisible(false);
+            }
+            else
+            {
+                creditActorLabel.setVisible(true);
+                creditActorTextField.setVisible(true);
+            }
         }
-        else
-        {
-            creditActorLabel.setVisible(true);
-            creditActorTextField.setVisible(true);
-        }
+
+
     }
 
-    public void saveCredit(ActionEvent actionEvent)
-    {
-        /*cs.saveCredit(new Credits(creditOccupationCB.getValue(),creditPersonCB.getValue(), creditActorTextField.getText()));
-        updateComboBox();*/
-    }
 
-    public void saveCreditToProgram(ActionEvent actionEvent)
-    {
-        cs.saveCreditToProgram(addCreditProgramCreditCB.getValue(), addCreditProgramProgramCB.getValue().getId());
-        updateComboBox();
-    }
 
     @FXML
     private void viewUsers(){
@@ -686,7 +703,6 @@ public class LogicController implements Initializable {
     } catch (Exception e) {
         e.printStackTrace();
     }
-}
 
     public void updateComboBox() {
         genreComboBox.setItems(FXCollections.observableArrayList(cs.getAllGenres()));
@@ -697,6 +713,12 @@ public class LogicController implements Initializable {
         editUserRoleCB.setItems(FXCollections.observableArrayList("Admin", "Producer" , "User"));
         editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
         deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
+        creditOccupationCB.setItems(FXCollections.observableArrayList(cs.getAllOccupations()));
+        creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersonByCreatorId()));
+        addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllProgramsByCreatorId()));
+        editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
+        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
+        deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
         setProgramsAllPrograms();
         viewUsers();
     }
