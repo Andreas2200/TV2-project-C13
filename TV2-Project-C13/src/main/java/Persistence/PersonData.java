@@ -2,21 +2,24 @@ package Persistence;
 
 import Interfaces.PersonInterface;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 public class PersonData implements PersonInterface {
-    private int age;
+    private LocalDate birthDate;
     private int id;
     private String email;
     private String name;
 
-    public PersonData (int age, int id, String email, String name) {
-        this.age = age;
+    public PersonData (LocalDate birthDate, int id, String email, String name) {
+        this.birthDate = birthDate;
         this.id = id;
         this.email = email;
         this.name = name;
     }
 
-    public PersonData (int age, String email, String name) {
-        this.age = age;
+    public PersonData (LocalDate birthDate, String email, String name) {
+        this.birthDate = birthDate;
         this.id = -1;
         this.email = email;
         this.name = name;
@@ -27,7 +30,9 @@ public class PersonData implements PersonInterface {
     }
 
     public int getAge() {
-        return age;
+        LocalDate today = LocalDate.now();
+        Period p = Period.between(birthDate,today);
+        return p.getYears();
     }
 
     public String getEmail() {
@@ -36,6 +41,10 @@ public class PersonData implements PersonInterface {
 
     public String getName() {
         return name;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
     @Override

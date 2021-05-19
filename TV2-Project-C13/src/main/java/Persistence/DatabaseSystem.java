@@ -3,6 +3,8 @@ package Persistence;
 
 import Domain.User;
 import Interfaces.*;
+import Domain.Occupation;
+import javafx.util.converter.LocalDateStringConverter;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -15,8 +17,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.*;
+import java.util.Date;
 
 //bruges kun til at teste database componenter og skal i ingen omstændigheder bruges i det endelige produkt
 class Main {
@@ -40,7 +45,8 @@ class Main {
     }
 }
 
-public class DatabaseSystem {
+public class DatabaseSystem
+{
     private static DatabaseSystem instance;
     private String url = "217.61.218.112";
     private int port = 5432;
@@ -49,12 +55,10 @@ public class DatabaseSystem {
     private String password = "Basse1234";
     private Connection connection = null;
 
-    public DatabaseSystem() {
-        initializePostgresqlDatabase();
-    }
+    public DatabaseSystem(){initializePostgresqlDatabase();}
 
-    public static synchronized Persistence.DatabaseSystem getInstance() {
-        if (instance == null) {
+    public static synchronized Persistence.DatabaseSystem getInstance(){
+        if (instance == null){
             instance = new Persistence.DatabaseSystem();
         }
         return instance;
@@ -116,19 +120,22 @@ public class DatabaseSystem {
     public UserInterface getUser(String username, String password) {
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
-            stmt.setString(1, username);
+            stmt.setString(1,username);
             ResultSet sqlReturnValues = stmt.executeQuery();
-            if (!sqlReturnValues.next()) {
+            if(!sqlReturnValues.next())
+            {
                 return null;
             }
-            if (hashPassword(password, sqlReturnValues.getString(4)).equals(sqlReturnValues.getString(3))) {
+            if(hashPassword(password,sqlReturnValues.getString(4)).equals(sqlReturnValues.getString(3)))
+            {
                 stmt = connection.prepareStatement("SELECT * FROM roles WHERE id= ?");
-                stmt.setInt(1, sqlReturnValues.getInt(6));
+                stmt.setInt(1,sqlReturnValues.getInt(6));
                 ResultSet sqlRoleValues = stmt.executeQuery();
-                if (!sqlRoleValues.next()) {
+                if(!sqlRoleValues.next())
+                {
                     return null;
                 }
-                return new UserData(sqlReturnValues.getString(2), sqlReturnValues.getString(3), sqlReturnValues.getString(4), sqlReturnValues.getString(5), sqlReturnValues.getString(7), java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()), sqlRoleValues.getString(2));
+                return new UserData(sqlReturnValues.getString(2),sqlReturnValues.getString(3),sqlReturnValues.getString(4),sqlReturnValues.getString(5),sqlReturnValues.getString(7),java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()),sqlRoleValues.getString(2));
             }
             return null;
         } catch (SQLException ex) {
@@ -137,7 +144,7 @@ public class DatabaseSystem {
         }
     }
 
-    public ProgramInterface getProgramFromID(int programID) {
+    public ProgramInterface getProgramFromID(int programID){
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM programs WHERE id = ?");
             stmt.setInt(1, programID);
@@ -146,7 +153,7 @@ public class DatabaseSystem {
                 return null;
             }
 
-            if (programID == sqlReturnValues.getInt(1)) {
+           if (programID == sqlReturnValues.getInt(1)) {
                 stmt = connection.prepareStatement("SELECT * FROM genres WHERE id= ?");
                 stmt.setInt(1, sqlReturnValues.getInt(3));
                 ResultSet sqlGenreValues = stmt.executeQuery();
@@ -154,8 +161,8 @@ public class DatabaseSystem {
                     return null;
                 }
                 return new ProgramData(sqlReturnValues.getString(2), sqlReturnValues.getString(4), LocalTime.parse(sqlReturnValues.getString(5)), sqlGenreValues.getString(2), sqlReturnValues.getString(6), sqlReturnValues.getInt(7));
-            }
-            return null;
+           }
+           return null;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -180,19 +187,23 @@ public class DatabaseSystem {
     public UserInterface getUser(String username) {
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
-            stmt.setString(1, username);
+            stmt.setString(1,username);
             ResultSet sqlReturnValues = stmt.executeQuery();
-            if (!sqlReturnValues.next()) {
+            if(!sqlReturnValues.next())
+            {
                 return null;
             }
             stmt = connection.prepareStatement("SELECT * FROM roles WHERE id= ?");
-            stmt.setInt(1, sqlReturnValues.getInt(6));
+            stmt.setInt(1,sqlReturnValues.getInt(6));
             ResultSet sqlRoleValues = stmt.executeQuery();
-            if (!sqlRoleValues.next()) {
+            if(!sqlRoleValues.next())
+            {
                 return null;
             }
-            return new UserData(sqlReturnValues.getString(2), sqlReturnValues.getString(3), sqlReturnValues.getString(4), sqlReturnValues.getString(5), sqlReturnValues.getString(7), java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()), sqlRoleValues.getString(2));
-        } catch (SQLException ex) {
+            return new UserData(sqlReturnValues.getString(2),sqlReturnValues.getString(3),sqlReturnValues.getString(4),sqlReturnValues.getString(5),sqlReturnValues.getString(7),java.time.LocalDate.parse(sqlReturnValues.getDate(8).toString()),sqlRoleValues.getString(2));
+        }
+        catch (SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
@@ -434,9 +445,7 @@ public class DatabaseSystem {
             while(sqlReturnValues.next()) {
                 LocalDate today = LocalDate.now();
                 LocalDate birthdate = java.time.LocalDate.parse(sqlReturnValues.getDate(3).toString());
-                Period p = Period.between(birthdate,today);
-                int age = p.getYears();
-                returnValue.add(new PersonData(age, sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2)));
+                returnValue.add(new PersonData(birthdate, sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2)));
             }
             return returnValue;
         } catch (SQLException ex) {
@@ -482,10 +491,8 @@ public class DatabaseSystem {
                 {
                     return null;
                 }
-                LocalDate today = LocalDate.now();
                 LocalDate birthdate = java.time.LocalDate.parse(sqlPersonReturnValue.getDate(3).toString());
-                Period p = Period.between(birthdate,today);
-                PersonData tempPerson = new PersonData(p.getYears(), sqlPersonReturnValue.getInt(1),sqlPersonReturnValue.getString(4),sqlPersonReturnValue.getString(2));
+                PersonData tempPerson = new PersonData(birthdate, sqlPersonReturnValue.getInt(1),sqlPersonReturnValue.getString(4),sqlPersonReturnValue.getString(2));
 
                 //Gets occupation
                 stmt = connection.prepareStatement("SELECT * FROM occupation where id = ?");
@@ -954,58 +961,61 @@ public class DatabaseSystem {
         return "";
     }
 
-    public void SavePerson (PersonInterface person) throws IOException {
-        Scanner reader = new Scanner(new File("persons.txt"));
-        if (person.getId() == -1) {
-            int ID = 0;
-            while (reader.hasNextLine()) {
-                ID = Integer.parseInt(reader.nextLine().split(";")[0]) + 1;
-            }
-            reader.close();
-            FileWriter writer = new FileWriter("persons.txt", true);
-            writer.write("\n" + ID + ";" + person.getName() + ";" + person.getAge() + ";" + person.getEmail());
-            writer.close();
-        } else {
-            FileWriter writer = new FileWriter("persons.txt", true);
-            writer.write("\n" + person.getId() + ";" + person.getName() + ";" + person.getAge() + ";" + person.getEmail());
-            writer.close();
+    public void SavePerson (PersonInterface person, int userId) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO persons (name, age, email, created) VALUES (?,?,?,?)");
+            stmt.setString(1,person.getName());
+            stmt.setDate(2,java.sql.Date.valueOf(person.getBirthDate()));
+            stmt.setString(3,person.getEmail());
+            stmt.setInt(4,userId);
+            stmt.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
-    public PersonInterface getPerson ( int id){
-        PersonData person = null;
+    public PersonInterface getPersonFromID (int id){
         try {
-            Scanner reader = new Scanner(new File("persons.txt"));
-            while (reader.hasNextLine()) {
-                String read = reader.nextLine();
-                String[] readSplit = read.split(";");
-                if (Integer.parseInt(readSplit[0]) == id) {
-                    person = new PersonData(Integer.parseInt(readSplit[2]), id, readSplit[3], readSplit[1]);
-                }
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM persons WHERE id = ?");
+            stmt.setInt(1, id);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if (!sqlReturnValues.next()) {
+                return null;
             }
-            return person;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LocalDate birthdate = java.time.LocalDate.parse(sqlReturnValues.getDate(3).toString());
+            return new PersonData(birthdate, sqlReturnValues.getInt(1), sqlReturnValues.getString(4), sqlReturnValues.getString(2));
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
             return null;
         }
     }
 
     public boolean doesPersonExist (String email){
         try {
-            Scanner reader = new Scanner(new File("persons.txt"));
-            while (reader.hasNextLine()) {
-                String read = reader.nextLine();
-                String[] readSplit = read.split(";");
-
-                if (readSplit[3].equals(email)) {
-                    System.out.println(readSplit);
-                    return true;
-                }
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM persons WHERE email = ?");
+            stmt.setString(1, email);
+            ResultSet sqlReturnValues = stmt.executeQuery();
+            if (sqlReturnValues.next()) {
+                return true;
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return false;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
         }
-        return false;
+    }
+
+    public void editPerson (PersonInterface person) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("UPDATE persons SET name = ?, age = ? WHERE email = ?");
+            stmt.setString(1,person.getName());
+            stmt.setDate(2,java.sql.Date.valueOf(person.getBirthDate()));
+            stmt.setString(3,person.getEmail());
+            stmt.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     /*public boolean doesProgramExist (String name){
@@ -1025,6 +1035,7 @@ public class DatabaseSystem {
     }*/
 
     //SearchParam uses letters to narrow the search result down, type is the searched var in object, file is the file the data is in
+    /*
     public ArrayList<PersonInterface> SearchPerson (String searchParam) throws Exception {
         //readlines and put em in a list
         String splitValue = "";
@@ -1048,8 +1059,10 @@ public class DatabaseSystem {
         Collections.sort(searchItems, Comparator.comparing(PersonInterface::getName));
         return searchItems;
     }
+     */
 
     //An unsorted and quicker way to get all persons, mostly used by Datasystem itself but can be used outside
+    /*
     public ArrayList<PersonInterface> getAllPersons () throws Exception {
         ArrayList<PersonInterface> persons = new ArrayList<>();
         ArrayList<String> personValues = readDataValues("persons.txt");
@@ -1058,6 +1071,7 @@ public class DatabaseSystem {
         }
         return persons;
     }
+     */
 
 
     private String SplitByChar (String text,int splitBy){
@@ -1179,6 +1193,26 @@ public class DatabaseSystem {
     }
 
     //</editor-fold desc="Methods missing SQL Implementation">
+
+    public int getUserID(String username)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+            stmt.setString(1,username);
+            ResultSet sqlReturnValue = stmt.executeQuery();
+            if(!sqlReturnValue.next())
+            {
+                return -1;
+            }
+            return sqlReturnValue.getInt(1);
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
 
     public String hashPassword(String password, String salt) {
         String returnHash = "";

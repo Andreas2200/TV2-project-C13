@@ -1,5 +1,7 @@
 package Interfaces;
 
+import java.time.LocalDate;
+
 public interface PersonInterface {
     public int getId();
 
@@ -8,6 +10,8 @@ public interface PersonInterface {
     public String getEmail();
 
     public String getName();
+
+    public LocalDate getBirthDate();
 
     @Override
     String toString();

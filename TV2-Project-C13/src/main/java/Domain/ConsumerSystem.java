@@ -87,17 +87,25 @@ public class ConsumerSystem
     {
 
     }
-    public void createEditPerson(int tempAge, String tempEmail, String tempName) {
-        Person tempPerson = new Person(tempAge, tempEmail, tempName);
-        try {
-            if(!dbSys.doesPersonExist(tempPerson.getEmail())){
-                dbSys.SavePerson(tempPerson);
-            } else{
-                System.out.println("That Person already exists..");
-            }
-        } catch(IOException e) {
-            e.printStackTrace();
+    public boolean createPerson(LocalDate tempBirthDate, String tempEmail, String tempName) {
+        Person tempPerson = new Person(tempBirthDate, tempEmail, tempName);
+        if(!dbSys.doesPersonExist(tempPerson.getEmail())){
+            dbSys.SavePerson(tempPerson,getUserID(activeUser));
+            return false;
+        } else{
+            System.out.println("That Person already exists..");
+            return true;
         }
+    }
+
+    public int getUserID(UserInterface user)
+    {
+        return dbSys.getUserID(user.getUsername());
+    }
+
+    public void editPerson(LocalDate tempBirthDate, String tempEmail, String tempName) {
+        Person tempPerson = new Person(tempBirthDate, tempEmail, tempName);
+        dbSys.editPerson(tempPerson);
     }
 
     public void createUser(String tempUsername, String tempPass, String tempSalt, String tempName, String tempEmail, LocalDate tempBirthday)
@@ -155,7 +163,7 @@ public class ConsumerSystem
         return returnList;
     }
 
-
+    /*
     public ArrayList<Person> getAllPersons()
     {
         ArrayList<Person> returnList = new ArrayList<>();
@@ -171,6 +179,7 @@ public class ConsumerSystem
 
         return returnList;
     }
+     */
 
     public ArrayList<User> getAllUser() {
         ArrayList<User> returnList = new ArrayList<>();
