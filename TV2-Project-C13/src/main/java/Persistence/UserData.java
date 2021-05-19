@@ -15,7 +15,7 @@ public class UserData implements UserInterface {
     private String email;
     private LocalDate birthday;
 
-    public UserData(String username, String password, String salt,String name, String email, LocalDate birthday) {
+    public UserData(String username, String password, String salt, String name, String email, LocalDate birthday) {
         this.username = username.toLowerCase();
         this.password = password;
         this.salt = salt;
@@ -24,27 +24,20 @@ public class UserData implements UserInterface {
         this.birthday = birthday;
         this.role = "User";
     }
-    public UserData(String username, String password, String salt, String name, String email, LocalDate birthday, String role)
-    {
-        this(username,password,salt,name,email, birthday);
+
+    public UserData(String username, String password, String salt, String name, String email, LocalDate birthday, String role) {
+        this(username, password, salt, name, email, birthday);
         this.role = role;
     }
-    public UserData(int id, String name, String role, String email){
+
+    public UserData(int id, String name, String role, String email) {
         this.id = id;
         this.name = name;
         this.role = role;
         this.email = email;
     }
 
-//    public UserData(int id, String username, String name, String email, String role) {
-//        this.id = id;
-//        this.name = name;
-//        this.role = role;
-//        this.email = email;
-//    }
-
-
-    public int getId(){
+    public int getId() {
         return id;
     }
 
@@ -60,16 +53,17 @@ public class UserData implements UserInterface {
         return password;
     }
 
-    public String getEmail() {return email;}
+    public String getEmail() {
+        return email;
+    }
 
     public int getAge() {
         LocalDate today = LocalDate.now();
-        Period p = Period.between(birthday,today);
+        Period p = Period.between(birthday, today);
         return p.getYears();
     }
 
-    public LocalDate getBirthday()
-    {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
@@ -77,23 +71,28 @@ public class UserData implements UserInterface {
         return role;
     }
 
-    public String getSalt(){return salt;}
+    public String getSalt() {
+        return salt;
+    }
 
     public void setPassword(String newPas) {
         this.password = newPas;
     }
 
-    public void changeName(String newName){this.name = newName;}
+    public void changeName(String newName) {
+        this.name = newName;
+    }
 
-    public void setRole(String newRole){this.role = newRole;}
+    public void setRole(String newRole) {
+        this.role = newRole;
+    }
 
-    public boolean checkInfo(String name, String username, int age)
-    {
+    public boolean checkInfo(String name, String username, int age) {
         return this.getName().equals(name) && this.getUsername().equals(username) && this.getAge() == age;
     }
 
     @Override
     public String toString() {
-        return "Bruger ID: " + getId() + ", " + "Brugernavn: " + getUsername() + ", " + "Navn: " + getName()  + ", " + "E-mail: " + getEmail()  + ", " + "Rolle: " + getRole();
+        return "Bruger ID: " + getId() + ", " + "Brugernavn: " + getUsername() + ", " + "Navn: " + getName() + ", " + "E-mail: " + getEmail() + ", " + "Rolle: " + getRole();
     }
 }

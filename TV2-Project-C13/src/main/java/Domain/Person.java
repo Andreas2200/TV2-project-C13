@@ -5,21 +5,20 @@ import Interfaces.PersonInterface;
 import java.time.LocalDate;
 import java.time.Period;
 
-
 public class Person implements PersonInterface {
     private LocalDate birthDate;
     private int id;
     private String email;
     private String name;
 
-    public Person (LocalDate birthDate, int id, String email, String name) {
+    public Person(LocalDate birthDate, int id, String email, String name) {
         this.birthDate = birthDate;
         this.id = id;
         this.email = email;
         this.name = name;
     }
 
-    public Person (LocalDate birthDate, String email, String name) {
+    public Person(LocalDate birthDate, String email, String name) {
         this.birthDate = birthDate;
         this.id = -1;
         this.email = email;
@@ -32,7 +31,7 @@ public class Person implements PersonInterface {
 
     public int getAge() {
         LocalDate today = LocalDate.now();
-        Period p = Period.between(birthDate,today);
+        Period p = Period.between(birthDate, today);
         return p.getYears();
     }
 

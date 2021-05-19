@@ -1,7 +1,5 @@
 package Interfaces;
 
-import Persistence.OccupationData;
-
 public interface CreditInterface {
     public String getOccupation();
 

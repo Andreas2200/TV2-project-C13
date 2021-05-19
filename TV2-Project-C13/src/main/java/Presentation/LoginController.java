@@ -2,15 +2,11 @@ package Presentation;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
 import Domain.ConsumerSystem;
 import Domain.User;
-import Persistence.DatabaseSystem;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,8 +15,6 @@ import javafx.scene.control.*;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -36,7 +30,7 @@ public class LoginController implements Initializable {
     @FXML
     public TextField userNameField, createUserNameField, createUserUsernameField, createUserEmailField, createUserPasswordField;
     @FXML
-    private Button loginButton, signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
+    private Button signInScreenButton, signUpScreenButton, signInCloseButton, signUpCloseButton, signInLoginButton, signUpLoginButton;
     @FXML
     private ImageView signUpImageView, signInImageView, signInCloseImageView, signUpCloseImageView;
     @FXML
@@ -99,7 +93,7 @@ public class LoginController implements Initializable {
     @FXML
     private void signInSignUpHandler(ActionEvent event) {
 
-        if(event.getSource() == signInScreenButton) {
+        if (event.getSource() == signInScreenButton) {
             signInPane.toFront();
             signInScreenButton.toFront();
             signUpScreenButton.toFront();
@@ -108,8 +102,7 @@ public class LoginController implements Initializable {
             invalidPasswordLabel.setVisible(false);
             invalidPasswordLabel.setStyle(INVALID);
             invalidPasswordLabel.setText("Ugyldigt brugernavn/password!");
-        }
-        else if(event.getSource() == signUpScreenButton) {
+        } else if (event.getSource() == signUpScreenButton) {
             signUpPane.toFront();
             signInScreenButton.toFront();
             signUpScreenButton.toFront();
@@ -119,18 +112,15 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void switchToSecondary(ActionEvent event) throws IOException
-    {
-        activeUser = cs.logIn(userNameField.getText().toLowerCase(),passwordField.getText());
+    private void switchToSecondary(ActionEvent event) throws IOException {
+        activeUser = cs.logIn(userNameField.getText().toLowerCase(), passwordField.getText());
 
-        if(activeUser == null)
-        {
+        if (activeUser == null) {
             invalidPasswordLabel.setVisible(true);
             invalidPasswordLabel.setStyle(INVALID);
             invalidPasswordLabel.setText("Ugyldigt brugernavn/password!");
             return;
-        }
-        else {
+        } else {
             App.setRoot("secondary");
         }
     }
@@ -139,30 +129,29 @@ public class LoginController implements Initializable {
         var key = keyEvent.getCode();
         switch (key) {
             case ENTER:
-                activeUser = cs.logIn(userNameField.getText().toLowerCase(),passwordField.getText());
+                activeUser = cs.logIn(userNameField.getText().toLowerCase(), passwordField.getText());
 
-                if(activeUser == null)
-                {
+                if (activeUser == null) {
                     invalidPasswordLabel.setVisible(true);
                     invalidPasswordLabel.setStyle(INVALID);
                     invalidPasswordLabel.setText("Ugyldigt brugernavn/password!");
                     return;
-                }
-                else {
+                } else {
                     App.setRoot("secondary");
                 }
         }
     }
+
     @FXML
     private void handleCreateUserEnter(javafx.scene.input.KeyEvent keyEvent) throws IOException {
         var key = keyEvent.getCode();
         switch (key) {
             case ENTER:
-                if(createUserNameField.getText() != null && createUserUsernameField.getText() != null && birthdayDatePicker.getValue() != null
+                if (createUserNameField.getText() != null && createUserUsernameField.getText() != null && birthdayDatePicker.getValue() != null
                         && createUserPasswordField.getText() != null && createUserEmailField.getText() != null) {
                     // Create the user
                     String tempSalt = createUUID();
-                    cs.createUser(createUserUsernameField.getText(),cs.hashPassword(createUserPasswordField.getText(), tempSalt),tempSalt,createUserNameField.getText(),createUserEmailField.getText(),birthdayDatePicker.getValue());
+                    cs.createUser(createUserUsernameField.getText(), cs.hashPassword(createUserPasswordField.getText(), tempSalt), tempSalt, createUserNameField.getText(), createUserEmailField.getText(), birthdayDatePicker.getValue());
                     //GUI controls
                     signInPane.toFront();
                     signInScreenButton.toFront();
@@ -178,22 +167,20 @@ public class LoginController implements Initializable {
                     createUserPasswordField.setText(null);
                     createUserEmailField.setText(null);
                     birthdayDatePicker.setValue(null);
-                }
-                else {
+                } else {
                     missingInfoLabel.setVisible(true);
                 }
         }
     }
 
-
     @FXML
-    private void createUser(ActionEvent event){
-        if(event.getSource() == signUpLoginButton) {
-            if(createUserNameField.getText() != null && createUserUsernameField.getText() != null && birthdayDatePicker.getValue() != null
+    private void createUser(ActionEvent event) {
+        if (event.getSource() == signUpLoginButton) {
+            if (createUserNameField.getText() != null && createUserUsernameField.getText() != null && birthdayDatePicker.getValue() != null
                     && createUserPasswordField.getText() != null && createUserEmailField.getText() != null) {
                 // Create the user
                 String tempSalt = createUUID();
-                cs.createUser(createUserUsernameField.getText(),cs.hashPassword(createUserPasswordField.getText(), tempSalt),tempSalt,createUserNameField.getText(),createUserEmailField.getText(),birthdayDatePicker.getValue());
+                cs.createUser(createUserUsernameField.getText(), cs.hashPassword(createUserPasswordField.getText(), tempSalt), tempSalt, createUserNameField.getText(), createUserEmailField.getText(), birthdayDatePicker.getValue());
                 //GUI controls
                 signInPane.toFront();
                 signInScreenButton.toFront();
@@ -209,13 +196,11 @@ public class LoginController implements Initializable {
                 createUserPasswordField.setText(null);
                 createUserEmailField.setText(null);
                 birthdayDatePicker.setValue(null);
-            }
-            else {
-               missingInfoLabel.setVisible(true);
+            } else {
+                missingInfoLabel.setVisible(true);
             }
         }
     }
-
 
     @FXML
     private void closeButtonHandler() {
@@ -249,7 +234,7 @@ public class LoginController implements Initializable {
         bigScale.setX(1.15);
         bigScale.setY(1.15);
 
-        DropShadow shadow = new DropShadow(BlurType.values()[3],Color.valueOf("#BFBFBF"), 4, 0.0f, -2.0f, -2.0f);
+        DropShadow shadow = new DropShadow(BlurType.values()[3], Color.valueOf("#BFBFBF"), 4, 0.0f, -2.0f, -2.0f);
 
         button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
             @Override

@@ -1,12 +1,9 @@
 package Persistence;
 
 import Interfaces.CreditInterface;
-import Interfaces.GenreInterface;
 import Interfaces.ProgramInterface;
-
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ProgramData implements ProgramInterface {
     private String name;
@@ -18,8 +15,7 @@ public class ProgramData implements ProgramInterface {
 
     private ArrayList<CreditInterface> credits;
 
-    public ProgramData(String name, String releaseDate, LocalTime duration, String genre, String description, int creatorID)
-    {
+    public ProgramData(String name, String releaseDate, LocalTime duration, String genre, String description, int creatorID) {
         this.name = name;
         this.releaseDate = releaseDate;
         credits = new ArrayList<>();
@@ -29,19 +25,16 @@ public class ProgramData implements ProgramInterface {
         this.creatorID = creatorID;
     }
 
-    public void addCredit(CreditInterface credit)
-    {
+    public void addCredit(CreditInterface credit) {
         credits.add(credit);
     }
 
-    public String toSaveFile()
-    {
+    public String toSaveFile() {
         return "" + getName() + ";" + getReleaseDate() + ";";
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "\nName: " + getName() + "\n" +
                 "Release date: " + getReleaseDate() + "\n" +
                 "People in credits: " + getCreditSize() + "\n";
@@ -55,23 +48,19 @@ public class ProgramData implements ProgramInterface {
         return releaseDate;
     }
 
-    public int getCreditSize()
-    {
+    public int getCreditSize() {
         return credits.size();
     }
 
-    //FIX ME! not implemented
-    public String getGenre()
-    {
+    public String getGenre() {
         return genre;
     }
 
     public LocalTime getDuration() {
-        //return duration.toString();
         return duration;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 

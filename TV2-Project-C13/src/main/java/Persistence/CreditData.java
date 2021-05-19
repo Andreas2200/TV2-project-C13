@@ -2,7 +2,6 @@ package Persistence;
 
 import Interfaces.CreditInterface;
 
-
 public class CreditData implements CreditInterface {
     private String occupation;
     private PersonData person;
@@ -10,28 +9,7 @@ public class CreditData implements CreditInterface {
     private ProgramData program;
     int createrID;
 
-    /*public CreditData(String occupation, PersonData person) {
-        this.occupation = occupation;
-        this.person = person;
-        this.characterName = "N/A";
-    }*/
-
-    /*public CreditData(String occupation, PersonData person, String characterName) {
-        this(occupation, person);
-
-        if(characterName.equals(""))
-        {
-            this.characterName = "N/A";
-            System.out.println("Credit Debug");
-        }
-        else
-        {
-            this.characterName = characterName;
-        }
-    }*/
-
-    public CreditData(PersonData person, ProgramData program, String occupation, int createrID)
-    {
+    public CreditData(PersonData person, ProgramData program, String occupation, int createrID) {
         this.person = person;
         this.program = program;
         this.occupation = occupation;
@@ -64,7 +42,9 @@ public class CreditData implements CreditInterface {
         return program;
     }
 
-    public int getCreatorId(){return createrID;}
+    public int getCreatorId() {
+        return createrID;
+    }
 
     @Override
     public String toString() {

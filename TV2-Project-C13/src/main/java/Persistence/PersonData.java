@@ -11,14 +11,14 @@ public class PersonData implements PersonInterface {
     private String email;
     private String name;
 
-    public PersonData (LocalDate birthDate, int id, String email, String name) {
+    public PersonData(LocalDate birthDate, int id, String email, String name) {
         this.birthDate = birthDate;
         this.id = id;
         this.email = email;
         this.name = name;
     }
 
-    public PersonData (LocalDate birthDate, String email, String name) {
+    public PersonData(LocalDate birthDate, String email, String name) {
         this.birthDate = birthDate;
         this.id = -1;
         this.email = email;
@@ -31,7 +31,7 @@ public class PersonData implements PersonInterface {
 
     public int getAge() {
         LocalDate today = LocalDate.now();
-        Period p = Period.between(birthDate,today);
+        Period p = Period.between(birthDate, today);
         return p.getYears();
     }
 

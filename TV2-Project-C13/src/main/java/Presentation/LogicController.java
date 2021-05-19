@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import Domain.*;
 import Interfaces.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -36,7 +34,7 @@ import javafx.stage.Stage;
 public class LogicController implements Initializable {
 
     private boolean personAlreadyExists = false;
-    public Button secondaryButton11,secondaryButton1;
+    public Button secondaryButton11, secondaryButton1;
     public Label pageCounter;
     public TextArea searchedProgramCreditsTXT;
     public TextArea searchedProgramDescriptionTXT;
@@ -50,15 +48,11 @@ public class LogicController implements Initializable {
     public Button saveCredit;
     public Button deleteCredit;
     @FXML
-    private CheckBox deleteUserCheckBox;
-    @FXML
     private ComboBox<String> editUserRoleCB;
     @FXML
     private ComboBox<User> editUserUsersCB, deleteUserCB;
     @FXML
     private ComboBox<Program> addCreditProgramProgramCB;
-    @FXML
-    private ComboBox<Credits> addCreditProgramCreditCB;
     @FXML
     private ComboBox<Person> creditPersonCB;
     @FXML
@@ -70,7 +64,7 @@ public class LogicController implements Initializable {
     private Button closeButton, manageCreditsButton, findPersonButton, findProgramButton, manageUsersButton,
             programButton1, programButton2, programButton3, programButton4, programButton5, programButton6, programButton7, programButton8,
             programButton9, programButton10, programButton11, programButton12, toSearchButton,
-            saveProgramButton, deleteProgramButton, editUserButton;
+            saveProgramButton, deleteProgramButton;
 
     private Button[] programButtons = new Button[12];
 
@@ -103,7 +97,7 @@ public class LogicController implements Initializable {
     private Button button;
     private Circle circle = new Circle(75);
 
-    public Label userRoleField, succesProgramField, deleteUserConfirmationLabel, editUserRoleConfirmationLabel;;
+    public Label userRoleField, succesProgramField, deleteUserConfirmationLabel, editUserRoleConfirmationLabel;
     public Label userNameField;
     @FXML
     private Label creditActorLabel;
@@ -129,13 +123,12 @@ public class LogicController implements Initializable {
         numberOfAdditionalPages = cs.getAllPrograms().size() / NUMBEROFPROGRAMSTODISPLAY;
 
         setUpProgramButtons();
-        //Plots values into comboBox
-        updateComboBox();
+        updateComboBox();//Plots values into comboBox
 
         userImage = new Image(getClass().getResource("Dancingkid.jpg").toString());
         userImageView.setImage(userImage);
-        circle.setCenterX(userImageView.getFitHeight()/2);
-        circle.setCenterY(userImageView.getFitWidth()/2.75);
+        circle.setCenterX(userImageView.getFitHeight() / 2);
+        circle.setCenterY(userImageView.getFitWidth() / 2.75);
         userImageView.setClip(circle);
 
         closeButtonImage = new Image(getClass().getResource("times.png").toString());
@@ -179,10 +172,7 @@ public class LogicController implements Initializable {
     @FXML
     private void findPersonInformation(ActionEvent event) {
         findPersonTableView.getItems().clear();
-        try{
-            //System.out.println(cs.searchPerson(searchPersonField.getText()));
-            //findPersonTableView.setEditable(false);
-            //Collection<String> list = cs.searchPerson(searchPersonField.getText());
+        try {
             List<CreditInterface> list = cs.searchPerson(searchPersonField.getText());
             final ObservableList<CreditInterface> details = FXCollections.observableArrayList(list);
 
@@ -193,8 +183,7 @@ public class LogicController implements Initializable {
             ArrayList<String> programList = new ArrayList<>();
             ArrayList<String> contactList = new ArrayList<>();
 
-            for(CreditInterface element: list) {
-                //String[] elementValues = element.split(";");
+            for (CreditInterface element : list) {
                 personList.add(element.getPerson().getName());
                 occupationList.add(element.getOccupation());
                 roleList.add(element.getCharacterName());
@@ -226,12 +215,11 @@ public class LogicController implements Initializable {
 
             // Indsæt cellerne i tableview
 
-            for(int i = 0; i < personList.size(); i++) {
+            for (int i = 0; i < personList.size(); i++) {
                 findPersonTableView.getItems().add(i);
             }
 
             cs.searchPerson(searchPersonField.getText());
-            //System.out.println(cs.searchPerson(searchPersonField.getText()));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -239,40 +227,30 @@ public class LogicController implements Initializable {
     }
 
     @FXML
-    private void saveCredit(ActionEvent actionEvent)
-    {
-        if(actionEvent.getSource() == saveCredit)
-        {
+    private void saveCredit(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == saveCredit) {
             succesCreditField.setVisible(true);
 
-            if(!cs.doesCreditExist(creditPersonCB.getValue(),addCreditProgramProgramCB.getValue(),creditOccupationCB.getValue(),creditActorTextField.getText()))
-            {
-                if(cs.saveCredit(creditPersonCB.getValue(),addCreditProgramProgramCB.getValue(),creditOccupationCB.getValue(),creditActorTextField.getText()))
-                {
+            if (!cs.doesCreditExist(creditPersonCB.getValue(), addCreditProgramProgramCB.getValue(), creditOccupationCB.getValue(), creditActorTextField.getText())) {
+                if (cs.saveCredit(creditPersonCB.getValue(), addCreditProgramProgramCB.getValue(), creditOccupationCB.getValue(), creditActorTextField.getText())) {
                     succesCreditField.setText("Kreditering blev oprettet!");
                     succesCreditField.setStyle("-fx-text-fill: GREEN");
                     creditOccupationCB.setValue(null);
                     updateComboBox();
                 }
-            }
-            else if(cs.doesCreditExist(creditPersonCB.getValue(),addCreditProgramProgramCB.getValue(),creditOccupationCB.getValue(),creditActorTextField.getText()))
-            {
+            } else if (cs.doesCreditExist(creditPersonCB.getValue(), addCreditProgramProgramCB.getValue(), creditOccupationCB.getValue(), creditActorTextField.getText())) {
                 succesCreditField.setText("Kreditering findes allerede.");
                 succesCreditField.setStyle("-fx-text-fill: RED");
             }
         }
-        if(actionEvent.getSource() == deleteCredit)
-        {
+        if (actionEvent.getSource() == deleteCredit) {
             succesCreditField.setVisible(true);
-            if(succesCreditField.getText().equals("Er du sikker på du vil slette krediteringen?"))
-            {
-                cs.deleteCredit(creditPersonCB.getValue(),addCreditProgramProgramCB.getValue(),creditOccupationCB.getValue(),creditActorTextField.getText());
+            if (succesCreditField.getText().equals("Er du sikker på du vil slette krediteringen?")) {
+                cs.deleteCredit(creditPersonCB.getValue(), addCreditProgramProgramCB.getValue(), creditOccupationCB.getValue(), creditActorTextField.getText());
                 succesCreditField.setText("Kreditering slettet");
                 creditOccupationCB.setValue(null);
                 updateComboBox();
-            }
-            else
-            {
+            } else {
                 succesCreditField.setText("Er du sikker på du vil slette krediteringen?");
                 succesCreditField.setStyle("-fx-text-fill: RED");
             }
@@ -282,23 +260,20 @@ public class LogicController implements Initializable {
 
     @FXML
     private void createEditProgram(ActionEvent event) throws NumberFormatException {
-        if(event.getSource() == saveProgramButton) {
+        if (event.getSource() == saveProgramButton) {
             LocalTime durationTime = LocalTime.parse(durationField.getText());
             String tempGenres = genreComboBox.getSelectionModel().getSelectedItem();
 
             succesProgramField.setVisible(true);
 
-            if(!cs.doesProgramExist(programTitleField.getText())){
+            if (!cs.doesProgramExist(programTitleField.getText())) {
                 cs.createEditProgram(programTitleField.getText(), releaseDateField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), cs.getUserID(activeUser));
                 succesProgramField.setText("Program blev oprettet!");
                 succesProgramField.setStyle("-fx-text-fill: GREEN");
                 updateComboBox();
                 System.out.println(durationTime);
-            }
-            else if(cs.doesProgramExist(programTitleField.getText()))
-            {
-                if(succesProgramField.getText().equals("Program findes allerede."))
-                {
+            } else if (cs.doesProgramExist(programTitleField.getText())) {
+                if (succesProgramField.getText().equals("Program findes allerede.")) {
                     cs.updateProgram(programTitleField.getText(), releaseDateField.getText(), durationTime, tempGenres, programDescriptionArea.getText(), cs.getUserID(activeUser));
                     succesProgramField.setText("Program blev oprettet!");
                     succesProgramField.setStyle("-fx-text-fill: GREEN");
@@ -310,18 +285,14 @@ public class LogicController implements Initializable {
 
             }
         }
-        if(event.getSource() == deleteProgramButton)
-        {
+        if (event.getSource() == deleteProgramButton) {
             succesProgramField.setVisible(true);
 
-            if(succesProgramField.getText().equals("Er du sikker på du vil slette programmet?"))
-            {
+            if (succesProgramField.getText().equals("Er du sikker på du vil slette programmet?")) {
                 cs.deleteProgram(programTitleField.getText());
                 succesProgramField.setText("Program slettet");
                 updateComboBox();
-            }
-            else
-            {
+            } else {
                 succesProgramField.setText("Er du sikker på du vil slette programmet?");
                 succesProgramField.setStyle("-fx-text-fill: RED");
             }
@@ -339,18 +310,15 @@ public class LogicController implements Initializable {
             if (personAlreadyExists) {
                 personAlreadyExistsVBoks.setVisible(true);
             }
-        }
-        else {
+        } else {
             cs.editPerson(birthdate, personEmailField.getText(), personNameField.getText());
             personAlreadyExists = false;
             personAlreadyExistsVBoks.setVisible(false);
-            //husk lige at tilføje userID når man gemmer btw
         }
         updateComboBox();
     }
 
-    private void setUpProgramButtons()
-    {
+    private void setUpProgramButtons() {
         programButtons[0] = programButton1;
         programButtons[1] = programButton2;
         programButtons[2] = programButton3;
@@ -363,28 +331,22 @@ public class LogicController implements Initializable {
         programButtons[9] = programButton10;
         programButtons[10] = programButton11;
         programButtons[11] = programButton12;
-        for (int i = 0; i < 12; i++)
-        {
+        for (int i = 0; i < 12; i++) {
             programButtons[i].setVisible(false);
         }
     }
 
-    private void setUserPermission()
-    {
-        if(activeUser.getRole().equals("User"))
-        {
+    private void setUserPermission() {
+        if (activeUser.getRole().equals("User")) {
             manageCreditsButton.setVisible(false);
             manageUsersButton.setVisible(false);
-        }
-        else if(activeUser.getRole().equals("Producer"))
-        {
+        } else if (activeUser.getRole().equals("Producer")) {
             manageUsersButton.setVisible(false);
         }
     }
 
     @FXML
-    private void switchToPrimary(ActionEvent event) throws IOException
-    {
+    private void switchToPrimary(ActionEvent event) throws IOException {
         activeUser = null;
         App.setRoot("primary");
     }
@@ -397,29 +359,28 @@ public class LogicController implements Initializable {
 
     @FXML
     private void toFrontHandler(ActionEvent event) {
-        if(event.getSource() == manageCreditsButton) {
+        if (event.getSource() == manageCreditsButton) {
             managementAccordion.toFront();
-
             manageCreditsButton.setStyle(CLICKED_BUTTON);
             manageUsersButton.setStyle(NOT_CLICKED_BUTTON);
             findPersonButton.setStyle(NOT_CLICKED_BUTTON);
             findProgramButton.setStyle(NOT_CLICKED_BUTTON);
         }
-        if(event.getSource() == findPersonButton) {
+        if (event.getSource() == findPersonButton) {
             personVBox.toFront();
             manageCreditsButton.setStyle(NOT_CLICKED_BUTTON);
             manageUsersButton.setStyle(NOT_CLICKED_BUTTON);
             findPersonButton.setStyle(CLICKED_BUTTON);
             findProgramButton.setStyle(NOT_CLICKED_BUTTON);
         }
-        if(event.getSource() == manageUsersButton) {
+        if (event.getSource() == manageUsersButton) {
             managementAccordionUsers.toFront();
             manageCreditsButton.setStyle(NOT_CLICKED_BUTTON);
             manageUsersButton.setStyle(CLICKED_BUTTON);
             findPersonButton.setStyle(NOT_CLICKED_BUTTON);
             findProgramButton.setStyle(NOT_CLICKED_BUTTON);
         }
-        if(event.getSource() == findProgramButton) {
+        if (event.getSource() == findProgramButton) {
             programVBox.toFront();
             setProgramsAllPrograms();
             manageCreditsButton.setStyle(NOT_CLICKED_BUTTON);
@@ -427,9 +388,8 @@ public class LogicController implements Initializable {
             findPersonButton.setStyle(NOT_CLICKED_BUTTON);
             findProgramButton.setStyle(CLICKED_BUTTON);
         }
-        //Something wrong - bliver kaldt af findprogrambutton event.
 
-        if(event.getSource() == toSearchButton) {
+        if (event.getSource() == toSearchButton) {
             programSearchAnchorPane.toFront();
         }
     }
@@ -437,11 +397,9 @@ public class LogicController implements Initializable {
     @FXML
     private void toFrontSearchProgramHandler(ActionEvent event) {
 
-        if(searchProgramField.getText().equals(""))
-        {
-            for (int i = 0; i < programButtons.length; i++)
-            {
-                if(event.getSource() == programButtons[i]) {
+        if (searchProgramField.getText().equals("")) {
+            for (int i = 0; i < programButtons.length; i++) {
+                if (event.getSource() == programButtons[i]) {
                     Program tempProgram = getChosenProgram(i);
 
                     searchedProgramTitle.setText(tempProgram.getName());
@@ -458,9 +416,7 @@ public class LogicController implements Initializable {
                     break;
                 }
             }
-        }
-        else
-        {
+        } else {
             for (int i = 0; i < programButtons.length; i++) {
                 if (event.getSource() == programButtons[i]) {
                     Program tempProgram = getChosenSearchedProgram(i);
@@ -469,18 +425,8 @@ public class LogicController implements Initializable {
                     searchedProgramDuration.setText(tempProgram.getDuration().toString());
                     searchedProgramDescriptionTXT.setText(tempProgram.getDescription());
                     searchedProgramReleaseDate.setText(tempProgram.getReleaseDate());
-
-                    String genres = "";
-                    /*for (GenreInterface element : tempProgram.getGenre()) {
-                        genres += Genre.valueOf(element.toString()) + "\n";
-                    }*/
-
-                    String credits = "";
-                    /*for (CreditInterface element : cs.getCredits(tempProgram.getId())) {
-                        credits += element.toString() + "\n";
-                    }*/
-                    searchedProgramGenre.setText(genres);
-                    searchedProgramCreditsTXT.setText(credits);
+                    searchedProgramGenre.setText(tempProgram.getGenre());
+                    searchedProgramCreditsTXT.setText(cs.getCreditsFromProgramTitle(tempProgram.getName()));
 
                     searchedProgramCreditsTXT.setDisable(true);
                     searchedProgramDescriptionTXT.setDisable(true);
@@ -496,39 +442,48 @@ public class LogicController implements Initializable {
     @FXML
     private void titledPaneHandler(MouseEvent event) {
 
-        if(event.getSource() == createCreditTitledPane) {
-            if(!createCreditTitledPane.getStyle().equals(CLICKED_TITLED_PANE))
-            {
+        if (event.getSource() == createCreditTitledPane) {
+            if (!createCreditTitledPane.getStyle().equals(CLICKED_TITLED_PANE)) {
                 createCreditTitledPane.setStyle(CLICKED_TITLED_PANE);
                 createPersonTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
                 createProgramTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-                System.out.println("Debug");
+
             }
         }
-        if(event.getSource() == createPersonTitledPane) {
-            createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            createPersonTitledPane.setStyle(CLICKED_TITLED_PANE);
-            createProgramTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+        if (event.getSource() == createPersonTitledPane) {
+            if (!createPersonTitledPane.getStyle().equals(CLICKED_TITLED_PANE)) {
+                createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                createPersonTitledPane.setStyle(CLICKED_TITLED_PANE);
+                createProgramTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            }
+
         }
-        if(event.getSource() == createProgramTitledPane) {
-            createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            createPersonTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            createProgramTitledPane.setStyle(CLICKED_TITLED_PANE);
+        if (event.getSource() == createProgramTitledPane) {
+            if (!createProgramTitledPane.getStyle().equals(CLICKED_TITLED_PANE)) {
+                createCreditTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                createPersonTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                createProgramTitledPane.setStyle(CLICKED_TITLED_PANE);
+            }
+
         }
-        if(event.getSource() == viewUsersTitledPane) {
-            viewUsersTitledPane.setStyle(CLICKED_TITLED_PANE);
-            editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+        if (event.getSource() == viewUsersTitledPane) {
+            if (!viewUsersTitledPane.getStyle().equals(CLICKED_TITLED_PANE)) {
+                viewUsersTitledPane.setStyle(CLICKED_TITLED_PANE);
+                editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            }
+
         }
-        if(event.getSource() == editUserTitledPane) {
-            viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            editUserTitledPane.setStyle(CLICKED_TITLED_PANE);
-            deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+        if (event.getSource() == editUserTitledPane) {
+            if (!editUserTitledPane.getStyle().equals(CLICKED_TITLED_PANE)) {
+                viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+                editUserTitledPane.setStyle(CLICKED_TITLED_PANE);
+                deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
+            }
+
         }
-        if(event.getSource() == deleteUserTitledPane)
-        {
-            if(!deleteUserTitledPane.getStyle().equals(CLICKED_TITLED_PANE))
-            {
+        if (event.getSource() == deleteUserTitledPane) {
+            if (!deleteUserTitledPane.getStyle().equals(CLICKED_TITLED_PANE)) {
                 viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
                 editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
                 editUserRoleConfirmationLabel.setVisible(false);
@@ -558,85 +513,65 @@ public class LogicController implements Initializable {
         });
     }
 
-    private Program getChosenProgram(int buttonID)
-    {
-        return cs.getAllPrograms().get(buttonID + ((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY));
+    private Program getChosenProgram(int buttonID) {
+        return cs.getAllPrograms().get(buttonID + ((pageNumber - 1) * NUMBEROFPROGRAMSTODISPLAY));
     }
 
-    private Program getChosenSearchedProgram(int buttonID)
-    {
-        return cs.getSearchedProgram(searchProgramField.getText()).get(buttonID + ((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY));
+    private Program getChosenSearchedProgram(int buttonID) {
+        return cs.getSearchedProgram(searchProgramField.getText()).get(buttonID + ((pageNumber - 1) * NUMBEROFPROGRAMSTODISPLAY));
     }
 
-    private void setProgramsAllPrograms()
-    {
+    private void setProgramsAllPrograms() {
         ArrayList<Program> programs = cs.getAllPrograms();
 
         setUpProgramButtons();
 
-        if(pageNumber == numberOfAdditionalPages +1)
-        {
-            int numberOfActiveButtons = programs.size() - ((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY);
-            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalPages+1));
-            for (int i = 0; i < numberOfActiveButtons; i++)
-            {
+        if (pageNumber == numberOfAdditionalPages + 1) {
+            int numberOfActiveButtons = programs.size() - ((pageNumber - 1) * NUMBEROFPROGRAMSTODISPLAY);
+            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalPages + 1));
+            for (int i = 0; i < numberOfActiveButtons; i++) {
                 programButtons[i].setVisible(true);
-                programButtons[i].setText(programs.get(i+((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
+                programButtons[i].setText(programs.get(i + ((pageNumber - 1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
             }
-        }
-        else
-        {
-            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalPages+1));
-            for (int i = 0; i < NUMBEROFPROGRAMSTODISPLAY; i++)
-            {
+        } else {
+            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalPages + 1));
+            for (int i = 0; i < NUMBEROFPROGRAMSTODISPLAY; i++) {
                 programButtons[i].setVisible(true);
-                programButtons[i].setText(programs.get(i+((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
+                programButtons[i].setText(programs.get(i + ((pageNumber - 1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
             }
         }
     }
 
-
     @FXML
-    private void setProgramSearchedProgram()
-    {
+    private void setProgramSearchedProgram() {
         ArrayList<Program> programs = cs.getSearchedProgram(searchProgramField.getText());
         pageNumber = 1;
         setUpProgramButtons();
 
         int numberOfAdditionalSearchPages = programs.size() / NUMBEROFPROGRAMSTODISPLAY;
 
-        if(pageNumber == numberOfAdditionalSearchPages + 1)
-        {
-            int numberOfActiveButtons = programs.size() - ((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY);
-            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalSearchPages+1));
-            for (int i = 0; i < numberOfActiveButtons; i++)
-            {
+        if (pageNumber == numberOfAdditionalSearchPages + 1) {
+            int numberOfActiveButtons = programs.size() - ((pageNumber - 1) * NUMBEROFPROGRAMSTODISPLAY);
+            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalSearchPages + 1));
+            for (int i = 0; i < numberOfActiveButtons; i++) {
                 programButtons[i].setVisible(true);
-                programButtons[i].setText(programs.get(i+((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
+                programButtons[i].setText(programs.get(i + ((pageNumber - 1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
             }
-        }
-        else
-        {
-            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalSearchPages+1));
-            for (int i = 0; i < NUMBEROFPROGRAMSTODISPLAY; i++)
-            {
+        } else {
+            pageCounter.setText(pageNumber + " ud af " + (numberOfAdditionalSearchPages + 1));
+            for (int i = 0; i < NUMBEROFPROGRAMSTODISPLAY; i++) {
                 programButtons[i].setVisible(true);
-                programButtons[i].setText(programs.get(i+((pageNumber-1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
+                programButtons[i].setText(programs.get(i + ((pageNumber - 1) * NUMBEROFPROGRAMSTODISPLAY)).getName());
             }
         }
     }
 
-    public void checkOccupationCB(ActionEvent actionEvent)
-    {
-        if(creditOccupationCB.getValue() != null)
-        {
-            if(!creditOccupationCB.getValue().equals("Skuespiller"))
-            {
+    public void checkOccupationCB(ActionEvent actionEvent) {
+        if (creditOccupationCB.getValue() != null) {
+            if (!creditOccupationCB.getValue().equals("Skuespiller")) {
                 creditActorLabel.setVisible(false);
                 creditActorTextField.setVisible(false);
-            }
-            else
-            {
+            } else {
                 creditActorLabel.setVisible(true);
                 creditActorTextField.setVisible(true);
             }
@@ -644,8 +579,6 @@ public class LogicController implements Initializable {
 
 
     }
-
-
 
     @FXML
     private void viewUsers() {
@@ -693,13 +626,13 @@ public class LogicController implements Initializable {
         }
     }
 
-    public void updateComboBox(){
+    public void updateComboBox() {
         numberOfAdditionalPages = cs.getAllPrograms().size() / NUMBEROFPROGRAMSTODISPLAY;
         genreComboBox.setItems(FXCollections.observableArrayList(cs.getAllGenres()));
         creditOccupationCB.setItems(FXCollections.observableArrayList(cs.getAllOccupations()));
         creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersonByCreatorId()));
         addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllProgramsByCreatorId()));
-        editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
+        editUserRoleCB.setItems(FXCollections.observableArrayList("User", "Producer", "Admin"));
         editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
         deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
         setProgramsAllPrograms();
@@ -714,7 +647,7 @@ public class LogicController implements Initializable {
 
         cs.updateUserRole(id, newUserRole(role_id));
         editUserRoleConfirmationLabel.setText("Brugerrolle blev ændret <3");
-        editUserRoleConfirmationLabel.setStyle("-fx-text-fill: GREEN; -fx-font-family: Times New Roman" );
+        editUserRoleConfirmationLabel.setStyle("-fx-text-fill: GREEN; -fx-font-family: Times New Roman");
         updateComboBox();
     }
 
@@ -724,51 +657,36 @@ public class LogicController implements Initializable {
         int deleted_by_id = cs.getUserID(activeUser);
 
 
-        cs.deleteUser(user, reason,deleted_by_id);
+        cs.deleteUser(user, reason, deleted_by_id);
         deleteUserConfirmationLabel.setText("Bruger er slettet");
-        deleteUserConfirmationLabel.setStyle("-fx-text-fill: GREEN; -fx-font-family: Times New Roman" );
+        deleteUserConfirmationLabel.setStyle("-fx-text-fill: GREEN; -fx-font-family: Times New Roman");
         updateComboBox();
     }
 
-    private int newUserRole(String role_id){
+    private int newUserRole(String role_id) {
         int rolleid = 0;
-        if (role_id == "Admin"){
+        if (role_id == "Admin") {
             rolleid = 1;
-        } if (role_id == "Producer"){
-            rolleid = 2; }
-        if ( role_id == "User"){
-            rolleid = 3; }
+        }
+        if (role_id == "Producer") {
+            rolleid = 2;
+        }
+        if (role_id == "User") {
+            rolleid = 3;
+        }
         return rolleid;
     }
 
-//    @FXML
-//    private void deleteUser()
-//    {
-//        if(deleteUserCheckBox.isSelected())
-//        {
-//            cs.deleteUser(deleteUserCB.getValue(),deleteUserReasonTXT.getText());
-//            System.out.println("Delete User");
-//            deleteUserConfirmationLabel.setVisible(true);
-//            return;
-//        }
-//        System.out.println("Didn't delete User");
-//    }
-
-    public void switchPage(ActionEvent actionEvent)
-    {
-        if(actionEvent.getSource() == secondaryButton1)
-        {
-            if(pageNumber > 1)
-            {
+    public void switchPage(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == secondaryButton1) {
+            if (pageNumber > 1) {
                 pageNumber--;
             }
             setProgramsAllPrograms();
             System.out.println("Page back");
         }
-        if(actionEvent.getSource() == secondaryButton11)
-        {
-            if(pageNumber < numberOfAdditionalPages+1)
-            {
+        if (actionEvent.getSource() == secondaryButton11) {
+            if (pageNumber < numberOfAdditionalPages + 1) {
                 pageNumber++;
             }
             setProgramsAllPrograms();

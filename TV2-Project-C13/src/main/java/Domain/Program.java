@@ -1,15 +1,9 @@
 package Domain;
 
-import Interfaces.CreditInterface;
-import Interfaces.GenreInterface;
 import Interfaces.ProgramInterface;
-
 import java.time.LocalTime;
-import java.util.ArrayList;
 
-
-public class Program implements ProgramInterface
-{
+public class Program implements ProgramInterface {
     private String name;
     private String releaseDate;
     private LocalTime duration;
@@ -17,8 +11,7 @@ public class Program implements ProgramInterface
     private String description;
     private int creatorID;
 
-    public Program(String name, String releaseDate, LocalTime duration, String genre, String description, int creatorID)
-    {
+    public Program(String name, String releaseDate, LocalTime duration, String genre, String description, int creatorID) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.duration = duration;
@@ -28,15 +21,13 @@ public class Program implements ProgramInterface
     }
 
 
-    public String toSaveFile()
-    {
+    public String toSaveFile() {
         return "" + getName() + ";" + getReleaseDate() + ";";
     }
 
     @Override
-    public String toString()
-    {
-        return "Name: " + getName()  +
+    public String toString() {
+        return "Name: " + getName() +
                 " Release date: " + getReleaseDate();
     }
 
@@ -45,7 +36,7 @@ public class Program implements ProgramInterface
     }
 
     public String getReleaseDate() {
-        return releaseDate.toString();
+        return releaseDate;
     }
 
     public String getGenre() {
@@ -53,11 +44,10 @@ public class Program implements ProgramInterface
     }
 
     public LocalTime getDuration() {
-        //return duration.toString();
         return duration;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 

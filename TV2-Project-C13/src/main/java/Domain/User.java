@@ -17,7 +17,7 @@ public class User implements UserInterface {
     private LocalDate birthday;
 
 
-    public User(String username, String password, String salt,String name, String email, LocalDate birthday) {
+    public User(String username, String password, String salt, String name, String email, LocalDate birthday) {
         this.username = username.toLowerCase();
         this.password = password;
         this.salt = salt;
@@ -27,9 +27,8 @@ public class User implements UserInterface {
         this.role = "User";
     }
 
-    public User(String username, String password, String salt, String name, String email, LocalDate birthday, String role)
-    {
-        this(username,password,salt,name,email, birthday);
+    public User(String username, String password, String salt, String name, String email, LocalDate birthday, String role) {
+        this(username, password, salt, name, email, birthday);
         this.role = role;
     }
 
@@ -40,7 +39,7 @@ public class User implements UserInterface {
         this.email = email;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
@@ -58,40 +57,48 @@ public class User implements UserInterface {
 
     public int getAge() {
         LocalDate today = LocalDate.now();
-        Period p = Period.between(birthday,today);
+        Period p = Period.between(birthday, today);
         return p.getYears();
     }
 
-    public LocalDate getBirthday()
-    {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public String getEmail(){return email;}
+    public String getEmail() {
+        return email;
+    }
 
     public String getRole() {
         return role;
     }
 
-    public String getSalt(){return salt;}
+    public String getSalt() {
+        return salt;
+    }
 
     public void setPassword(String newPas) {
         this.password = newPas;
     }
 
-    public void changeName(String newName){this.name = newName;}
+    public void changeName(String newName) {
+        this.name = newName;
+    }
 
-    public void setRole(String newRole){this.role = newRole;}
+    public void setRole(String newRole) {
+        this.role = newRole;
+    }
 
-    public void setSalt(String salt){this.salt = salt;}
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
-    public boolean checkInfo(String name, String username, int age)
-    {
+    public boolean checkInfo(String name, String username, int age) {
         return this.getName().equals(name) && this.getUsername().equals(username) && this.getAge() == age;
     }
 
     @Override
     public String toString() {
-        return "Bruger ID: " + getId() + ", " + "Navn: " + getName()  + ", " + "E-mail: " + getEmail()  + ", " + "Rolle: " + getRole();
+        return "Bruger ID: " + getId() + ", " + "Navn: " + getName() + ", " + "E-mail: " + getEmail() + ", " + "Rolle: " + getRole();
     }
 }
