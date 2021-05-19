@@ -154,7 +154,7 @@ public class ConsumerSystem
 
         for (PersonInterface element : dbSys.getAllPersonsByCreatorId(getUserID(activeUser)))
         {
-            returnList.add(new Person(element.getAge(), element.getEmail(), element.getName()));
+            returnList.add(new Person(element.getBirthDate(), element.getEmail(), element.getName()));
         }
 
         return returnList;
@@ -268,21 +268,16 @@ public class ConsumerSystem
     {
         ArrayList<User> returnArray = new ArrayList<>();
 
-        /*for (UserInterface element: dbSys.getAllUsersExceptXUser(user))
+        for (UserInterface element: dbSys.getAllUsersExceptXUser(user))
         {
             returnArray.add(mapUserInterfaceUser(element));
-        }*/
+        }
         return returnArray;
     }
 
     public ArrayList<String> getAllGenres()
     {
         return dbSys.getAllGenres();
-    }
-
-    public int getUserID(UserInterface user)
-    {
-        return dbSys.getUserID(user.getUsername());
     }
 
     public void updateProgram(String tempName, String tempDate, LocalTime tempDuration, String tempGenre, String tempDesc, int createrID)

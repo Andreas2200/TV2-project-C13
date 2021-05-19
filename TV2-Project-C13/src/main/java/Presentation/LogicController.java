@@ -11,10 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import Domain.*;
-import Interfaces.CreditInterface;
-import Interfaces.GenreInterface;
-import Interfaces.PersonInterface;
-import Interfaces.ProgramInterface;
+import Interfaces.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -79,7 +76,7 @@ public class LogicController implements Initializable {
 
     @FXML
     private TitledPane createCreditTitledPane, createProgramTitledPane, createPersonTitledPane,
-            viewUsersTitledPane, requestsTitledPane, editUserTitledPane, deleteUserTitledPane;
+            viewUsersTitledPane, editUserTitledPane, deleteUserTitledPane;
     @FXML
     private Accordion managementAccordion, managementAccordionUsers;
     @FXML
@@ -520,19 +517,11 @@ public class LogicController implements Initializable {
         }
         if(event.getSource() == viewUsersTitledPane) {
             viewUsersTitledPane.setStyle(CLICKED_TITLED_PANE);
-            requestsTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-        }
-        if(event.getSource() == requestsTitledPane) {
-            viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            requestsTitledPane.setStyle(CLICKED_TITLED_PANE);
             editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
             deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
         }
         if(event.getSource() == editUserTitledPane) {
             viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-            requestsTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
             editUserTitledPane.setStyle(CLICKED_TITLED_PANE);
             deleteUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
         }
@@ -541,7 +530,6 @@ public class LogicController implements Initializable {
             if(!deleteUserTitledPane.getStyle().equals(CLICKED_TITLED_PANE))
             {
                 viewUsersTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
-                requestsTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
                 editUserTitledPane.setStyle(NON_CLICKED_TITLED_PANE);
                 editUserRoleConfirmationLabel.setVisible(false);
                 deleteUserTitledPane.setStyle(CLICKED_TITLED_PANE);
@@ -660,7 +648,7 @@ public class LogicController implements Initializable {
 
 
     @FXML
-    private void viewUsers(){
+    private void viewUsers() {
         viewUsersTableview.getItems().clear();
         try {
             List<UserInterface> list = cs.viewUser();
@@ -695,32 +683,28 @@ public class LogicController implements Initializable {
                 return new ReadOnlyStringWrapper(emailList.get(rowIndex));
             });
 
-            for(int i = 0; i < idList.size(); i++){
+            for (int i = 0; i < idList.size(); i++) {
                 viewUsersTableview.getItems().add(i);
-        }
+            }
 
             cs.viewUser();
-    } catch (Exception e) {
-        e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void updateComboBox() {
+    public void updateComboBox(){
+        numberOfAdditionalPages = cs.getAllPrograms().size() / NUMBEROFPROGRAMSTODISPLAY;
         genreComboBox.setItems(FXCollections.observableArrayList(cs.getAllGenres()));
-        creditOccupationCB.setItems(FXCollections.observableArrayList(Occupation.values().toString()));
-        //creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
-        //addCreditProgramCreditCB.setItems(FXCollections.observableArrayList(cs.getAllCredits()));
-        addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
-        editUserRoleCB.setItems(FXCollections.observableArrayList("Admin", "Producer" , "User"));
-        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
-        deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
         creditOccupationCB.setItems(FXCollections.observableArrayList(cs.getAllOccupations()));
         creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersonByCreatorId()));
         addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllProgramsByCreatorId()));
         editUserRoleCB.setItems(FXCollections.observableArrayList("User","Producer","Admin"));
-        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
-        deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUsersExcept(activeUser)));
+        editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
+        deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
         setProgramsAllPrograms();
         viewUsers();
+
     }
 
     public void updateUserRole(ActionEvent event) {

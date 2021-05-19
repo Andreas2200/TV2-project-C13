@@ -124,7 +124,10 @@ public class DatabaseSystem
                 returnValue.add(new UserData(rs.getInt("id"), rs.getString("name"), rs.getString("role"), rs.getString("email")));
             }
             return returnValue;
-        } catch (SQLException ex) {
+        } catch (SQLException ex)
+        {
+            return null;
+        }
     }
 
 //    public ArrayList<PersonInterface> getAllPersons () throws Exception {
@@ -1464,26 +1467,6 @@ public class DatabaseSystem
     }
 
     //</editor-fold desc="Methods missing SQL Implementation">
-
-    public int getUserID(String username)
-    {
-        try
-        {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
-            stmt.setString(1,username);
-            ResultSet sqlReturnValue = stmt.executeQuery();
-            if(!sqlReturnValue.next())
-            {
-                return -1;
-            }
-            return sqlReturnValue.getInt(1);
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-            return -1;
-        }
-    }
 
     public String hashPassword(String password, String salt) {
         String returnHash = "";
