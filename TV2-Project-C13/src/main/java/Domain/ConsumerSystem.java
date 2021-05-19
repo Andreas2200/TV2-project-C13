@@ -172,19 +172,16 @@ public class ConsumerSystem
         return returnList;
     }
 
-    public ArrayList<User> getAllUser()
-    {
+    public ArrayList<User> getAllUser() {
         ArrayList<User> returnList = new ArrayList<>();
 
         try {
-            for (UserInterface element: dbSys.getViewUser())
-            {
+            for (UserInterface element : dbSys.getViewUser()) {
                 returnList.add(new User(element.getId(), element.getName(), element.getRole(), element.getEmail()));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return returnList;
     }
 
@@ -263,9 +260,9 @@ public class ConsumerSystem
         //dbSys.updateUserPerms(user);
     }
 
-    public void deleteUser(User user, String reason)
+    public void deleteUser(int user, String reason,int deletedBy)
     {
-        //dbSys.deleteUser(new UserData(user.getName(), user.getUsername(), user.getPassword(), user.getAge(), user.getEmail(), user.getRole()),reason);
+        dbSys.deleteUser(user,reason,deletedBy);
     }
 
     private User mapUserInterfaceUser(UserInterface user)

@@ -1116,7 +1116,30 @@ public class DatabaseSystem {
         updateUsers(updateUserArray);
     }
 
-    public void deleteUser(UserData user, String reason)
+    public void deleteUser(int userId, String reason, int deletedById)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("UPDATE users SET active = ? WHERE id = ?");
+            stmt.setBoolean(1, false);
+            stmt.setInt(2, userId);
+            stmt.execute();
+            stmt = connection.prepareStatement("INSERT INTO deleted_users (user_id,deleted_by,reason,date) VALUES (?,?,?,?)");
+            stmt.setInt(1,userId);
+            stmt.setInt(2,deletedById);
+            stmt.setString(3,reason);
+            java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+            stmt.setDate(4,date);
+            stmt.execute();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return;
+        }
+    }
+
+    /*public void deleteUser(UserData user, String reason)
     {
         ArrayList<UserInterface> tempUserArray = getAllUsers();
         ArrayList<UserInterface> updateUserArray = new ArrayList<>();
@@ -1138,7 +1161,7 @@ public class DatabaseSystem {
             }
         }
         updateUsers(updateUserArray);
-    }
+    }*/
 
     public ArrayList<UserInterface> getAllUsersExceptXUser(UserInterface user)
     {

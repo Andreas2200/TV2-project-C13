@@ -702,17 +702,17 @@ public class LogicController implements Initializable {
         updateComboBox();
     }
 
-//    public void deleteUser(ActionEvent event) {
-//        int id = deleteUserCB.getValue().getId();
-//        String reason = deleteUserReasonTXT.getText();
-//        int deleted_by_id = cs.getUserID(activeUser);
-//
-//
-//        cs.deleteUser(id, deleted_by_id, reason);
-//        deleteUserConfirmationLabel.setText("Bruger er slettet");
-//        deleteUserConfirmationLabel.setStyle("-fx-text-fill: GREEN; -fx-font-family: Times New Roman" );
-//        updateComboBox();
-//    }
+    public void deleteUser(ActionEvent event) {
+        int user = deleteUserCB.getValue().getId();
+        String reason = deleteUserReasonTXT.getText();
+        int deleted_by_id = cs.getUserID(activeUser);
+
+
+        cs.deleteUser(user, reason,deleted_by_id);
+        deleteUserConfirmationLabel.setText("Bruger er slettet");
+        deleteUserConfirmationLabel.setStyle("-fx-text-fill: GREEN; -fx-font-family: Times New Roman" );
+        updateComboBox();
+    }
 
     private int newUserRole(String role_id){
         int rolleid = 0;
