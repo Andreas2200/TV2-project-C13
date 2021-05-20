@@ -128,7 +128,7 @@ public class ConsumerSystem
             returnList.add(mapPersonInterfaceProgram(element));
         }
         return returnList;
-    } //Returns all programs from the database
+    } //Returns all persons from the database
 
     public ArrayList<Program> getAllProgramsByCreatorId() {
         ArrayList<Program> returnList = new ArrayList<>();
@@ -171,7 +171,7 @@ public class ConsumerSystem
 
     private Person mapPersonInterfaceProgram(PersonInterface element) {
         return new Person(element.getBirthDate(), element.getEmail(), element.getName());
-    } //Method for quickly mapping a ProgramInterface to Program
+    } //Method for quickly mapping a PersonInterface to Person
     //</editor-fold>
 
     //<editor-fold desc="Utilities">

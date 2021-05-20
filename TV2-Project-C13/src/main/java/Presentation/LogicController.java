@@ -648,16 +648,14 @@ public class LogicController implements Initializable {
         deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
         setProgramsAllPrograms();
         viewUsers();
-
     }
 
     public void updateUserRole(ActionEvent event) {
         int id = editUserUsersCB.getValue().getId();
         String role_id = editUserRoleCB.getValue();
 
-
         cs.updateUserRole(id, newUserRole(role_id));
-        editUserRoleConfirmationLabel.setText("Brugerrolle blev ændret <3");
+        editUserRoleConfirmationLabel.setText("Brugerrolle blev ændret");
         editUserRoleConfirmationLabel.setStyle("-fx-text-fill: GREEN; -fx-font-family: Times New Roman");
         updateComboBox();
     }

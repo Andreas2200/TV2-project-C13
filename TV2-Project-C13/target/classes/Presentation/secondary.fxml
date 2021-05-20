@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
@@ -24,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="834.0" prefWidth="1200.0" stylesheets="@titledPaneStylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.LogicController">
+<BorderPane prefHeight="834.0" prefWidth="1200.0" stylesheets="@titledPaneStylesheet.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.LogicController">
    <center>
       <AnchorPane prefHeight="834.0" prefWidth="923.0" style="-fx-background-color: #ffffff;">
          <children>
@@ -186,7 +180,7 @@
                                           </Label>
                                        </children>
                                     </HBox>
-                                    <Button alignment="CENTER" onAction="#deleteUser" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="167.0" text="Slet bruger" textAlignment="CENTER">
+                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#deleteUser" prefHeight="50.0" prefWidth="167.0" text="Slet bruger" textAlignment="CENTER">
                                        <VBox.margin>
                                           <Insets bottom="40.0" left="375.0" right="375.0" top="40.0" />
                                        </VBox.margin>
@@ -205,50 +199,6 @@
                   </TitledPane>
                </panes>
             </Accordion>
-            <VBox fx:id="personVBox" prefHeight="824.0" prefWidth="908.0" style="-fx-background-color: #FFFF;">
-               <children>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="824.0" prefWidth="900.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" layoutX="-4.0" layoutY="-1.0" prefHeight="834.0" prefWidth="912.0">
-                           <children>
-                              <HBox prefHeight="70.0" prefWidth="860.0" style="-fx-background-color: #d21e1e;">
-                                 <children>
-                                    <Label prefHeight="27.0" prefWidth="554.0" text="Hvem leder du efter?" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="searchPersonField" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font></TextField>
-                                    <Button fx:id="searchPersonButton" mnemonicParsing="false" onAction="#findPersonInformation" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets bottom="30.0" top="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <TableView fx:id="findPersonTableView" prefHeight="676.0" prefWidth="862.0">
-                                 <columns>
-                                    <TableColumn fx:id="personCol" minWidth="0.0" prefWidth="176.0" text="Person:" />
-                                    <TableColumn fx:id="occupationCol" prefWidth="160.0" text="Beskæftigelse" />
-                                    <TableColumn fx:id="roleCol" prefWidth="159.0" text="Rolle" />
-                                    <TableColumn fx:id="programCol" prefWidth="167.0" text="Produktion:" />
-                                    <TableColumn fx:id="contactInfoCol" prefWidth="199.0" text="Kontakt Information:" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="30.0" />
-                           </padding>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </VBox>
             <VBox fx:id="programVBox" prefHeight="834.0" prefWidth="910.0" style="-fx-background-color: #FFFF;">
                <children>
                   <AnchorPane prefHeight="824.0" prefWidth="899.0">
@@ -270,86 +220,6 @@
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding>
                         </HBox>
-                        <AnchorPane fx:id="programInfoAnchorPane" layoutX="18.0" layoutY="100.0" prefHeight="697.0" prefWidth="837.0" style="-fx-background-color: #FFFF;">
-                           <children>
-                              <HBox layoutX="-3.0" layoutY="-1.0" prefHeight="696.0" prefWidth="857.0">
-                                 <children>
-                                    <VBox prefHeight="696.0" prefWidth="506.0">
-                                       <children>
-                                          <Label fx:id="searchedProgramTitle" text="Programtitel">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="42.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets left="20.0" right="20.0" top="20.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <HBox prefHeight="100.0" prefWidth="200.0">
-                                             <children>
-                                                <Label fx:id="searchedProgramDuration" text="programlængde">
-                                                   <padding>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <Label fx:id="searchedProgramGenre" text="genre">
-                                                   <padding>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <Label fx:id="searchedProgramReleaseDate" text="udgivelsesdato">
-                                                   <padding>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                                   </padding>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                          <Label text="Resumé">
-                                             <VBox.margin>
-                                                <Insets left="20.0" right="20.0" top="20.0" />
-                                             </VBox.margin>
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                          <TextArea fx:id="searchedProgramDescriptionTXT" prefHeight="200.0" prefWidth="200.0">
-                                             <VBox.margin>
-                                                <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
-                                             </VBox.margin>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </TextArea>
-                                          <Button fx:id="toSearchButton" onAction="#toFrontHandler" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Forrige Side" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets left="20.0" top="200.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="702.0" prefWidth="359.0">
-                                       <children>
-                                          <Label prefHeight="51.0" prefWidth="345.0" text="Krediteringer til programmet">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="28.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <TextArea fx:id="searchedProgramCreditsTXT" prefHeight="622.0" prefWidth="351.0">
-                                             <VBox.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                             </VBox.margin>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </TextArea>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
                         <AnchorPane fx:id="programSearchAnchorPane" layoutX="16.0" layoutY="109.0" prefHeight="694.0" prefWidth="861.0" style="-fx-background-color: #FFFF;">
                            <children>
                               <HBox layoutY="6.0" prefHeight="617.0" prefWidth="855.0">
@@ -479,6 +349,86 @@
                                           <Insets left="280.0" />
                                        </HBox.margin>
                                     </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="programInfoAnchorPane" layoutX="18.0" layoutY="100.0" prefHeight="697.0" prefWidth="837.0" style="-fx-background-color: #FFFF;">
+                           <children>
+                              <HBox layoutX="-3.0" layoutY="-1.0" prefHeight="696.0" prefWidth="857.0">
+                                 <children>
+                                    <VBox prefHeight="696.0" prefWidth="506.0">
+                                       <children>
+                                          <Label fx:id="searchedProgramTitle" text="Programtitel">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="42.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="20.0" right="20.0" top="20.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label fx:id="searchedProgramDuration" text="programlængde">
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="searchedProgramGenre" text="genre">
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="searchedProgramReleaseDate" text="udgivelsesdato">
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Resumé">
+                                             <VBox.margin>
+                                                <Insets left="20.0" right="20.0" top="20.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextArea fx:id="searchedProgramDescriptionTXT" prefHeight="200.0" prefWidth="200.0">
+                                             <VBox.margin>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextArea>
+                                          <Button fx:id="toSearchButton" onAction="#toFrontHandler" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Forrige Side" textFill="WHITE">
+                                             <VBox.margin>
+                                                <Insets left="20.0" top="200.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="702.0" prefWidth="359.0">
+                                       <children>
+                                          <Label prefHeight="51.0" prefWidth="345.0" text="Krediteringer til programmet">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="28.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <TextArea fx:id="searchedProgramCreditsTXT" prefHeight="622.0" prefWidth="351.0">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextArea>
+                                       </children>
+                                    </VBox>
                                  </children>
                               </HBox>
                            </children>
@@ -825,6 +775,50 @@
                 </TitledPane>
               </panes>
             </Accordion>
+            <VBox fx:id="personVBox" prefHeight="824.0" prefWidth="908.0" style="-fx-background-color: #FFFF;">
+               <children>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="824.0" prefWidth="900.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" layoutX="-4.0" layoutY="-1.0" prefHeight="834.0" prefWidth="912.0">
+                           <children>
+                              <HBox prefHeight="70.0" prefWidth="860.0" style="-fx-background-color: #d21e1e;">
+                                 <children>
+                                    <Label prefHeight="27.0" prefWidth="554.0" text="Hvem leder du efter?" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="searchPersonField" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="203.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font></TextField>
+                                    <Button fx:id="searchPersonButton" mnemonicParsing="false" onAction="#findPersonInformation" prefHeight="29.0" prefWidth="71.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="30.0" top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <TableView fx:id="findPersonTableView" prefHeight="676.0" prefWidth="862.0">
+                                 <columns>
+                                    <TableColumn fx:id="personCol" minWidth="0.0" prefWidth="176.0" text="Person:" />
+                                    <TableColumn fx:id="occupationCol" prefWidth="160.0" text="Beskæftigelse" />
+                                    <TableColumn fx:id="roleCol" prefWidth="159.0" text="Rolle" />
+                                    <TableColumn fx:id="programCol" prefWidth="167.0" text="Produktion:" />
+                                    <TableColumn fx:id="contactInfoCol" prefWidth="199.0" text="Kontakt Information:" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="30.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </center>
