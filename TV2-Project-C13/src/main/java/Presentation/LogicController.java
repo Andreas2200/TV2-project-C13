@@ -167,11 +167,14 @@ public class LogicController implements Initializable {
         creditActorTextField.setVisible(false);
 
         setUserPermission();
+
+        searchedProgramDescriptionTXT.setWrapText(true);
     }
 
     @FXML
     private void findPersonInformation(ActionEvent event) {
         findPersonTableView.getItems().clear();
+
         try {
             List<CreditInterface> list = cs.searchPerson(searchPersonField.getText());
             final ObservableList<CreditInterface> details = FXCollections.observableArrayList(list);
@@ -630,8 +633,16 @@ public class LogicController implements Initializable {
         numberOfAdditionalPages = cs.getAllPrograms().size() / NUMBEROFPROGRAMSTODISPLAY;
         genreComboBox.setItems(FXCollections.observableArrayList(cs.getAllGenres()));
         creditOccupationCB.setItems(FXCollections.observableArrayList(cs.getAllOccupations()));
-        creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersonByCreatorId()));
-        addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllProgramsByCreatorId()));
+        //Makes it possible for Admin to edit ALL persons and programs
+        if(!activeUser.getRole().equals("Admin")) {
+            creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersonByCreatorId()));
+            addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllProgramsByCreatorId()));
+        }
+        else {
+            creditPersonCB.setItems(FXCollections.observableArrayList(cs.getAllPersons()));
+            addCreditProgramProgramCB.setItems(FXCollections.observableArrayList(cs.getAllPrograms()));
+        }
+
         editUserRoleCB.setItems(FXCollections.observableArrayList("User", "Producer", "Admin"));
         editUserUsersCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));
         deleteUserCB.setItems(FXCollections.observableArrayList(cs.getAllUser()));

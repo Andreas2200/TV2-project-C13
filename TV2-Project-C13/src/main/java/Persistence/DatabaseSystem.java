@@ -475,6 +475,23 @@ public class DatabaseSystem
         }
     }
 
+    public ArrayList<PersonInterface> getAllPersons() {
+        try {
+            ArrayList<PersonInterface> returnList = new ArrayList<>();
+
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM persons");
+            ResultSet sqlPersonReturnValue = stmt.executeQuery();
+            while (sqlPersonReturnValue.next()) {
+                LocalDate birthdate = java.time.LocalDate.parse(sqlPersonReturnValue.getDate(3).toString());
+                returnList.add(new PersonData(birthdate, sqlPersonReturnValue.getString(4), sqlPersonReturnValue.getString(2)));
+            }
+            return returnList;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public ProgramInterface getProgram(String programTitle) {
         try {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM programs WHERE title = ?");
