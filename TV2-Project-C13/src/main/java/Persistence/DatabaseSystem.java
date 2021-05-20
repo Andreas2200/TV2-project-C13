@@ -318,10 +318,16 @@ public class DatabaseSystem
 
     public boolean deleteProgram(String programName) {
         try {
+            ProgramInterface program = getProgram(programName);
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM credits WHERE program_id IN(SELECT id FROM programs WHERE title = ?)");
+            statement.setString(1, programName);
+            statement.execute();
+
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM programs WHERE title = ?");
-            stmt.setString(1, programName);
+            stmt.setString(1, program.getName());
             stmt.execute();
             return true;
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
