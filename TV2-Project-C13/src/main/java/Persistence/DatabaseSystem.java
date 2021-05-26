@@ -78,11 +78,13 @@ public class DatabaseSystem
 
     public List<UserInterface> getViewUser() {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT us.id, us.name, ro.role, us.email FROM users us JOIN roles ro ON us.role_id = ro.id ORDER BY id;");
+            PreparedStatement stmt = connection.prepareStatement("SELECT us.id, us.name, ro.role, us.email, us.active FROM users us JOIN roles ro ON us.role_id = ro.id ORDER BY id;");
             ResultSet rs = stmt.executeQuery();
             List<UserInterface> returnValue = new ArrayList<>();
             while (rs.next()) {
-                returnValue.add(new UserData(rs.getInt("id"), rs.getString("name"), rs.getString("role"), rs.getString("email")));
+                if(rs.getBoolean("active")) {
+                    returnValue.add(new UserData(rs.getInt("id"), rs.getString("name"), rs.getString("role"), rs.getString("email")));
+                }
             }
             return returnValue;
         } catch (SQLException ex) {
@@ -98,7 +100,7 @@ public class DatabaseSystem
             if (!sqlReturnValues.next()) {
                 return null;
             }
-            if (hashPassword(password, sqlReturnValues.getString(4)).equals(sqlReturnValues.getString(3))) {
+            if (hashPassword(password, sqlReturnValues.getString(4)).equals(sqlReturnValues.getString(3)) && sqlReturnValues.getBoolean(9)) {
                 stmt = connection.prepareStatement("SELECT * FROM roles WHERE id= ?");
                 stmt.setInt(1, sqlReturnValues.getInt(6));
                 ResultSet sqlRoleValues = stmt.executeQuery();
