@@ -78,7 +78,7 @@ public class DatabaseSystem
 
     public List<UserInterface> getViewUser() {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT us.id, us.name, ro.role, us.email FROM users us JOIN roles ro ON us.role_id = ro.id ORDER BY name;");
+            PreparedStatement stmt = connection.prepareStatement("SELECT us.id, us.name, ro.role, us.email FROM users us JOIN roles ro ON us.role_id = ro.id ORDER BY id;");
             ResultSet rs = stmt.executeQuery();
             List<UserInterface> returnValue = new ArrayList<>();
             while (rs.next()) {

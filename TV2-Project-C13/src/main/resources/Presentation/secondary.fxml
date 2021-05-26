@@ -24,7 +24,7 @@
          <children>
             <Accordion fx:id="managementAccordionUsers" layoutX="-6.0" prefHeight="824.0" prefWidth="916.0" style="-fx-background-color: #FFFF;">
                <panes>
-                  <TitledPane fx:id="viewUsersTitledPane" alignment="TOP_LEFT" animated="false" onMouseClicked="#titledPaneHandler" style="-fx-border-width: 0px 0px 0px 0px;" text="View users">
+                  <TitledPane fx:id="viewUsersTitledPane" alignment="TOP_LEFT" animated="false" onMouseClicked="#titledPaneHandler" style="-fx-border-width: 0px 0px 0px 0px;" text="Se brugere">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -33,24 +33,7 @@
                            <children>
                               <VBox alignment="TOP_CENTER" layoutX="-4.0" layoutY="-1.0" prefHeight="628.0" prefWidth="906.0" spacing="20.0" style="-fx-background-color: #FFFF;">
                                  <children>
-                                    <HBox prefHeight="70.0" prefWidth="855.0" style="-fx-background-color: #d21e1e;">
-                                       <children>
-                                          <Label prefHeight="27.0" prefWidth="554.0" text="Who are you looking for?" textFill="WHITE">
-                                             <font>
-                                                <Font name="System Bold" size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="202.0" promptText="Søg" style="-fx-background-color: #FFFF; -fx-background-radius: 10px 0px 0px 10px;">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font></TextField>
-                                          <Button id="accordionSearchButton" mnemonicParsing="false" prefHeight="9.0" prefWidth="72.0" style="-fx-background-color: #FFFF; -fx-background-radius: 0px 10px 10px 0px;" text="Søg" textFill="#d21e1e" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                                       </padding>
-                                    </HBox>
-                                    <TableView fx:id="viewUsersTableview" prefHeight="496.0" prefWidth="855.0">
+                                    <TableView fx:id="viewUsersTableview" prefHeight="542.0" prefWidth="866.0">
                                        <columns>
                                           <TableColumn fx:id="idColumn" minWidth="20.0" prefWidth="197.5" text="Bruger id" />
                                           <TableColumn fx:id="nameColumn" prefWidth="220" text="Fulde navn" />
@@ -68,7 +51,7 @@
                         </AnchorPane>
                      </content>
                   </TitledPane>
-                  <TitledPane fx:id="editUserTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefWidth="916.0" style="-fx-border-width: 0px 0px 0px 0px;" text="Edit user">
+                  <TitledPane fx:id="editUserTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefWidth="916.0" style="-fx-border-width: 0px 0px 0px 0px;" text="Rediger bruger">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="620.0" prefWidth="914.0" style="-fx-background-color: #FFFF;">
                            <children>
@@ -125,7 +108,7 @@
                         <Font size="24.0" />
                      </font>
                   </TitledPane>
-                  <TitledPane fx:id="deleteUserTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefWidth="916.0" style="-fx-border-width: 0px 0px 0px 0px;" text="Delete user">
+                  <TitledPane fx:id="deleteUserTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefWidth="916.0" style="-fx-border-width: 0px 0px 0px 0px;" text="Slet bruger">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="629.0" prefWidth="896.0" style="-fx-background-color: #FFFF;">
                            <children>
@@ -220,6 +203,86 @@
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding>
                         </HBox>
+                        <AnchorPane fx:id="programInfoAnchorPane" layoutX="18.0" layoutY="100.0" prefHeight="697.0" prefWidth="837.0" style="-fx-background-color: #FFFF;">
+                           <children>
+                              <HBox layoutX="-3.0" layoutY="-1.0" prefHeight="696.0" prefWidth="857.0">
+                                 <children>
+                                    <VBox prefHeight="696.0" prefWidth="506.0">
+                                       <children>
+                                          <Label fx:id="searchedProgramTitle" text="Programtitel">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="42.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="20.0" right="20.0" top="20.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label fx:id="searchedProgramDuration" text="programlængde">
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="searchedProgramGenre" text="genre">
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="searchedProgramReleaseDate" text="udgivelsesdato">
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Resumé">
+                                             <VBox.margin>
+                                                <Insets left="20.0" right="20.0" top="20.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextArea fx:id="searchedProgramDescriptionTXT" prefHeight="200.0" prefWidth="200.0">
+                                             <VBox.margin>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextArea>
+                                          <Button fx:id="toSearchButton" onAction="#toFrontHandler" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Forrige Side" textFill="WHITE">
+                                             <VBox.margin>
+                                                <Insets left="20.0" top="200.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="702.0" prefWidth="359.0">
+                                       <children>
+                                          <Label prefHeight="51.0" prefWidth="345.0" text="Krediteringer til programmet">
+                                             <font>
+                                                <Font name="Gill Sans MT" size="28.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <TextArea fx:id="searchedProgramCreditsTXT" prefHeight="622.0" prefWidth="351.0">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </TextArea>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
                         <AnchorPane fx:id="programSearchAnchorPane" layoutX="16.0" layoutY="109.0" prefHeight="694.0" prefWidth="861.0" style="-fx-background-color: #FFFF;">
                            <children>
                               <HBox layoutY="6.0" prefHeight="617.0" prefWidth="855.0">
@@ -353,93 +416,13 @@
                               </HBox>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="programInfoAnchorPane" layoutX="18.0" layoutY="100.0" prefHeight="697.0" prefWidth="837.0" style="-fx-background-color: #FFFF;">
-                           <children>
-                              <HBox layoutX="-3.0" layoutY="-1.0" prefHeight="696.0" prefWidth="857.0">
-                                 <children>
-                                    <VBox prefHeight="696.0" prefWidth="506.0">
-                                       <children>
-                                          <Label fx:id="searchedProgramTitle" text="Programtitel">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="42.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets left="20.0" right="20.0" top="20.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <HBox prefHeight="100.0" prefWidth="200.0">
-                                             <children>
-                                                <Label fx:id="searchedProgramDuration" text="programlængde">
-                                                   <padding>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <Label fx:id="searchedProgramGenre" text="genre">
-                                                   <padding>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <Label fx:id="searchedProgramReleaseDate" text="udgivelsesdato">
-                                                   <padding>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                                   </padding>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                          <Label text="Resumé">
-                                             <VBox.margin>
-                                                <Insets left="20.0" right="20.0" top="20.0" />
-                                             </VBox.margin>
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                          <TextArea fx:id="searchedProgramDescriptionTXT" prefHeight="200.0" prefWidth="200.0">
-                                             <VBox.margin>
-                                                <Insets bottom="20.0" left="20.0" right="20.0" top="15.0" />
-                                             </VBox.margin>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </TextArea>
-                                          <Button fx:id="toSearchButton" onAction="#toFrontHandler" prefHeight="25.0" prefWidth="83.0" style="-fx-background-radius: 10; -fx-background-color: #d21e1e;" styleClass="smallRedButton" text="Forrige Side" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets left="20.0" top="200.0" />
-                                             </VBox.margin>
-                                          </Button>
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="702.0" prefWidth="359.0">
-                                       <children>
-                                          <Label prefHeight="51.0" prefWidth="345.0" text="Krediteringer til programmet">
-                                             <font>
-                                                <Font name="Gill Sans MT" size="28.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <TextArea fx:id="searchedProgramCreditsTXT" prefHeight="622.0" prefWidth="351.0">
-                                             <VBox.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                             </VBox.margin>
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </TextArea>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
                      </children>
                   </AnchorPane>
                </children>
             </VBox>
             <Accordion fx:id="managementAccordion" layoutX="-6.0" prefHeight="824.0" prefWidth="916.0" style="-fx-background-color: #FFFF;">
               <panes>
-                <TitledPane id="createProgramTitledPane" fx:id="createProgramTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="682.0" prefWidth="916.0" text="Create/Edit Program">
+                <TitledPane id="createProgramTitledPane" fx:id="createProgramTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="682.0" prefWidth="916.0" text="Opret &amp; Rediger Program">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -474,7 +457,7 @@
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="durationField" layoutX="651.0" layoutY="40.0" prefHeight="35.0" prefWidth="190.0" promptText="10:10:10" style="-fx-border-color: #d21e1e;">
+                                          <TextField fx:id="durationField" layoutX="651.0" layoutY="40.0" prefHeight="35.0" prefWidth="190.0" promptText="tt:mm:ss" style="-fx-border-color: #d21e1e;">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -569,7 +552,7 @@
                         <Font size="24.0" />
                      </font>
                 </TitledPane>
-                <TitledPane id="createCreditTitledPane" fx:id="createCreditTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="689.0" prefWidth="916.0" text="Create/Edit Credit">
+                <TitledPane id="createCreditTitledPane" fx:id="createCreditTitledPane" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="689.0" prefWidth="916.0" text="Opret &amp; Rediger Kreditering">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -670,7 +653,7 @@
                         <Font size="24.0" />
                      </font>
                 </TitledPane>
-                <TitledPane fx:id="createPersonTitledPane" alignment="TOP_LEFT" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="671.0" prefWidth="938.0" text="Create/Edit Person">
+                <TitledPane fx:id="createPersonTitledPane" alignment="TOP_LEFT" animated="false" onMouseClicked="#titledPaneHandler" prefHeight="671.0" prefWidth="938.0" text="Opret &amp; Rediger Person">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
