@@ -95,7 +95,7 @@ public class LogicController implements Initializable {
     private Image userImage;
     private Image closeButtonImage;
     private Button button;
-    private Circle circle = new Circle(75);
+    //private Circle circle = new Circle(75);
 
     public Label userRoleField, succesProgramField, deleteUserConfirmationLabel, editUserRoleConfirmationLabel;
     public Label userNameField;
@@ -125,11 +125,24 @@ public class LogicController implements Initializable {
         setUpProgramButtons();
         updateComboBox();//Plots values into comboBox
 
-        userImage = new Image(getClass().getResource("Dancingkid.jpg").toString());
+        Lighting white = new Lighting(new Light.Distant(45, 90, Color.valueOf("#FFFF")));
+        ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
+        white.setContentInput(bright);
+        white.setSurfaceScale(0.0);
+
+        if(activeUser.getRole().equals("Producer")) {
+            userImage = new Image(getClass().getResource("director-film-chair.png").toString());
+        } else if(activeUser.getRole().equals("Admin")) {
+            userImage = new Image(getClass().getResource("admin.png").toString());
+        } else {
+            userImage = new Image(getClass().getResource("TV_2_Hvid_RGB.png").toString());
+        }
         userImageView.setImage(userImage);
-        circle.setCenterX(userImageView.getFitHeight() / 2);
-        circle.setCenterY(userImageView.getFitWidth() / 2.75);
-        userImageView.setClip(circle);
+        userImageView.setEffect(white);
+
+        //circle.setCenterX(userImageView.getFitHeight() / 2);
+        //circle.setCenterY(userImageView.getFitWidth() / 2.75);
+        //userImageView.setClip(circle)
 
         closeButtonImage = new Image(getClass().getResource("times.png").toString());
         closeButtonImageView.setImage(closeButtonImage);
@@ -153,7 +166,6 @@ public class LogicController implements Initializable {
 
         //Paints the close button red
         Lighting lighting = new Lighting(new Light.Distant(45, 90, Color.valueOf("#d21e1e")));
-        ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
         lighting.setContentInput(bright);
         lighting.setSurfaceScale(0.0);
 
