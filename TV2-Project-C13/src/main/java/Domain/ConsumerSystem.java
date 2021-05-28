@@ -11,8 +11,11 @@ public class ConsumerSystem
 {
     //<editor-fold desc="Attributes">
     private User activeUser = null;
-    static DatabaseSystem dbSys = new DatabaseSystem();//</editor-fold>
-
+    static DatabaseSystem dbSys = new DatabaseSystem();
+    //</editor-fold>
+    public ConsumerSystem() {
+        dbSys = dbSys.getInstance();
+    }
     //<editor-fold desc="Methods for Person">
     public List<CreditInterface> searchPerson(String searchString) {
         List<PersonInterface> people = dbSys.getPersonsFromName(searchString);

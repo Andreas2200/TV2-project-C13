@@ -26,9 +26,9 @@ public class DatabaseSystem
         initializePostgresqlDatabase();
     }
 
-    public static synchronized Persistence.DatabaseSystem getInstance() {
+    public static DatabaseSystem getInstance() {
         if (instance == null) {
-            instance = new Persistence.DatabaseSystem();
+            instance = new DatabaseSystem();
         }
         return instance;
     }
